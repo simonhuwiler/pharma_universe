@@ -2,3 +2,4 @@
 *.gpkg-wal
 .ipynb_checkpoints/
 .ipynb_checkpoints
+env/
