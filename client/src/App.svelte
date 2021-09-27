@@ -3,6 +3,8 @@
   import { onMount } from 'svelte';
   import * as THREE from 'three'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+  import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+  import data from './data'
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -32,41 +34,45 @@
     // const mesh = new THREE.Mesh(geometry, material)
     // scene.add(mesh)
 
-
-
-
-    const r = 100
-    const teilkreise = 10
-    const n = 50
+    const r_factor = 1
 
     var planets = []
-    
-    
-    for(let i = 0; i < n - 1; i++)
+    for(let i in data.planets)
     {
+      let planet = data.planets[i]
+
       // Create Sphere
       const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-      const geometry = new THREE.SphereGeometry( 5, 32, 16 );
+      const geometry = new THREE.SphereGeometry( 12000, 32, 16 );
       const sphere = new THREE.Mesh( geometry, material );
 
-      // console.log()
-      let y = Math.floor(Math.floor((i + 1) / (n / teilkreise))) * (r / teilkreise) + (r / teilkreise) / 2
-      let h = y <= (r / 2) ? y : r - y
-      console.log(h, y)
-      let r_new = Math.sqrt(2 * r * h - Math.pow(h, 2))
-
-      let items = n / teilkreise
-
-      let step = Math.PI * 2 / items
-      let angle = (i % items) * step
-      let x = r_new * Math.cos(angle)
-      let z = r_new * Math.sin(angle)
-      
-      sphere.position.set(x, y, z)
-      // console.log(r_new, x,y, z)
+      sphere.position.set(planet.x, planet.y, planet.z)
       planets.push(sphere)
 
     }
+
+
+    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    const geometry = new THREE.SphereGeometry( 2, 32, 16 );
+
+    // for(let i in data.asteroids)
+    // {
+    //   // Create Sphere
+
+    //   const sphere = new THREE.Mesh( geometry, material );
+
+    //   let planet = data.asteroids[i]
+
+    //   sphere.position.set(planet.x, planet.y, planet.z)
+    //   // console.log(r_new, x,y, z)
+    //   planets.push(sphere)
+
+    // }
+
+    
+    console.log("ye2s")
+
+
 
     planets.forEach(p => scene.add(p))
 
@@ -93,13 +99,18 @@
     })
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 10000)
-    camera.position.y = r / 2
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000000000)
+    camera.position.y = 200//data.solarsystem_r / 2
+    console.log(camera.position.y)
     scene.add(camera)
 
     // Controls
     const controls = new OrbitControls(camera, canvas)
     controls.enableDamping = true
+    controls.target.set(data.planets[0].x, data.planets[0].y, data.planets[0].z);
+    // const controls = new FirstPersonControls( camera, canvas );
+    // controls.movementSpeed = 150;
+    // controls.lookSpeed = 0.1;
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
