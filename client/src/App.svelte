@@ -2,8 +2,11 @@
 	// import './style.css'
   import { onMount } from 'svelte';
   import * as THREE from 'three'
-  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-  import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+  // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+  // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+	// import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
+  import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
+  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import data from './data'
 
   onMount(async () => {
@@ -11,6 +14,7 @@
 
     // Scene
     const scene = new THREE.Scene()
+    const textureLoader = new THREE.TextureLoader();
 
     // Object
     // const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -36,6 +40,10 @@
 
     const r_factor = 1
 
+    const materialMoon = new THREE.MeshPhongMaterial( {
+      map: textureLoader.load( "./textures/moon_1024.jpg" )
+    } );
+
     var planets = []
     for(let i in data.planets)
     {
@@ -43,8 +51,8 @@
 
       // Create Sphere
       const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-      const geometry = new THREE.SphereGeometry( 12000, 32, 16 );
-      const sphere = new THREE.Mesh( geometry, material );
+      const geometry = new THREE.SphereGeometry( planet.size, 32, 16 );
+      const sphere = new THREE.Mesh( geometry, materialMoon );
 
       sphere.position.set(planet.x, planet.y, planet.z)
       planets.push(sphere)
@@ -52,27 +60,40 @@
     }
 
 
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    const geometry = new THREE.SphereGeometry( 2, 32, 16 );
+    const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+    const geometry = new THREE.SphereGeometry( 200000, 32, 16 );
 
-    // for(let i in data.asteroids)
-    // {
-    //   // Create Sphere
+    const oLoader = new OBJLoader();
+    // Loader Promise https://redstapler.co/load-multiple-model-three-js-promise/
+    oLoader.load('./meshes/asteroid1/10464_Asteroid_v1_Iterations-2.obj', function ( object ) {
+      // object = object.children[1]
+      console.log(object)
 
-    //   const sphere = new THREE.Mesh( geometry, material );
+      let asteroids = []
+      for(let i in data.asteroids)
+      {
+        // Create Sphere
 
-    //   let planet = data.asteroids[i]
+        const sphere = new THREE.Mesh( geometry, material );
 
-    //   sphere.position.set(planet.x, planet.y, planet.z)
-    //   // console.log(r_new, x,y, z)
-    //   planets.push(sphere)
+        let planet = data.asteroids[i]
 
-    // }
+        sphere.position.set(planet.x, planet.y, planet.z)
+        // console.log(r_new, x,y, z)
+        asteroids.push(sphere)
 
+      }
+
+      asteroids.forEach(p => scene.add(p))
+      console.log("ye2s")
+    });
     
-    console.log("ye2s")
 
-
+    // let dirLight = new THREE.DirectionalLight( 0xffffff );
+    const light = new THREE.PointLight( 0xffffff, 1 );
+    //dirLight.position.set( 0, data.solarsystem_r / 2, 0 ).normalize();
+    light.position.y = data.solarsystem_r / 2
+    scene.add( light );
 
     planets.forEach(p => scene.add(p))
 
@@ -100,17 +121,57 @@
 
     // Camera
     const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000000000)
-    camera.position.y = 200//data.solarsystem_r / 2
-    console.log(camera.position.y)
     scene.add(camera)
+    camera.position.y = data.solarsystem_r / 2
+
+    const loader = new THREE.CubeTextureLoader();
+    // https://opengameart.org/content/ulukais-space-skyboxes
+    const texture = loader.load([
+      // './textures/skybox/corona_ft.png',
+      // './textures/skybox/corona_bk.png',
+      // './textures/skybox/corona_up.png',
+      // './textures/skybox/corona_dn.png',
+      // './textures/skybox/corona_rt.png',
+      // './textures/skybox/corona_lf.png',
+      
+      // https://opengameart.org/content/space-skybox-0
+      './textures/skybox/1.png',
+      './textures/skybox/3.png',
+      './textures/skybox/5.png',
+      './textures/skybox/6.png',
+      './textures/skybox/2.png',
+      './textures/skybox/4.png',
+      
+      // './textures/skybox/2.png',
+      // './textures/skybox/3.png',
+      // './textures/skybox/4.png',
+      // './textures/skybox/5.png',
+      // './textures/skybox/6.png',
+      
+      // './textures/skybox/redeclipse_ft.png',
+      // './textures/skybox/redeclipse_bk.png',
+      // './textures/skybox/redeclipse_up.png',
+      // './textures/skybox/redeclipse_dn.png',
+      // './textures/skybox/redeclipse_rt.png',
+      // './textures/skybox/redeclipse_lf.png',
+      
+    ]);
+    scene.background = texture;
 
     // Controls
-    const controls = new OrbitControls(camera, canvas)
-    controls.enableDamping = true
-    controls.target.set(data.planets[0].x, data.planets[0].y, data.planets[0].z);
+    // const controls = new OrbitControls(camera, canvas)
+    // controls.enableDamping = true
+    // controls.target.set(data.planets[0].x, data.planets[0].y, data.planets[0].z);
     // const controls = new FirstPersonControls( camera, canvas );
     // controls.movementSpeed = 150;
     // controls.lookSpeed = 0.1;
+    // let controls = new PointerLockControls( camera, document.body );
+    // scene.add( controls.getObject() );
+    // controls.lock();
+
+
+
+
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -119,15 +180,28 @@
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+    let controls = new FlyControls( camera, renderer.domElement );
+    controls.movementSpeed = 10000000;
+    controls.domElement = renderer.domElement;
+    controls.rollSpeed = Math.PI / 12;
+    controls.autoForward = false;
+    controls.dragToLook = false;
+
     // Animate
     const clock = new THREE.Clock()
+    renderer.render(scene, camera)
 
     const tick = () =>
     {
-        const elapsedTime = clock.getElapsedTime()
+        // const elapsedTime = clock.getElapsedTime()
 
         // Update controls
-        controls.update()
+        // controls.update()
+        // controls.update( clock.getDelta() );
+
+        const delta = clock.getDelta();
+        // controls.movementSpeed = 0.33 * 1;
+        controls.update( delta );
 
         // Render
         renderer.render(scene, camera)
