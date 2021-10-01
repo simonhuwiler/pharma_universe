@@ -66,25 +66,102 @@
     const oLoader = new OBJLoader();
     // Loader Promise https://redstapler.co/load-multiple-model-three-js-promise/
     oLoader.load('./meshes/asteroid1/10464_Asteroid_v1_Iterations-2.obj', function ( object ) {
-      // object = object.children[1]
+      object = object//.children[1]
       console.log(object)
+
+
+      function ColorLuminance(hex, lum) {
+
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+
+        // convert to decimal and change luminosity
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+          c = parseInt(hex.substr(i*2,2), 16);
+          c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+          rgb += ("00"+c).substr(c.length);
+        }
+
+        return rgb;
+        }
+
+
+      function createRock(size,spreadX,maxWidth,maxHeight,maxDepth){
+        var geometry = new THREE.DodecahedronGeometry(size, 1);
+
+        var vertices = geometry.attributes.position.array;
+
+        for (let i = 0; i < vertices.length; i=i+3) {
+            //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
+            
+            vertices[i] += (0-Math.random()*(size/4));
+            vertices[i + 1]  += (0-Math.random()*(size/4));
+            vertices[i + 2] += (0-Math.random()*(size/4));
+        }
+
+        // geometry.attributes.forEach(function(v){
+        //   v.x += (0-Math.random()*(size/4));
+        //   v.y += (0-Math.random()*(size/4));
+        //   v.z += (0-Math.random()*(size/4));
+        // })
+        var color = '#111111';
+        color = ColorLuminance(color,2+Math.random()*10);
+        console.log(color);
+        let texture = new THREE.MeshStandardMaterial({color:color,
+                                              shading: THREE.FlatShading,
+                                          //   shininess: 0.5,
+                                                  roughness: 0.8,
+                                                  metalness: 1
+                                              });
+
+        let cube = new THREE.Mesh(geometry, texture);
+        cube.castShadow = true;
+        cube.receiveShadow = true;
+        cube.scale.set(1+Math.random()*0.4,1+Math.random()*0.8,1+Math.random()*0.4);
+        //cube.rotation.y = Math.PI/4;
+        //cube.rotation.x = Math.PI/4;
+        var x = spreadX/2-Math.random()*spreadX;
+        var centeredness = 1-(Math.abs(x)/(maxWidth/2));
+        var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
+        var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
+        cube.position.set(x,y,z)
+        cube.r = {};
+        cube.r.x = Math.random() * 0.005;
+        cube.r.y = Math.random() * 0.005;
+        cube.r.z = Math.random() * 0.005;
+        return cube;
+      };      
+
 
       let asteroids = []
       for(let i in data.asteroids)
       {
         // Create Sphere
 
-        const sphere = new THREE.Mesh( geometry, material );
+        // const sphere = new THREE.Mesh( geometry, material );
 
         let planet = data.asteroids[i]
 
+        var maxWidth = 1000;
+        var maxHeight = 200;
+        var maxDepth = 200;
+        let sphere = createRock(5+Math.random()*50,200,maxWidth,300,400)
+
+        // sphere.scale.set(100)
         sphere.position.set(planet.x, planet.y, planet.z)
         // console.log(r_new, x,y, z)
         asteroids.push(sphere)
 
       }
 
+      // const mergedGeometry = BufferGeometryUtils.mergeGeometries(asteroids, false);
       asteroids.forEach(p => scene.add(p))
+      // scene.add(mergedGeometry)
       console.log("ye2s")
     });
     
