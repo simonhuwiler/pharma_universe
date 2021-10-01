@@ -143,6 +143,8 @@
       {
         // Create Sphere
 
+        // https://codepen.io/Divyz/pen/VPrZMy
+
         // const sphere = new THREE.Mesh( geometry, material );
 
         let planet = data.asteroids[i]
