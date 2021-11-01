@@ -66,65 +66,107 @@
     var c = 0
     for(let i in data.asteroids)
     {
-      // Create Sphere
+
+     // Create Sphere
 
       // https://codepen.io/Divyz/pen/VPrZMy
 
-      const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+      const material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
       // const material = new THREE.MeshPhongMaterial( 0x00ff00  );
-      const geometry = new THREE.SphereGeometry( 2000000, 32, 16 );
-      const sphere = new THREE.Mesh( geometry, material );
-      let planet = data.asteroids[i]
-      sphere.position.set(planet.x, planet.y, planet.z)
+      // // const geometry = new THREE.SphereBufferGeometry( 2000000, 32, 16 );
+      // // const sphere = new THREE.Mesh( geometry, material );
+      // // let planet = data.asteroids[i]
+      // // sphere.position.set(planet.x, planet.y, planet.z)
 
 
 
 
-      // var geometry = new THREE.DodecahedronGeometry(2000000, 0);
-      // geometry.vertices.forEach(function(v){
-      //   v.x += (0-Math.random()*(size/4));
-      //   v.y += (0-Math.random()*(size/4));
-      //   v.z += (0-Math.random()*(size/4));
-      // })
-      // var color = '#111111';
-      // color = ColorLuminance(color,2+Math.random()*10);
-      // console.log(color);
-      // var texture2 = new THREE.MeshStandardMaterial({color:0x00ff00,
-      //                                       // shading: THREE.FlatShading,
-      //                                   //   shininess: 0.5,
-      //                                           // roughness: 0.8,
-      //                                           // metalness: 1
-      //                                       });
-      // texture2.flatShading = true
-
-      // var cube = new THREE.Mesh(geometry, texture2);
-      // cube.castShadow = true;
-      // cube.receiveShadow = true;
-      // cube.scale.set(10, 10, 10);
-      //cube.rotation.y = Math.PI/4;
-      //cube.rotation.x = Math.PI/4;
-      // var x = spreadX/2-Math.random()*spreadX;
-      // var centeredness = 1-(Math.abs(x)/(maxWidth/2));
-      // var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
-      // var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
-      // cube.position.set(x,y,z)
-      // cube.r = {};
-      // cube.r.x = Math.random() * 0.005;
-      // cube.r.y = Math.random() * 0.005;
-      // cube.r.z = Math.random() * 0.005;
-
-      // cube.position.set(planet.x, planet.y, planet.z)
-      // cube.position.needsUpdate = true
-      // asteroids.push(cube)
+      var size = 10
+      var geometry = new THREE.DodecahedronBufferGeometry(size, 1);
+      var vertices = geometry.attributes.position.array;
+      // var vertices = geometry.getAttribute( 'position' );
+      for (let i = 0; i < vertices.length; i=i+3) {
+          //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
+          
+          vertices[i] += (0-Math.random()*(size/4));
+          vertices[i + 1] += (0-Math.random()*(size/4));
+          vertices[i + 2] += (0-Math.random()*(size/4));
+      }     
+      geometry.attributes.position.needsUpdate = true
+      
+      const mesh = new THREE.Mesh( geometry, material );
+      let p = data.asteroids[i]
+      mesh.position.set(p.x, p.y, p.z)
+      var scale = 200000
+      mesh.scale.set(scale, scale, scale)
 
 
-      // sphere.scale.set(10,10,10)
 
-      asteroids.push(sphere)
-      sphere.needsUpdate = true
+
+        // var vertices = geometry.attributes.position.array;
+        // // var vertices = geometry.getAttribute( 'position' );
+        // for (let i = 0; i < vertices.length; i=i+3) {
+        //     //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
+            
+        //     vertices[i] += (0-Math.random()*(size/4));
+        //     vertices[i + 1] += (0-Math.random()*(size/4));
+        //     vertices[i + 2] += (0-Math.random()*(size/4));
+        // }     
+
+        // // geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) ); 
+        // geometry.setAttribute( 'position', vertices, 3 ); 
+        // geometry.computeFaceNormals();
+        // geometry.computeVertexNormals();        
+        // // geometry.needsUpdate = true
+        // geometry.attributes.position.needsUpdate = true
+        
+        // sphere.geometry.computeVertexNormals();
+
+
+      // let planet = data.asteroids[i]
+      // sphere.position.set(planet.x, planet.y, planet.z)
+      // var scale = 200000
+      // sphere.scale.set(scale, scale, scale)
+
+      // // var color = '#111111';
+      // // color = ColorLuminance(color,2+Math.random()*10);
+      // // console.log(color);
+      // // var texture2 = new THREE.MeshStandardMaterial({color:0x00ff00,
+      // //                                       // shading: THREE.FlatShading,
+      // //                                   //   shininess: 0.5,
+      // //                                           // roughness: 0.8,
+      // //                                           // metalness: 1
+      // //                                       });
+      // // texture2.flatShading = true
+
+      // // var cube = new THREE.Mesh(geometry, texture2);
+      // // cube.castShadow = true;
+      // // cube.receiveShadow = true;
+      // // cube.scale.set(10, 10, 10);
+      // //cube.rotation.y = Math.PI/4;
+      // //cube.rotation.x = Math.PI/4;
+      // // var x = spreadX/2-Math.random()*spreadX;
+      // // var centeredness = 1-(Math.abs(x)/(maxWidth/2));
+      // // var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
+      // // var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
+      // // cube.position.set(x,y,z)
+      // // cube.r = {};
+      // // cube.r.x = Math.random() * 0.005;
+      // // cube.r.y = Math.random() * 0.005;
+      // // cube.r.z = Math.random() * 0.005;
+
+      // // cube.position.set(planet.x, planet.y, planet.z)
+      // // cube.position.needsUpdate = true
+      // // asteroids.push(cube)
+
+
+      // // sphere.scale.set(10,10,10)
+
+      asteroids.push(mesh)
+      // sphere.needsUpdate = true
 
       c++
-      // if(c > 3000) break
+      if(c > 5000) break
 
     }
 
@@ -391,7 +433,7 @@
     })
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000000000)
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1000, 1000000000)
     scene.add(camera)
     camera.position.y = data.solarsystem_r / 2
 
