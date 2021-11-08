@@ -3,6 +3,8 @@ Planets made with:
 Asteroids inspired by 
 https://codepen.io/Divyz/pen/VPrZMy
 
+Skybox
+https://opengameart.org/content/space-skybox-0
 
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 

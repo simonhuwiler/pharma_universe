@@ -20,68 +20,75 @@
 
     const r_factor = 1
 
-    const materialMoon = new THREE.MeshPhongMaterial( {
-      map: textureLoader.load( "./textures/planets/terrestrial1.png" )
-    } );
-
+    
     // Generate loaders
     const loaders = []
-    for(let tx in settings.planetTextures)
-    {
-      loaders.push(textureLoader.load(`./textures/planets/${tx}`))
-    }
-
+    settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)));
+    
+    const planets = []
     const texturePromis = Promise.all(loaders, (resolve, reject) => {
-        resolve(texturePromis);
-    }).then(result => {
-      console.log("loaded", result)
-        // result in array of textures
-    }).catch(result => {
-      console.log(result)
-    });
+      resolve(texturePromis);
+    }).then(textures => {
 
-    var planets = []
-    for(let i in data.planets)
-    {
-      let planet = data.planets[i]
+      // Textures Loaded. Create Planets
+      console.log("Load Planets")
 
-      // Create Sphere
-      // const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-      const geometry = new THREE.SphereGeometry( planet.size, 32, 16 );
-      const sphere = new THREE.Mesh( geometry, materialMoon );
+      for(let i in data.planets)
+      {
+        let planet = data.planets[i]
 
-      sphere.position.set(planet.x, planet.y, planet.z)
-      planets.push(sphere)
+        // Create Material
+        // const materialPlanet = new THREE.MeshPhongMaterial({map: textures[0]});
+        const materialPlanet = new THREE.MeshPhongMaterial({map: textures[i]});       
 
-    }
+        // Create Sphere
+        const geometry = new THREE.SphereGeometry( planet.size, 32, 16 );
+        const sphere = new THREE.Mesh( geometry, materialPlanet );
 
+        sphere.position.set(planet.x, planet.y, planet.z)
+        planets.push(sphere)
+        scene.add(sphere)
+
+      }      
+      
+    })
 
     var color = '#edc99d';
     // color = ColorLuminance(color,2+Math.random()*10);
     var material = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
-    material.flatShading = true    
+    material.flatShading = true
+    // const materialMoon = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/planets/moon.jpg`)});
 
     let asteroids = []
     var c = 0
     for(let i in data.asteroids)
     {
-
-      // https://codepen.io/Divyz/pen/VPrZMy
-
-      var size = 10
-      var geometry = new AsteroidGeometry(size, 1);
-
-      
-      const mesh = new THREE.Mesh( geometry, material );
       let p = data.asteroids[i]
+      var size = 10
+
+
+      if(p['type'] == 'moonX')
+      {
+        // Create Moon
+        const geometry = new THREE.SphereGeometry( size, 32, 16 );
+        var mesh = new THREE.Mesh( geometry, materialMoon );        
+      }
+      else
+      {
+        // Generate Astroid
+        // https://codepen.io/Divyz/pen/VPrZMy
+        var geometry = new AsteroidGeometry(size, 1);
+        var mesh = new THREE.Mesh( geometry, material ); 
+      }
+
       mesh.position.set(p.x, p.y, p.z)
       var scale = 200000
-      mesh.scale.set(scale, scale, scale)
+      mesh.scale.set(scale, scale, scale)       
 
       asteroids.push(mesh)
 
       c++
-      if(c > 5000) break
+      // if(c > 5000) break
 
     }
 
@@ -95,7 +102,6 @@
     light.position.y = data.solarsystem_r / 2
     scene.add( light );
 
-    planets.forEach(p => scene.add(p))
 
 
     // Sizes
@@ -125,15 +131,7 @@
     camera.position.y = data.solarsystem_r / 2
 
     const loader = new THREE.CubeTextureLoader();
-    // https://opengameart.org/content/ulukais-space-skyboxes
     const texture = loader.load([
-      // './textures/skybox/corona_ft.png',
-      // './textures/skybox/corona_bk.png',
-      // './textures/skybox/corona_up.png',
-      // './textures/skybox/corona_dn.png',
-      // './textures/skybox/corona_rt.png',
-      // './textures/skybox/corona_lf.png',
-      
       // https://opengameart.org/content/space-skybox-0
       './textures/skybox/1.png',
       './textures/skybox/3.png',
@@ -141,20 +139,6 @@
       './textures/skybox/6.png',
       './textures/skybox/2.png',
       './textures/skybox/4.png',
-      
-      // './textures/skybox/2.png',
-      // './textures/skybox/3.png',
-      // './textures/skybox/4.png',
-      // './textures/skybox/5.png',
-      // './textures/skybox/6.png',
-      
-      // './textures/skybox/redeclipse_ft.png',
-      // './textures/skybox/redeclipse_bk.png',
-      // './textures/skybox/redeclipse_up.png',
-      // './textures/skybox/redeclipse_dn.png',
-      // './textures/skybox/redeclipse_rt.png',
-      // './textures/skybox/redeclipse_lf.png',
-      
     ]);
     scene.background = texture;
 
@@ -182,6 +166,7 @@
 
     let controls = new FlyControls( camera, renderer.domElement );
     controls.movementSpeed = 10000000;
+    controls.movementSpeed = 100000000;
     controls.domElement = renderer.domElement;
     controls.rollSpeed = Math.PI / 12;
     controls.autoForward = false;
@@ -200,6 +185,13 @@
         // controls.update( clock.getDelta() );
 
         const delta = clock.getDelta();
+
+        // Rotate Planets
+        planets.forEach(p => p.rotation.y += 0.02 * delta)
+        
+        // Rotate Asteroids
+        // asteroids.forEach(p => p.rotation.y += 0.2 * delta)
+
         // controls.movementSpeed = 0.33 * 1;
         controls.update( delta );
 
