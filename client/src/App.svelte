@@ -1,4 +1,18 @@
 <script>
+
+
+  /*
+  TODO
+
+  Lightnigh geht von Planet rechts oben nach links unten. Kaum zu sehen. Fixen.
+  Achtung: Controller ist ausgeschaltet (keine Bewegung möglich)
+  Ebenfalls Asteroiden und Meshes für Planeten
+
+  */
+
+
+
+
 	// import './style.css'
   import { onMount } from 'svelte';
   import * as THREE from 'three'
@@ -11,8 +25,15 @@
   import data from './data'
   import settings from './settings'
 
+  import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js';
+  import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
+  import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
+
+    const groupClickable = new THREE.Group();
 
     // Scene
     const scene = new THREE.Scene()
@@ -38,8 +59,8 @@
         let planet = data.planets[i]
 
         // Create Material
-        // const materialPlanet = new THREE.MeshPhongMaterial({map: textures[0]});
-        const materialPlanet = new THREE.MeshPhongMaterial({map: textures[i]});       
+        const materialPlanet = new THREE.MeshPhongMaterial({map: textures[0]});
+        // const materialPlanet = new THREE.MeshPhongMaterial({map: textures[i]});       
 
         // Create Sphere
         const geometry = new THREE.SphereGeometry( planet.size, 32, 16 );
@@ -47,11 +68,13 @@
 
         sphere.position.set(planet.x, planet.y, planet.z)
         planets.push(sphere)
-        scene.add(sphere)
+        groupClickable.add(sphere)
 
       }      
       
     })
+
+    scene.add(groupClickable)
 
     var color = '#edc99d';
     // color = ColorLuminance(color,2+Math.random()*10);
@@ -92,7 +115,7 @@
 
     }
 
-    asteroids.forEach(p => scene.add(p))
+    // asteroids.forEach(p => scene.add(p))
   
    
 
@@ -101,8 +124,6 @@
     //dirLight.position.set( 0, data.solarsystem_r / 2, 0 ).normalize();
     light.position.y = data.solarsystem_r / 2
     scene.add( light );
-
-
 
     // Sizes
     const sizes = {
@@ -176,6 +197,8 @@
     const clock = new THREE.Clock()
     renderer.render(scene, camera)
 
+    var currentTime = 0;
+
     const tick = () =>
     {
         // const elapsedTime = clock.getElapsedTime()
@@ -192,18 +215,183 @@
         // Rotate Asteroids
         // asteroids.forEach(p => p.rotation.y += 0.2 * delta)
 
-        // controls.movementSpeed = 0.33 * 1;
-        controls.update( delta );
+        // XXX Wieder auskommentieren
+        // controls.update( delta );
 
         // Render
-        renderer.render(scene, camera)
+        // renderer.render(scene, camera)
+
+
+
+        const p1 = new THREE.Vector3(3597000.5284939, 655575323.51362, -802579235.8354956)
+        const p2 = new THREE.Vector3(-386590677, 218750000, -511928790)
+
+        lightningStrike.rayParameters.sourceOffset.copy( p1 );
+        // lightningStrike.rayParameters.sourceOffset.y -= coneHeightHalf;
+        lightningStrike.rayParameters.destOffset.copy( p2 );
+        // lightningStrike.rayParameters.destOffset.y += coneHeightHalf;
+
+        currentTime += 1 * clock.getDelta();
+        lightningStrike.update( currentTime );
+
+
+        // Update point light position to the middle of the ray
+        composer.render();
+
+        // if ( scene.userData.outlineEnabled ) {
+
+        //   composer.render();
+
+        // }	else {
+
+        //   renderer.render( scene, scene.userData.camera );
+
+        // }
+
+
+
+
+
+
 
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
     }
 
-    tick()
+
+    // Raycaster
+    const raycaster = new THREE.Raycaster();
+		const pointer = new THREE.Vector2();
+    canvas.addEventListener('click', e => {
+      pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+      pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+      console.log(pointer)
+      raycaster.setFromCamera( pointer, camera );
+      console.log(groupClickable)
+      const intersects = raycaster.intersectObjects( groupClickable.children );
+      console.log(intersects)
+    }, false);
+
+
+
+
+
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    const composer = new EffectComposer( renderer );
+
+    scene.userData.lightningColor = new THREE.Color( 0xB0FFFF );
+    scene.userData.outlineColor = new THREE.Color( 0x00FFFF );
+
+    scene.userData.lightningMaterial = new THREE.MeshBasicMaterial( { color: scene.userData.lightningColor } );
+    scene.userData.camera = camera
+
+    scene.userData.rayParams = {
+
+      sourceOffset: new THREE.Vector3(),
+      destOffset: new THREE.Vector3(),
+      radius0: 4,
+      radius1: 4,
+      minRadius: 2.5,
+      maxIterations: 7,
+      isEternal: true,
+
+      timeScale: 0.7,
+
+      propagationTimeFactor: 0.05,
+      vanishingTimeFactor: 0.95,
+      subrayPeriod: 3.5,
+      subrayDutyCycle: 0.6,
+      maxSubrayRecursion: 3,
+      ramification: 7,
+      recursionProbability: 0.6,
+
+      roughness: 0.85,
+      straightness: 0.6
+
+    };
+
+    let lightningStrike;
+    let lightningStrikeMesh;
+    const outlineMeshArray = [];
+
+    scene.userData.recreateRay = function () {
+
+      if ( lightningStrikeMesh ) {
+
+        scene.remove( lightningStrikeMesh );
+
+      }
+
+      lightningStrike = new LightningStrike( scene.userData.rayParams );
+      lightningStrikeMesh = new THREE.Mesh( lightningStrike, scene.userData.lightningMaterial );
+
+      outlineMeshArray.length = 0;
+      outlineMeshArray.push( lightningStrikeMesh );
+
+      scene.add( lightningStrikeMesh );
+
+    };
+
+    scene.userData.recreateRay();
+
+    function createOutline( scene, objectsArray, visibleColor ) {
+
+      const outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, scene.userData.camera, objectsArray );
+      outlinePass.edgeStrength = 2.5;
+      outlinePass.edgeGlow = 0.7;
+      outlinePass.edgeThickness = 2.8;
+      outlinePass.visibleEdgeColor = visibleColor;
+      outlinePass.hiddenEdgeColor.set( 0 );
+      composer.addPass( outlinePass );
+
+      scene.userData.outlineEnabled = true;
+
+      return outlinePass;
+
+      }    
+
+    // Compose rendering
+
+    composer.passes = [];
+    composer.addPass( new RenderPass( scene, scene.userData.camera ) );
+    createOutline( scene, outlineMeshArray, scene.userData.outlineColor );
+
+
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    tick()    
+
+
 	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 

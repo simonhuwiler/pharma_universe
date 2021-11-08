@@ -1,10 +1,14 @@
 Planets made with:
+https://www.texturesforplanets.com/
 
 Asteroids inspired by 
 https://codepen.io/Divyz/pen/VPrZMy
 
 Skybox
 https://opengameart.org/content/space-skybox-0
+
+Lightnigh
+https://threejs.org/examples/webgl_lightningstrike.html
 
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 

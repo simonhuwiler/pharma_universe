@@ -1,8 +1,8 @@
-exports.planetTexturesX = [
-    'terrestrial1.png'
+exports.planetTextures = [
+    'moon.jpg'
 ]
 
-exports.planetTextures = [
+exports.planetTexturesX = [
     'volcan1.png',
     'volcan2.png',
     'volcan3.png',
@@ -59,6 +59,8 @@ exports.planetTextures = [
     'oasis8.png',
     'oasis9.png',
     'oasis10.png',
+    'mars1.png',
+    'mars2.png',
     'moon_1024.jpg',
     'moon_1024.jpg',
     'moon_1024.jpg',
