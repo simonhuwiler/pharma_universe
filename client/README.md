@@ -1,3 +1,9 @@
+Planets made with:
+
+Asteroids inspired by 
+https://codepen.io/Divyz/pen/VPrZMy
+
+
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---

@@ -7,7 +7,9 @@
 	// import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
   import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+  import { AsteroidGeometry } from './AsteroidGeometry'
   import data from './data'
+  import settings from './settings'
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -16,33 +18,27 @@
     const scene = new THREE.Scene()
     const textureLoader = new THREE.TextureLoader();
 
-    // Object
-    // const geometry = new THREE.BoxGeometry(1, 1, 1)
-
-    // const geometry = new THREE.BufferGeometry()
-
-    // const count = 500;
-    // const positionArray = new Float32Array(count * 3 * 3)
-
-    // for(let i = 0; i < count * 3 * 3; i++)
-    // {
-    //     positionArray[i] = (Math.random() - 0.5) * 4
-    // }
-
-    // const positionsAttribute = new THREE.BufferAttribute(positionArray, 3)
-
-    // geometry.setAttribute('position', positionsAttribute)
-
-
-    // const material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-    // const mesh = new THREE.Mesh(geometry, material)
-    // scene.add(mesh)
-
     const r_factor = 1
 
     const materialMoon = new THREE.MeshPhongMaterial( {
-      map: textureLoader.load( "./textures/moon_1024.jpg" )
+      map: textureLoader.load( "./textures/planets/terrestrial1.png" )
     } );
+
+    // Generate loaders
+    const loaders = []
+    for(let tx in settings.planetTextures)
+    {
+      loaders.push(textureLoader.load(`./textures/planets/${tx}`))
+    }
+
+    const texturePromis = Promise.all(loaders, (resolve, reject) => {
+        resolve(texturePromis);
+    }).then(result => {
+      console.log("loaded", result)
+        // result in array of textures
+    }).catch(result => {
+      console.log(result)
+    });
 
     var planets = []
     for(let i in data.planets)
@@ -60,39 +56,21 @@
     }
 
 
-
+    var color = '#edc99d';
+    // color = ColorLuminance(color,2+Math.random()*10);
+    var material = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
+    material.flatShading = true    
 
     let asteroids = []
     var c = 0
     for(let i in data.asteroids)
     {
 
-     // Create Sphere
-
       // https://codepen.io/Divyz/pen/VPrZMy
 
-      const material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
-      // const material = new THREE.MeshPhongMaterial( 0x00ff00  );
-      // // const geometry = new THREE.SphereBufferGeometry( 2000000, 32, 16 );
-      // // const sphere = new THREE.Mesh( geometry, material );
-      // // let planet = data.asteroids[i]
-      // // sphere.position.set(planet.x, planet.y, planet.z)
-
-
-
-
       var size = 10
-      var geometry = new THREE.DodecahedronBufferGeometry(size, 1);
-      var vertices = geometry.attributes.position.array;
-      // var vertices = geometry.getAttribute( 'position' );
-      for (let i = 0; i < vertices.length; i=i+3) {
-          //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
-          
-          vertices[i] += (0-Math.random()*(size/4));
-          vertices[i + 1] += (0-Math.random()*(size/4));
-          vertices[i + 2] += (0-Math.random()*(size/4));
-      }     
-      geometry.attributes.position.needsUpdate = true
+      var geometry = new AsteroidGeometry(size, 1);
+
       
       const mesh = new THREE.Mesh( geometry, material );
       let p = data.asteroids[i]
@@ -100,307 +78,16 @@
       var scale = 200000
       mesh.scale.set(scale, scale, scale)
 
-
-
-
-        // var vertices = geometry.attributes.position.array;
-        // // var vertices = geometry.getAttribute( 'position' );
-        // for (let i = 0; i < vertices.length; i=i+3) {
-        //     //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
-            
-        //     vertices[i] += (0-Math.random()*(size/4));
-        //     vertices[i + 1] += (0-Math.random()*(size/4));
-        //     vertices[i + 2] += (0-Math.random()*(size/4));
-        // }     
-
-        // // geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) ); 
-        // geometry.setAttribute( 'position', vertices, 3 ); 
-        // geometry.computeFaceNormals();
-        // geometry.computeVertexNormals();        
-        // // geometry.needsUpdate = true
-        // geometry.attributes.position.needsUpdate = true
-        
-        // sphere.geometry.computeVertexNormals();
-
-
-      // let planet = data.asteroids[i]
-      // sphere.position.set(planet.x, planet.y, planet.z)
-      // var scale = 200000
-      // sphere.scale.set(scale, scale, scale)
-
-      // // var color = '#111111';
-      // // color = ColorLuminance(color,2+Math.random()*10);
-      // // console.log(color);
-      // // var texture2 = new THREE.MeshStandardMaterial({color:0x00ff00,
-      // //                                       // shading: THREE.FlatShading,
-      // //                                   //   shininess: 0.5,
-      // //                                           // roughness: 0.8,
-      // //                                           // metalness: 1
-      // //                                       });
-      // // texture2.flatShading = true
-
-      // // var cube = new THREE.Mesh(geometry, texture2);
-      // // cube.castShadow = true;
-      // // cube.receiveShadow = true;
-      // // cube.scale.set(10, 10, 10);
-      // //cube.rotation.y = Math.PI/4;
-      // //cube.rotation.x = Math.PI/4;
-      // // var x = spreadX/2-Math.random()*spreadX;
-      // // var centeredness = 1-(Math.abs(x)/(maxWidth/2));
-      // // var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
-      // // var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
-      // // cube.position.set(x,y,z)
-      // // cube.r = {};
-      // // cube.r.x = Math.random() * 0.005;
-      // // cube.r.y = Math.random() * 0.005;
-      // // cube.r.z = Math.random() * 0.005;
-
-      // // cube.position.set(planet.x, planet.y, planet.z)
-      // // cube.position.needsUpdate = true
-      // // asteroids.push(cube)
-
-
-      // // sphere.scale.set(10,10,10)
-
       asteroids.push(mesh)
-      // sphere.needsUpdate = true
 
       c++
       if(c > 5000) break
 
     }
 
-    // const mergedGeometry = BufferGeometryUtils.mergeGeometries(asteroids, false);
     asteroids.forEach(p => scene.add(p))
-    // scene.add(mergedGeometry)
-    console.log("ye2s", c)
   
-
-
-    // const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
-    // const geometry = new THREE.SphereGeometry( 200000, 32, 16 );
-
-    // const oLoader = new OBJLoader();
-    // // Loader Promise https://redstapler.co/load-multiple-model-three-js-promise/
-    // oLoader.load('./meshes/asteroid1/10464_Asteroid_v1_Iterations-2.obj', function ( object ) {
-    //   object = object//.children[1]
-    //   console.log(object)
-
-
-    //   function ColorLuminance(hex, lum) {
-
-    //     // validate hex string
-    //     hex = String(hex).replace(/[^0-9a-f]/gi, '');
-    //     if (hex.length < 6) {
-    //       hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-    //     }
-    //     lum = lum || 0;
-
-    //     // convert to decimal and change luminosity
-    //     var rgb = "#", c, i;
-    //     for (i = 0; i < 3; i++) {
-    //       c = parseInt(hex.substr(i*2,2), 16);
-    //       c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-    //       rgb += ("00"+c).substr(c.length);
-    //     }
-
-    //     return rgb;
-    //     }
-
-
-    //   function createRock(size,spreadX,maxWidth,maxHeight,maxDepth, position){
-    //     var geometry = new THREE.DodecahedronGeometry(size, 1);
-
-    //     var vertices = geometry.attributes.position.array;
-
-    //     for (let i = 0; i < vertices.length; i=i+3) {
-    //         //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
-            
-    //         vertices[i] += (0-Math.random()*(size/4));
-    //         vertices[i + 1] += (0-Math.random()*(size/4));
-    //         vertices[i + 2] += (0-Math.random()*(size/4));
-    //     }
-
-    //     // geometry.attributes.forEach(function(v){
-    //     //   v.x += (0-Math.random()*(size/4));
-    //     //   v.y += (0-Math.random()*(size/4));
-    //     //   v.z += (0-Math.random()*(size/4));
-    //     // })
-
-    //     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-
-    //     geometry.attributes.position.needsUpdate = true;
-    //     geometry.needsUpdate = true;        
-
-    //     var color = '#111111';
-    //     color = ColorLuminance(color,2+Math.random()*10);
-    //     let texture = new THREE.MeshStandardMaterial({color:color,
-    //                                           // shading: THREE.FlatShading,
-    //                                       //   shininess: 0.5,
-    //                                               roughness: 0.8,
-    //                                               metalness: 1
-    //                                           });
-
-    //     let cube = new THREE.Mesh(geometry, texture);
-    //     cube.castShadow = true;
-    //     cube.receiveShadow = true;
-    //     cube.scale.set(1+Math.random()*0.4,1+Math.random()*0.8,1+Math.random()*0.4);
-    //     //cube.rotation.y = Math.PI/4;
-    //     //cube.rotation.x = Math.PI/4;
-    //     var x = spreadX/2-Math.random()*spreadX;
-    //     var centeredness = 1-(Math.abs(x)/(maxWidth/2));
-    //     var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
-    //     var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
-    //     cube.position.set(position.x,position.y,position.z)
-    //     // cube.r = {};
-    //     // cube.r.x = Math.random() * 0.005;
-    //     // cube.r.y = Math.random() * 0.005;
-    //     // cube.r.z = Math.random() * 0.005;
-    //     return cube;
-    //   };      
-
-
-    //   let asteroids = []
-    //   for(let i in data.asteroids)
-    //   {
-    //     // Create Sphere
-
-    //     // https://codepen.io/Divyz/pen/VPrZMy
-
-    //     // const sphere = new THREE.Mesh( geometry, material );
-
-    //     let planet = data.asteroids[i]
-
-    //     var maxWidth = 100000;
-    //     var maxHeight = 200;
-    //     var maxDepth = 200;
-    //     let sphere = createRock(5+Math.random()*50,200,maxWidth,30000,400, planet)
-
-    //     // sphere.scale.set(100)
-    //     sphere.position.set(planet.x, planet.y, planet.z)
-    //     // console.log(r_new, x,y, z)
-    //     asteroids.push(sphere)
-
-    //   }
-
-    //   // const mergedGeometry = BufferGeometryUtils.mergeGeometries(asteroids, false);
-    //   asteroids.forEach(p => scene.add(p))
-    //   // scene.add(mergedGeometry)
-    //   console.log("ye2s")
-    // });
-
-
-
-
-  
-  
-
-
-// function createAsteroids(){
-//   var maxWidth = 1000;
-//   var maxHeight = 200;
-//   var maxDepth = 200;
-//   var asteroids = [];
-//   for(var i=0;i<7;i++){
-//     asteroids.push(createRock(5+Math.random()*50,200,maxWidth,300,400));
-//   }
-//   for(var i=0;i<30;i++){
-//     asteroids.push(createRock(5+Math.random()*10,500,maxWidth,200,600));
-//   }
-//   for(var i=0;i<160;i++){
-//     asteroids.push(createRock(2+Math.random()*5,1000,maxWidth,150,800));
-//   }
-//   return asteroids;
-// }
-
-
-
-// function createRock(size,spreadX,maxWidth,maxHeight,maxDepth){
-// 	var geometry = new THREE.DodecahedronGeometry(size, 1);
-//   geometry.vertices.forEach(function(v){
-//     v.x += (0-Math.random()*(size/4));
-//     v.y += (0-Math.random()*(size/4));
-//     v.z += (0-Math.random()*(size/4));
-//   })
-//   var color = '#111111';
-//   color = ColorLuminance(color,2+Math.random()*10);
-//   console.log(color);
-// 	texture = new THREE.MeshStandardMaterial({color:color,
-//                                         shading: THREE.FlatShading,
-//                                      //   shininess: 0.5,
-//                                             roughness: 0.8,
-//                                             metalness: 1
-//                                         });
-
-// 	var cube = new THREE.Mesh(geometry, texture);
-//   cube.castShadow = true;
-//   cube.receiveShadow = true;
-//   cube.scale.set(1+Math.random()*0.4,1+Math.random()*0.8,1+Math.random()*0.4);
-// 	//cube.rotation.y = Math.PI/4;
-// 	//cube.rotation.x = Math.PI/4;
-//   var x = spreadX/2-Math.random()*spreadX;
-//   var centeredness = 1-(Math.abs(x)/(maxWidth/2));
-//   var y = (maxHeight/2-Math.random()*maxHeight)*centeredness
-//   var z = (maxDepth/2-Math.random()*maxDepth)*centeredness
-//   cube.position.set(x,y,z)
-//   cube.r = {};
-//   cube.r.x = Math.random() * 0.005;
-//   cube.r.y = Math.random() * 0.005;
-//   cube.r.z = Math.random() * 0.005;
-// 	scene.add(cube);
-//   return cube;
-// };
-
-// //Init our scene
-
-// function ColorLuminance(hex, lum) {
-
-// 	// validate hex string
-// 	hex = String(hex).replace(/[^0-9a-f]/gi, '');
-// 	if (hex.length < 6) {
-// 		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-// 	}
-// 	lum = lum || 0;
-
-// 	// convert to decimal and change luminosity
-// 	var rgb = "#", c, i;
-// 	for (i = 0; i < 3; i++) {
-// 		c = parseInt(hex.substr(i*2,2), 16);
-// 		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-// 		rgb += ("00"+c).substr(c.length);
-// 	}
-
-// 	return rgb;
-// }
-
-// var asteroids = createAsteroids();
-//  var obj = extrude();
-//  var obj = extrude2();
-  
-  // function update () {
-  // //  console.log(1);
-  //   pointCloud.rotation.x -= 0.0001;
-  //   //pointCloud.rotation.y -= 0.001;
-  //   pointCloud.rotation.z -= 0.0001;
-  //   asteroids.forEach(function(obj){
-  //         obj.rotation.x -= obj.r.x;
-  //         obj.rotation.y -= obj.r.y;
-  //         obj.rotation.z -= obj.r.z;
-  //   })
-
-  //   renderer.render(scene, camera);
-  //   requestAnimationFrame(update);
-  // }
-  // requestAnimationFrame(update);
-
-
-
-
-
-
-
-
-    
+   
 
     // let dirLight = new THREE.DirectionalLight( 0xffffff );
     const light = new THREE.PointLight( 0xffffff, 1 );
