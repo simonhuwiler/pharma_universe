@@ -29,6 +29,8 @@
   import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
   import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+  import Connection from './connection'
+
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -222,16 +224,12 @@
         // renderer.render(scene, camera)
 
 
-        const p1 = new THREE.Vector3(75628313, 656250000, -816159479)
-        const p2 = new THREE.Vector3(-386590677, 218750000, -511928790)
-        
-        lightningStrike.rayParameters.sourceOffset.copy( p1 );
-        // lightningStrike.rayParameters.sourceOffset.y -= coneHeightHalf;
-        lightningStrike.rayParameters.destOffset.copy( p2 );
-        // lightningStrike.rayParameters.destOffset.y += coneHeightHalf;
+        // lightningStrike.rayParameters.sourceOffset.copy( p1 );
+        // lightningStrike.rayParameters.destOffset.copy( p2 );
 
         currentTime += 100 * clock.getDelta();
-        lightningStrike.update( currentTime );
+        // lightningStrike.update( currentTime );
+        connections.forEach(c => c.update(currentTime))
 
 
         // Update point light position to the middle of the ray
@@ -264,101 +262,37 @@
     canvas.addEventListener('click', e => {
       pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
       pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-      console.log(pointer)
       raycaster.setFromCamera( pointer, camera );
-      console.log(groupClickable)
       const intersects = raycaster.intersectObjects( groupClickable.children );
-      console.log(intersects)
-    }, false);
-
-
-
-
-
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-    const composer = new EffectComposer( renderer );
-
-    scene.userData.lightningColor = new THREE.Color( 0x00d0ff );
-    scene.userData.outlineColor = new THREE.Color( 0xf00add4 );
-
-    scene.userData.lightningMaterial = new THREE.MeshBasicMaterial( { color: scene.userData.lightningColor } );
-    scene.userData.camera = camera
-
-    scene.userData.rayParams = {
-
-      sourceOffset: new THREE.Vector3(),
-      destOffset: new THREE.Vector3(),
-      radius0: 800000,
-      radius1: 500000,
-      minRadius: 400000,
-      maxIterations: 7,
-      isEternal: true,
-
-      timeScale: 0.1,
-
-      propagationTimeFactor: 0.99,
-      vanishingTimeFactor: 0.95,
-      subrayPeriod: 0,
-      subrayDutyCycle: 0,
-      maxSubrayRecursion: 3,
-      ramification: 7,
-      recursionProbability: 0.6,
-
-      roughness: 1,
-      straightness: 0.9
-
-    };
-
-    let lightningStrike;
-    let lightningStrikeMesh;
-    const outlineMeshArray = [];
-
-    scene.userData.recreateRay = function () {
-
-      if ( lightningStrikeMesh ) {
-
-        scene.remove( lightningStrikeMesh );
-
+      
+      if(intersects.length > 0)
+      {
+        console.log(intersects)
+        
+        removeConnections()
+        const p1 = new THREE.Vector3(75628313, 656250000, -816159479)
+        addConnection(p1, intersects[0].object.position)
       }
 
-      lightningStrike = new LightningStrike( scene.userData.rayParams );
-      lightningStrikeMesh = new THREE.Mesh( lightningStrike, scene.userData.lightningMaterial );
+    }, false);
 
-      outlineMeshArray.length = 0;
-      outlineMeshArray.push( lightningStrikeMesh );
+    // Create Composer
+    const composer = new EffectComposer( renderer )
+    composer.addPass(new RenderPass( scene, camera ))
 
-      scene.add( lightningStrikeMesh );
+    // Create Connections
+    var connections = []
 
-    };
+    const addConnection = (p1, p2) => {
+      connections.push(new Connection(scene, camera, composer, p1, p2))
+    }
 
-    scene.userData.recreateRay();
+    const removeConnections = () => {
+      connections.forEach(c => c.remove())
+      connections = []
+    }
 
-    function createOutline( scene, objectsArray, visibleColor ) {
-
-      const outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, scene.userData.camera, objectsArray );
-      outlinePass.edgeStrength = 2.5;
-      outlinePass.edgeGlow = 1.7;
-      outlinePass.edgeThickness = 0.8;
-      outlinePass.visibleEdgeColor = visibleColor;
-      outlinePass.hiddenEdgeColor.set( 0 );
-      composer.addPass( outlinePass );
-
-      scene.userData.outlineEnabled = true;
-
-      return outlinePass;
-
-      }    
-
-    // Compose rendering
-
-    composer.passes = [];
-    composer.addPass( new RenderPass( scene, scene.userData.camera ) );
-    createOutline( scene, outlineMeshArray, scene.userData.outlineColor );
-
-
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
+    // Start rendering
     tick()    
 
 

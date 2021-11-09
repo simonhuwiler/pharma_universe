@@ -10,6 +10,9 @@ https://opengameart.org/content/space-skybox-0
 Lightnigh
 https://threejs.org/examples/webgl_lightningstrike.html
 
+
+GLOW?? http://stemkoski.github.io/Three.js/Atmosphere.html
+
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
