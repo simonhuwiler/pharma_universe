@@ -216,22 +216,21 @@
         // asteroids.forEach(p => p.rotation.y += 0.2 * delta)
 
         // XXX Wieder auskommentieren
-        // controls.update( delta );
+        controls.update( delta );
 
         // Render
         // renderer.render(scene, camera)
 
 
-
-        const p1 = new THREE.Vector3(3597000.5284939, 655575323.51362, -802579235.8354956)
+        const p1 = new THREE.Vector3(75628313, 656250000, -816159479)
         const p2 = new THREE.Vector3(-386590677, 218750000, -511928790)
-
+        
         lightningStrike.rayParameters.sourceOffset.copy( p1 );
         // lightningStrike.rayParameters.sourceOffset.y -= coneHeightHalf;
         lightningStrike.rayParameters.destOffset.copy( p2 );
         // lightningStrike.rayParameters.destOffset.y += coneHeightHalf;
 
-        currentTime += 1 * clock.getDelta();
+        currentTime += 100 * clock.getDelta();
         lightningStrike.update( currentTime );
 
 
@@ -280,8 +279,8 @@
 
     const composer = new EffectComposer( renderer );
 
-    scene.userData.lightningColor = new THREE.Color( 0xB0FFFF );
-    scene.userData.outlineColor = new THREE.Color( 0x00FFFF );
+    scene.userData.lightningColor = new THREE.Color( 0x00d0ff );
+    scene.userData.outlineColor = new THREE.Color( 0xf00add4 );
 
     scene.userData.lightningMaterial = new THREE.MeshBasicMaterial( { color: scene.userData.lightningColor } );
     scene.userData.camera = camera
@@ -290,24 +289,24 @@
 
       sourceOffset: new THREE.Vector3(),
       destOffset: new THREE.Vector3(),
-      radius0: 4,
-      radius1: 4,
-      minRadius: 2.5,
+      radius0: 800000,
+      radius1: 500000,
+      minRadius: 400000,
       maxIterations: 7,
       isEternal: true,
 
-      timeScale: 0.7,
+      timeScale: 0.1,
 
-      propagationTimeFactor: 0.05,
+      propagationTimeFactor: 0.99,
       vanishingTimeFactor: 0.95,
-      subrayPeriod: 3.5,
-      subrayDutyCycle: 0.6,
+      subrayPeriod: 0,
+      subrayDutyCycle: 0,
       maxSubrayRecursion: 3,
       ramification: 7,
       recursionProbability: 0.6,
 
-      roughness: 0.85,
-      straightness: 0.6
+      roughness: 1,
+      straightness: 0.9
 
     };
 
@@ -339,8 +338,8 @@
 
       const outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, scene.userData.camera, objectsArray );
       outlinePass.edgeStrength = 2.5;
-      outlinePass.edgeGlow = 0.7;
-      outlinePass.edgeThickness = 2.8;
+      outlinePass.edgeGlow = 1.7;
+      outlinePass.edgeThickness = 0.8;
       outlinePass.visibleEdgeColor = visibleColor;
       outlinePass.hiddenEdgeColor.set( 0 );
       composer.addPass( outlinePass );
