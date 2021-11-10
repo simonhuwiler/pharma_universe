@@ -235,6 +235,7 @@
         // Update point light position to the middle of the ray
         composer.render();
 
+  
         // if ( scene.userData.outlineEnabled ) {
 
         //   composer.render();
@@ -292,6 +293,9 @@
       connections = []
     }
 
+    // Create Frustum to detect object in view
+    // Nearby https://github.com/oguzeroglu/Nearby
+    // Text https://seregpie.github.io/aframe-text-sprite/
     // Start rendering
     tick()    
 
