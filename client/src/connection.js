@@ -15,30 +15,32 @@ class Connection {
       this.outlineColor = new THREE.Color( 0xf00add4 );
   
       this.lightningMaterial = new THREE.MeshBasicMaterial( { color: this.lightningColor } );
+      this.lightningMaterial.transparent = true
+      this.lightningMaterial.opacity = 0.6
       this.camera = camera
   
       let rayParams = {
   
         sourceOffset: new THREE.Vector3(),
         destOffset: new THREE.Vector3(),
-        radius0: 800000,
-        radius1: 500000,
-        minRadius: 400000,
-        maxIterations: 7,
+        radius0: 50000,
+        radius1: 50000,
+        minRadius: 50000,
+        maxIterations: 6,
         isEternal: true,
   
-        timeScale: 0.1,
+        timeScale: 0,
   
         propagationTimeFactor: 0.99,
         vanishingTimeFactor: 0.95,
         subrayPeriod: 0,
         subrayDutyCycle: 0,
-        maxSubrayRecursion: 3,
-        ramification: 7,
-        recursionProbability: 0.6,
+        maxSubrayRecursion: 0,
+        ramification: 0,
+        recursionProbability: 0,
   
         roughness: 1,
-        straightness: 0.9
+        straightness: 0.95
   
       };
   
@@ -60,7 +62,7 @@ class Connection {
       this.outlinePass.edgeThickness = 0.8;
       this.outlinePass.visibleEdgeColor = this.outlineColor;
       this.outlinePass.hiddenEdgeColor.set( 0 );
-      this.composer.addPass( this.outlinePass );
+      // this.composer.addPass( this.outlinePass );
 
       // Add Direction
       this.lightningStrike.rayParameters.sourceOffset.copy( p1 );
@@ -70,7 +72,7 @@ class Connection {
 
     update(currentTime)
     {
-      this.lightningStrike.update( currentTime );
+      this.lightningStrike.update( 0 );
     }
 
     remove()
