@@ -3,6 +3,10 @@ import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.j
 import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
 
+const lightningMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( 0x00d0ff ) } );
+lightningMaterial.transparent = true
+lightningMaterial.opacity = 0.6
+
 class Connection {
     constructor(scene, camera, composer, p1, p2) {
 
@@ -11,12 +15,9 @@ class Connection {
       this.composer = composer
 
 
-      this.lightningColor = new THREE.Color( 0x00d0ff );
-      this.outlineColor = new THREE.Color( 0xf00add4 );
+      // this.lightningColor = new THREE.Color( 0x00d0ff );
+      // this.outlineColor = new THREE.Color( 0xf00add4 );
   
-      this.lightningMaterial = new THREE.MeshBasicMaterial( { color: this.lightningColor } );
-      this.lightningMaterial.transparent = true
-      this.lightningMaterial.opacity = 0.6
       this.camera = camera
   
       let rayParams = {
@@ -46,7 +47,7 @@ class Connection {
 
       // Create Ray
       this.lightningStrike = new LightningStrike( rayParams );
-      this.lightningStrikeMesh = new THREE.Mesh( this.lightningStrike, this.lightningMaterial );
+      this.lightningStrikeMesh = new THREE.Mesh( this.lightningStrike, lightningMaterial );
 
       // this.outlineMeshArray.length = 0;
       // this.outlineMeshArray.push( this.lightningStrikeMesh );
