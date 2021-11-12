@@ -40,6 +40,7 @@
     height: 15px;
     overflow: hidden;
     text-align: center;
+    font-size: 0.9em;
   }
   
   .label.asteroid

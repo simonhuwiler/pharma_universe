@@ -308,23 +308,30 @@
       
       if(intersects.length > 0)
       {
-        let active = intersects[0].object.userData
+        let active = intersects[0].object
         console.log(active)
-        removeConnections()
 
-        if(active.type == 'planet') var planets = data.asteroids.filter(p => p.from.includes(active.id))
-        else var planets = data.planets.filter(p => active.from.includes(p.id))
-
-        const source = intersects[0].object.position
-
-        planets.forEach(p => {
-          addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
-        })
-        connections.forEach(c => c.update(0))
+        setTimeout(() => addConnections(active), 0)
         
+        console.log("Done")
       }
 
     }, false);
+
+    function addConnections(active)
+    {
+      removeConnections()
+
+      if(active.userData.type == 'planet') var planets = data.asteroids.filter(p => p.from.includes(active.userData.id))
+      else var planets = data.planets.filter(p => active.userData.from.includes(p.id))
+
+      const source = active.position
+
+      planets.forEach(p => {
+        addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
+      })
+      connections.forEach(c => c.update(0))
+    }
 
     // Create Composer
     const composer = new EffectComposer( renderer )
@@ -342,10 +349,6 @@
       connections = []
     }
 
-    // Create Frustum to detect object in view
-    // Nearby https://github.com/oguzeroglu/Nearby
-    // Text https://seregpie.github.io/aframe-text-sprite/
-    // Start rendering
     tick()    
 
 

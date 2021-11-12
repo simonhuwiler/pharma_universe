@@ -48,18 +48,18 @@ class Connection {
       this.lightningStrike = new LightningStrike( rayParams );
       this.lightningStrikeMesh = new THREE.Mesh( this.lightningStrike, this.lightningMaterial );
 
-      this.outlineMeshArray.length = 0;
-      this.outlineMeshArray.push( this.lightningStrikeMesh );
+      // this.outlineMeshArray.length = 0;
+      // this.outlineMeshArray.push( this.lightningStrikeMesh );
 
       scene.add( this.lightningStrikeMesh );
       
       // Create Outline
-      this.outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), this.scene, this.camera, this.outlineMeshArray );
-      this.outlinePass.edgeStrength = 2.5;
-      this.outlinePass.edgeGlow = 1.7;
-      this.outlinePass.edgeThickness = 0.8;
-      this.outlinePass.visibleEdgeColor = this.outlineColor;
-      this.outlinePass.hiddenEdgeColor.set( 0 );
+      // this.outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), this.scene, this.camera, this.outlineMeshArray );
+      // this.outlinePass.edgeStrength = 2.5;
+      // this.outlinePass.edgeGlow = 1.7;
+      // this.outlinePass.edgeThickness = 0.8;
+      // this.outlinePass.visibleEdgeColor = this.outlineColor;
+      // this.outlinePass.hiddenEdgeColor.set( 0 );
       // this.composer.addPass( this.outlinePass );
 
       // Add Direction
