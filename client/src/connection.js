@@ -29,14 +29,12 @@ class Connection {
         maxIterations: 6,
         isEternal: true,
   
-        timeScale: 0,
-  
         propagationTimeFactor: 0.99,
         vanishingTimeFactor: 0.95,
-        subrayPeriod: 0,
+        subrayPeriod: 0.5,
         subrayDutyCycle: 0,
-        maxSubrayRecursion: 0,
-        ramification: 0,
+        maxSubrayRecursion: 4,
+        ramification: 3,
         recursionProbability: 0,
   
         roughness: 1,
@@ -72,7 +70,7 @@ class Connection {
 
     update(currentTime)
     {
-      this.lightningStrike.update( 0 );
+      this.lightningStrike.update( currentTime );
     }
 
     remove()

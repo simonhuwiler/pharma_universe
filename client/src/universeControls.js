@@ -70,7 +70,7 @@ class FlyControls extends EventDispatcher {
                 }
 				case 'KeyS': {
                     this.moveState.back = 1;
-                    // this.damping = 1
+                    this.damping = -1
                     break;
                 }
 
@@ -215,7 +215,7 @@ class FlyControls extends EventDispatcher {
 
 			}
             
-            if(this.damping > 0 && (!this.moveState.forward || !this.moveState.back))
+            if(Math.abs(this.damping) > 0 && (!this.moveState.forward || !this.moveState.back))
               this.updateMovementVector()
 
 		};
@@ -223,10 +223,10 @@ class FlyControls extends EventDispatcher {
 		this.updateMovementVector = function () {
 
 			var forward = ( this.moveState.forward || ( this.autoForward && ! this.moveState.back ) ) ? 1 : 0;
-            if(!this.moveState.forward && !this.moveState.back && (this.damping > 0))
+            if(!this.moveState.forward && !this.moveState.back && (Math.abs(this.damping) > 0))
             {
                 forward = this.damping
-                if(forward <= 0.05)
+                if(Math.abs(forward) <= 0.05)
                 {
                     forward = 0
                     this.damping = 0
@@ -237,9 +237,9 @@ class FlyControls extends EventDispatcher {
 			this.moveVector.y = ( - this.moveState.down + this.moveState.up );
 			this.moveVector.z = ( - forward + this.moveState.back );
 
-            if (!this.moveState.forward && !this.moveState.back)
+            if (!this.moveState.forward && !this.moveState.back && Math.abs(this.damping) > 0)
             {
-              this.damping = this.damping - 0.05
+              this.damping = this.damping > 0 ? this.damping - 0.05 : this.damping + 0.05
             }
 
 			//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );

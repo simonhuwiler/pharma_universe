@@ -203,10 +203,16 @@
 
         controls.update( delta );
 
-        currentTime += 100 * clock.getDelta();
+        // currentTime += 100 * clock.getDelta();
         // connections.forEach(c => c.update(currentTime))
 
         composer.render();
+
+        // Leave Universe?
+        if(Math.max(Math.abs(camera.position.x), Math.abs(camera.position.y), Math.abs(camera.position.z)) > data.solarsystem_r)
+        {
+          console.log("Leaving Universe!")
+        }
 
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
@@ -236,7 +242,7 @@
         planets.forEach(p => {
           addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
         })
-        connections.forEach(c => c.update(currentTime))
+        connections.forEach(c => c.update(0))
         
       }
 
