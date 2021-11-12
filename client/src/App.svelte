@@ -1,18 +1,5 @@
 <script>
 
-
-  /*
-  TODO
-
-  Lightnigh geht von Planet rechts oben nach links unten. Kaum zu sehen. Fixen.
-  Achtung: Controller ist ausgeschaltet (keine Bewegung möglich)
-  Ebenfalls Asteroiden und Meshes für Planeten
-
-  */
-
-
-
-
 	// import './style.css'
   import { onMount } from 'svelte';
   import * as THREE from 'three'
@@ -20,18 +7,25 @@
   // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
 	// import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
   // import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
-  import { FlyControls } from './universeControls';
-  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-  import { AsteroidGeometry } from './AsteroidGeometry'
-  import data from './data'
-  import settings from './settings'
-
   import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js';
   import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
   import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+
+  import { FlyControls } from './universeControls';
+  import { AsteroidGeometry } from './AsteroidGeometry'
+  import Nearby from './nearby'
+
+  import Hud from './Hud.svelte'
+
+  import data from './data'
+  import settings from './settings'
+
+ 
   import Connection from './connection'
 
+  let huds = []
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -46,6 +40,9 @@
     const loaders = []
     settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)));
     
+    const nearbyFactor = 100000000
+    const nearbyAsteroids = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor);
+    const nearbyPlanets = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r);
     const planets = []
     const texturePromis = Promise.all(loaders, (resolve, reject) => {
       resolve(texturePromis);
@@ -63,18 +60,27 @@
         // const materialPlanet = new THREE.MeshPhongMaterial({map: textures[i]});       
 
         // Create Sphere
-        const geometry = new THREE.SphereGeometry( planet.size, 32, 16 );
+        const geometry = new THREE.SphereGeometry( planet.size, 64, 64 );
         const sphere = new THREE.Mesh( geometry, materialPlanet );
 
         sphere.userData.type = 'planet'
         sphere.userData.id = planet.id
         sphere.userData.name = planet.name
+        sphere.userData.i = i //REMOVE
 
         sphere.position.set(planet.x, planet.y, planet.z)
         planets.push(sphere)
         groupClickable.add(sphere)
 
-      }      
+        // Add Nearby
+        var box = nearbyPlanets.createBox(
+          planet.x, planet.y, planet.z,
+          planet.size, planet.size, planet.size
+        );
+        var object = nearbyPlanets.createObject(sphere, box);
+        nearbyPlanets.insert(object);
+
+      }
       
     })
 
@@ -101,6 +107,14 @@
       mesh.userData.name = p.name
 
       asteroids.push(mesh)
+
+      // Add Nearby
+      var box = nearbyAsteroids.createBox(
+        p.x, p.y, p.z,
+        p.size, p.size, p.size
+      );
+      var object = nearbyAsteroids.createObject(mesh, box);
+      nearbyAsteroids.insert(object);      
 
       c++
       // if(c > 5000) break
@@ -187,7 +201,7 @@
 
     // Animate
     const clock = new THREE.Clock()
-    renderer.render(scene, camera)
+    // composer.render(scene, camera)
 
     var currentTime = 0;
 
@@ -214,6 +228,70 @@
           console.log("Leaving Universe!")
         }
 
+        if(planets.length > 0)
+        {
+          var pos = planets[26].position.clone();
+          
+          // console.log(pos.x, pos.y)
+          if(pos.z < 1)
+          {
+            // huds = [{top: pos.y, left: pos.x}];
+            // document.querySelector('.circle').style['left'] = pos.x + 'px';
+            // document.querySelector('.circle').style['top'] = pos.y + 'px';
+          }
+          
+        }
+
+        const addNearbies = (nearbyMeshes, max, type, results) => {
+
+          // Get all nearby Object
+          var nearbyMeshes = [...nearbyMeshes.keys()]
+
+          // Now calculate distance to each Object
+          for(var i in nearbyMeshes)
+          {
+            const mesh = nearbyMeshes[i].id
+            mesh.userData.distance = camera.position.distanceTo(mesh.position)
+          }
+
+          // Now sort by distance
+          nearbyMeshes.sort((a, b) => a.id.userData.distance > b.id.userData.distance ? 1 : -1)
+
+          var i = 0;
+          for(let m in nearbyMeshes)
+          {
+            i++
+            const mesh = nearbyMeshes[m].id
+            var pos = mesh.position.clone()
+            pos.project(camera);
+            if(pos.z >= 1) continue
+
+            pos.x = ( pos.x * sizes.width / 2 ) + sizes.width / 2;
+            pos.y = - ( pos.y * sizes.height / 2 ) + sizes.height / 2;
+
+            if(pos.x < 0 || pos.x > sizes.width || pos.y < 0 || pos.y >= sizes.height) continue
+
+            results.push({
+              top: pos.y,
+              left: pos.x,
+              distance: Math.max(100 - Math.round(100 / nearbyFactor * mesh.userData.distance), 0),
+              label: mesh.userData.name,
+              type: type
+            });
+            if(i >= max) break
+          }          
+        }
+
+        // Nearby
+        const localhuds = []
+        var nearresultAsteroids = nearbyAsteroids.query(camera.position.x, camera.position.y, camera.position.z);
+        var rearresultPlanets = nearbyPlanets.query(camera.position.x, camera.position.y, camera.position.z);
+
+        addNearbies(nearresultAsteroids, 6, 'asteroid', localhuds)
+        addNearbies(rearresultPlanets, 10, 'planet', localhuds)
+
+        huds = localhuds
+
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
     }
@@ -231,7 +309,7 @@
       if(intersects.length > 0)
       {
         let active = intersects[0].object.userData
-        console.log(active.name)
+        console.log(active)
         removeConnections()
 
         if(active.type == 'planet') var planets = data.asteroids.filter(p => p.from.includes(active.id))
@@ -277,33 +355,20 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <main>
+  <div class='hud'>
+    {#each huds as h}
+      <Hud
+      top={h.top}
+      left={h.left}
+      distance={h.distance}
+      label={h.label}
+      type={h.type}  
+    />
+    {/each}
+  </div>
 	<canvas class="webgl"></canvas>
 </main>
 
@@ -315,6 +380,18 @@
     top: 0;
     left: 0;
     outline: none;
+    z-index: 1;
 	}
+
+  .hud
+  {
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 
 </style>
