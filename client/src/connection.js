@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js';
-import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
-import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+// import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
+// import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
 
 const lightningMaterial = new THREE.MeshBasicMaterial( { color: new THREE.Color( 0x00d0ff ) } );
 lightningMaterial.transparent = true

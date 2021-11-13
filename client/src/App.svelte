@@ -3,15 +3,9 @@
 	// import './style.css'
   import { onMount } from 'svelte';
   import * as THREE from 'three'
-  // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-  // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
-	// import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-  // import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
-  import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js';
   import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
   import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
-  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
   import { FlyControls } from './universeControls';
   import { AsteroidGeometry } from './AsteroidGeometry'
@@ -327,10 +321,21 @@
 
       const source = active.position
 
-      planets.forEach(p => {
-        addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
-      })
-      connections.forEach(c => c.update(0))
+      // Add it badgeSize to reduce lag
+      const badgeSize = 50
+      const connectionTimer = setInterval(() => {
+        planets.forEach((p, i) => {
+          if(i >= badgeSize) return false
+          addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
+        })
+
+        planets.splice(0, badgeSize)
+
+        if(planets.length <= 0)
+          clearInterval(connectionTimer)
+
+      }, 50)
+
     }
 
     // Create Composer
@@ -341,7 +346,9 @@
     var connections = []
 
     const addConnection = (p1, p2) => {
-      connections.push(new Connection(scene, camera, composer, p1, p2))
+      const c = new Connection(scene, camera, composer, p1, p2)
+      connections.push(c)
+      c.update(0)
     }
 
     const removeConnections = () => {
