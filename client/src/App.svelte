@@ -5,13 +5,15 @@
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
-  import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+  // import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
 
   import { FlyControls } from './universeControls';
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
   import Hud from './Hud.svelte'
+  import DisplayAsteroid from './DisplayAsteroid.svelte'
+  import DisplayPlanet from './DisplayPlanet.svelte'
 
   import data from './data'
   import settings from './settings'
@@ -20,6 +22,7 @@
   import Connection from './connection'
 
   let huds = []
+  var activeAsteroid = null
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -60,7 +63,8 @@
         sphere.userData.type = 'planet'
         sphere.userData.id = planet.id
         sphere.userData.name = planet.name
-        sphere.userData.i = i //REMOVE
+        sphere.userData.recipients = planet.recipients
+        sphere.userData.value = planet.value
 
         sphere.position.set(planet.x, planet.y, planet.z)
         planets.push(sphere)
@@ -83,7 +87,6 @@
     material.flatShading = true
 
     let asteroids = []
-    var c = 0
     for(let i in data.asteroids)
     {
       let p = data.asteroids[i]
@@ -99,6 +102,7 @@
       mesh.userData.from = p['from']
       mesh.userData.type = 'asteroid'
       mesh.userData.name = p.name
+      mesh.userData.id = p.id
 
       asteroids.push(mesh)
 
@@ -110,19 +114,13 @@
       var object = nearbyAsteroids.createObject(mesh, box);
       nearbyAsteroids.insert(object);      
 
-      c++
-      // if(c > 5000) break
-
     }
 
     asteroids.forEach(p => groupClickable.add(p))
 
     scene.add(groupClickable)
-   
 
-    // let dirLight = new THREE.DirectionalLight( 0xffffff );
     const light = new THREE.PointLight( 0xffffff, 1 );
-    //dirLight.position.set( 0, data.solarsystem_r / 2, 0 ).normalize();
     light.position.y = data.solarsystem_r / 2
     scene.add( light );
 
@@ -164,21 +162,6 @@
     ]);
     scene.background = texture;
 
-    // Controls
-    // const controls = new OrbitControls(camera, canvas)
-    // controls.enableDamping = true
-    // controls.target.set(data.planets[0].x, data.planets[0].y, data.planets[0].z);
-    // const controls = new FirstPersonControls( camera, canvas );
-    // controls.movementSpeed = 150;
-    // controls.lookSpeed = 0.1;
-    // let controls = new PointerLockControls( camera, document.body );
-    // scene.add( controls.getObject() );
-    // controls.lock();
-
-
-
-
-
     // Renderer
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas
@@ -195,7 +178,6 @@
 
     // Animate
     const clock = new THREE.Clock()
-    // composer.render(scene, camera)
 
     var currentTime = 0;
 
@@ -206,13 +188,7 @@
         // Rotate Planets
         planets.forEach(p => p.rotation.y += 0.02 * delta)
         
-        // Rotate Asteroids
-        // asteroids.forEach(p => p.rotation.y += 0.2 * delta)
-
         controls.update( delta );
-
-        // currentTime += 100 * clock.getDelta();
-        // connections.forEach(c => c.update(currentTime))
 
         composer.render();
 
@@ -220,20 +196,6 @@
         if(Math.max(Math.abs(camera.position.x), Math.abs(camera.position.y), Math.abs(camera.position.z)) > data.solarsystem_r)
         {
           console.log("Leaving Universe!")
-        }
-
-        if(planets.length > 0)
-        {
-          var pos = planets[26].position.clone();
-          
-          // console.log(pos.x, pos.y)
-          if(pos.z < 1)
-          {
-            // huds = [{top: pos.y, left: pos.x}];
-            // document.querySelector('.circle').style['left'] = pos.x + 'px';
-            // document.querySelector('.circle').style['top'] = pos.y + 'px';
-          }
-          
         }
 
         const addNearbies = (nearbyMeshes, max, type, results) => {
@@ -303,12 +265,30 @@
       if(intersects.length > 0)
       {
         let active = intersects[0].object
-        console.log(active)
+
+        if(active.userData.type == 'planet')
+        {
+          activeAsteroid = {
+            name: active.userData.name,
+            id: active.userData.id,
+            value: active.userData.value,
+            recipients: active.userData.recipients,
+            type: 'planet'
+          }
+        }
+        else
+        {
+          activeAsteroid = {
+            name: active.userData.name,
+            id: active.userData.id,
+            type: 'asteroid'
+          }
+        }
 
         setTimeout(() => addConnections(active), 0)
         
-        console.log("Done")
       }
+      else activeAsteroid = null
 
     }, false);
 
@@ -326,7 +306,7 @@
       const connectionTimer = setInterval(() => {
         planets.forEach((p, i) => {
           if(i >= badgeSize) return false
-          addConnection(source, new THREE.Vector3(p.x, p.y, p.z))
+          addConnection(source, new THREE.Vector3(p.x, p.y, p.z), p[' '])
         })
 
         planets.splice(0, badgeSize)
@@ -368,6 +348,28 @@
 </script>
 
 <main>
+  <div class='infoboxes'>
+    {#if activeAsteroid}
+      {#if activeAsteroid.type == 'asteroid'}
+
+        <DisplayAsteroid 
+          name={activeAsteroid.name}
+          id={activeAsteroid.id}
+        />
+
+      {:else if activeAsteroid.type === 'planet'}
+
+        <DisplayPlanet 
+          name={activeAsteroid.name}
+          id={activeAsteroid.id}
+          value={activeAsteroid.value}
+          recipients={activeAsteroid.recipients}
+        />
+
+      {/if}
+    {/if}
+  </div>
+
   <div class='hud'>
     {#each huds as h}
       <Hud
@@ -379,6 +381,7 @@
     />
     {/each}
   </div>
+
 	<canvas class="webgl"></canvas>
 </main>
 
@@ -402,6 +405,11 @@
     top: 0;
     left: 0;
     z-index: 2;
+  }
+
+  .infoboxes
+  {
+    z-index: 3;
   }
 
 </style>
