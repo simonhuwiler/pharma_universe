@@ -12,6 +12,7 @@ https://opengameart.org/content/space-skybox-0
 Lightnigh
 https://threejs.org/examples/webgl_lightningstrike.html
 
+LAVA-Texture: https://www.cgtrader.com/3d-models/textures/natural/lava-pbr-seamless-texture
 
 GLOW?? http://stemkoski.github.io/Three.js/Atmosphere.html
 

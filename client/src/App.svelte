@@ -36,6 +36,15 @@
     // Generate loaders
     const loaders = []
     settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)));
+
+    // Load Special Planet
+    const materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
+    materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
+    materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
+    materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
+    materialPlanetLava.emissiveMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Emissive.jpg`)
+    materialPlanetLava.displacementMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Displacement.jpg`)
+    materialPlanetLava.aoMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_AO.jpg`)
     
     const nearbyFactor = 100000000
     const nearbyAsteroids = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor);
@@ -48,13 +57,23 @@
       // Textures Loaded. Create Planets
       console.log("Load Planets")
 
+
       for(let i in data.planets)
       {
         let planet = data.planets[i]
 
+        var materialPlanet;
         // Create Material
-        const materialPlanet = new THREE.MeshPhongMaterial({map: textures[0]});
-        // const materialPlanet = new THREE.MeshPhongMaterial({map: textures[i]});       
+        if(planet.id == 40)
+        {
+          // Lava planet
+          materialPlanet = materialPlanetLava
+        }
+        else
+        {
+          // materialPlanet = new THREE.MeshPhongMaterial({map: textures[0]});
+          materialPlanet = new THREE.MeshPhongMaterial({map: textures[i % textures.length]});     
+        }  
 
         // Create Sphere
         const geometry = new THREE.SphereGeometry( planet.size, 64, 64 );
@@ -121,8 +140,10 @@
     scene.add(groupClickable)
 
     const light = new THREE.PointLight( 0xffffff, 1 );
+    const ambientLight = new THREE.AmbientLight( 0xffffff, 0.1 );
     light.position.y = data.solarsystem_r / 2
     scene.add( light );
+    scene.add( ambientLight );
 
     // Sizes
     const sizes = {
@@ -143,6 +164,24 @@
         // Update renderer
         renderer.setSize(sizes.width, sizes.height)
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    })
+
+    document.addEventListener('dblclick', () => {
+      var elem = document.querySelector('main')
+       if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+       } else if (elem.mozRequestFullScreen) {
+          /* Firefox */
+          elem.mozRequestFullScreen();
+       } else if (elem.webkitRequestFullscreen) {
+          /* Chrome, Safari & Opera */
+          elem.webkitRequestFullscreen();
+       } else if (elem.msRequestFullscreen) {
+          /* IE/Edge */
+          elem.msRequestFullscreen();
+       }
+       elem.style.width = '100%';
+       elem.style.height = '100%';      
     })
 
     // Camera
@@ -288,7 +327,11 @@
         setTimeout(() => addConnections(active), 0)
         
       }
-      else activeAsteroid = null
+      else 
+      {
+        activeAsteroid = null
+        removeConnections()
+      }
 
     }, false);
 

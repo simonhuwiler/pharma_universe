@@ -1,4 +1,7 @@
 <script>
+  import format from 'format-number'
+  var myFormat = format({integerSeparator: "'", suffix: ' CHF'});
+
   export let id
   export let name
   const states = {waiting: 0, ready: 1, nothing: 99, error: -1}
@@ -59,7 +62,7 @@
           {#each data.transactions as t}
           <tr>
             <td>{t.name}</td>
-            <td>{t.value} CHF</td>
+            <td>{myFormat(t.value)}</td>
           </tr>
           {/each}
         </table>

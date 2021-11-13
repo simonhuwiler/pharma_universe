@@ -1,4 +1,7 @@
 <script>
+  import format from 'format-number'
+  var myFormat = format({integerSeparator: "'"});
+
   export let id
   export let name
   export let value
@@ -13,11 +16,11 @@
         <table border=0 cellpadding=0 cellspacing=0>
           <tr>
             <td>Ausgegeben</td>
-            <td>{value} CHF</td>
+            <td>{myFormat(value)} CHF</td>
           </tr>
           <tr>
             <td>Anzahl Empfänger</td>
-            <td>{recipients}</td>
+            <td>{myFormat(recipients)}</td>
           </tr>
         </table>
         <a href='https://www.pharmagelder.ch/pharma/{id}-Pharma.html' target='_blank'>Detaillierte Daten anzeigen</a>    
