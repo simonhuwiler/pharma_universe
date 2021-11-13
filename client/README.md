@@ -1,5 +1,7 @@
 Planets made with:
 https://www.texturesforplanets.com/
+and
+https://sites.google.com/site/mapsandsuch/maps-of-fictional-worlds
 
 Asteroids inspired by 
 https://codepen.io/Divyz/pen/VPrZMy
