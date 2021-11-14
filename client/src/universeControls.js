@@ -26,6 +26,7 @@ class FlyControls extends EventDispatcher {
 
 		this.movementSpeed = 1.0;
 		this.rollSpeed = 0.005;
+        this.movementSpeedMultiplier = 1
         this.damping = 0
 
 		this.dragToLook = false;
@@ -60,14 +61,16 @@ class FlyControls extends EventDispatcher {
 
 			switch ( event.code ) {
 				case 'ShiftLeft':
-				case 'ShiftRight': this.movementSpeedMultiplier = .1; break;
+				case 'ShiftRight': this.movementSpeedMultiplier = 3; break;
 
 				case 'KeyW':
+                case 'ArrowUp':
 				case 'Space': {
                     this.moveState.forward = 1;
                     this.damping = 1
                     break;
                 }
+                case 'ArrowDown':
 				case 'KeyS': {
                     this.moveState.back = 1;
                     this.damping = -1
@@ -80,13 +83,16 @@ class FlyControls extends EventDispatcher {
 				case 'KeyR': this.moveState.up = 1; break;
 				case 'KeyF': this.moveState.down = 1; break;
 
-				case 'ArrowUp': this.moveState.pitchUp = 1; break;
-				case 'ArrowDown': this.moveState.pitchDown = 1; break;
+				// case 'ArrowUp': this.moveState.pitchUp = 1; break;
+				// case 'ArrowDown': this.moveState.pitchDown = 1; break;
 
-				case 'ArrowLeft': this.moveState.yawLeft = 1; break;
-				case 'ArrowRight': this.moveState.yawRight = 1; break;
+				// case 'ArrowLeft': this.moveState.yawLeft = 1; break;
+				// case 'ArrowRight': this.moveState.yawRight = 1; break;
 
+                case 'ArrowLeft':
 				case 'KeyA': this.moveState.rollLeft = 1; break;
+
+                case 'ArrowRight':
 				case 'KeyD': this.moveState.rollRight = 1; break;
 
 			}
@@ -103,8 +109,11 @@ class FlyControls extends EventDispatcher {
 				case 'ShiftLeft':
 				case 'ShiftRight': this.movementSpeedMultiplier = 1; break;
 
-				case 'KeyW': this.moveState.forward = 0; break;
+                case 'ArrowUp':
+				case 'KeyW':
 				case 'Space': this.moveState.forward = 0; break;
+
+                case 'ArrowDown':
 				case 'KeyS': this.moveState.back = 0; break;
 
 				// case 'KeyA': this.moveState.left = 0; break;
@@ -113,13 +122,16 @@ class FlyControls extends EventDispatcher {
 				case 'KeyR': this.moveState.up = 0; break;
 				case 'KeyF': this.moveState.down = 0; break;
 
-				case 'ArrowUp': this.moveState.pitchUp = 0; break;
-				case 'ArrowDown': this.moveState.pitchDown = 0; break;
+				// case 'ArrowUp': this.moveState.pitchUp = 0; break;
+				// case 'ArrowDown': this.moveState.pitchDown = 0; break;
 
-				case 'ArrowLeft': this.moveState.yawLeft = 0; break;
-				case 'ArrowRight': this.moveState.yawRight = 0; break;
+				// case 'ArrowLeft': this.moveState.yawLeft = 0; break;
+				// case 'ArrowRight': this.moveState.yawRight = 0; break;
 
+                case 'ArrowLeft':
 				case 'KeyA': this.moveState.rollLeft = 0; break;
+
+                case 'ArrowRight':
 				case 'KeyD': this.moveState.rollRight = 0; break;
 
 			}
@@ -194,7 +206,7 @@ class FlyControls extends EventDispatcher {
 
 		this.update = function ( delta ) {
 
-			const moveMult = delta * scope.movementSpeed;
+			const moveMult = delta * scope.movementSpeed * this.movementSpeedMultiplier;
 			const rotMult = delta * scope.rollSpeed;
 
 			scope.object.translateX( scope.moveVector.x * moveMult );

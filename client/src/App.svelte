@@ -209,7 +209,7 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     let controls = new FlyControls( camera, renderer.domElement );
-    controls.movementSpeed = 100000000;
+    controls.movementSpeed = 50000000;
     controls.domElement = renderer.domElement;
     controls.rollSpeed = Math.PI / 12;
     controls.autoForward = false;
