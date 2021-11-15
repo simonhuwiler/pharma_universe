@@ -103,6 +103,7 @@
 
     var color = '#edc99d';
     var material = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
+    // var material = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
     material.flatShading = true
 
     let asteroids = []
@@ -209,7 +210,7 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     let controls = new FlyControls( camera, renderer.domElement );
-    controls.movementSpeed = 50000000;
+    controls.movementSpeed = 40000000;
     controls.domElement = renderer.domElement;
     controls.rollSpeed = Math.PI / 12;
     controls.autoForward = false;
@@ -381,6 +382,18 @@
 
     tick()    
 
+
+    // ANIMATION TEST _________________
+    // view-source:https://threejs.org/docs/scenes/material-browser.html#MeshBasicMaterial
+
+    // const pipeSpline = new THREE.CatmullRomCurve3( [
+    //   new THREE.Vector3( 474002736, 131250000, 183629638, ),
+    //   new THREE.Vector3( -446655920, 306250000, 591468026 ),
+    //   new THREE.Vector3( 75628313, 656250000, -816159479, ),
+    // ])
+    // const tubeGeometry = new THREE.TubeGeometry( pipeSpline, 100000, 2000, 100, true );
+    // const meshX = new THREE.Mesh( tubeGeometry, new THREE.MeshBasicMaterial({'color': 0xff0000}) );
+    // scene.add(meshX)
 
 	});
 
