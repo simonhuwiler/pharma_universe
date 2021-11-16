@@ -450,6 +450,7 @@
     left: 0;
     outline: none;
     z-index: 1;
+    overflow: hidden;
 	}
 
   .hud
