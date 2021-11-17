@@ -9,7 +9,8 @@
   var data = {state: states.nothing}
 
   $: {
-    if(id) 
+    // if(id) 
+    if(true == false) //XXXX!!!!
     {
       data = {state: states.waiting}
       fetch(`https://api.pharmagelder.ch/recipient/id/${id}`)

@@ -8,6 +8,7 @@
   // import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
 
   import { FlyControls } from './universeControls';
+  import { PathAnimation } from './pathanimation'
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
@@ -20,6 +21,10 @@
 
  
   import Connection from './connection'
+
+  // --- DEBUG
+  const debug = true
+  // ---
 
   let huds = []
   var activeAsteroid = null
@@ -35,16 +40,22 @@
 
     // Generate loaders
     const loaders = []
-    settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)));
+    if(debug)
+      settings.planetTexturesDebug.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)))
+    else
+      settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)))
 
     // Load Special Planet
-    const materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
-    materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
-    materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
-    materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
-    materialPlanetLava.emissiveMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Emissive.jpg`)
-    materialPlanetLava.displacementMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Displacement.jpg`)
-    materialPlanetLava.aoMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_AO.jpg`)
+    if(!debug)
+    {
+      const materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
+      materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
+      materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
+      materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
+      materialPlanetLava.emissiveMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Emissive.jpg`)
+      materialPlanetLava.displacementMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Displacement.jpg`)
+      materialPlanetLava.aoMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_AO.jpg`)
+    }
     
     const nearbyFactor = 100000000
     const nearbyAsteroids = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor);
@@ -64,7 +75,7 @@
 
         var materialPlanet;
         // Create Material
-        if(planet.id == 40)
+        if(planet.id === 40 && !debug)
         {
           // Lava planet
           materialPlanet = materialPlanetLava
@@ -218,8 +229,20 @@
 
     // Animate
     const clock = new THREE.Clock()
+    const animationArray = []
 
     var currentTime = 0;
+
+  // ANIMATION TEST _________________
+    // view-source: https://threejs.org/examples/#webgl_geometry_extrude_splines
+
+    const anim = new PathAnimation(camera, [
+      [ 474002736, 131250000, 183629638 ],
+      [ -446655920, 306250000, 591468026 ],
+      [ 75628313, 656250000, -816159479 ],
+    ], 10000)
+    animationArray.push(anim)
+
 
     const tick = () =>
     {
@@ -227,10 +250,6 @@
 
         // Rotate Planets
         planets.forEach(p => p.rotation.y += 0.02 * delta)
-        
-        controls.update( delta );
-
-        composer.render();
 
         // Leave Universe?
         if(Math.max(Math.abs(camera.position.x), Math.abs(camera.position.y), Math.abs(camera.position.z)) > data.solarsystem_r)
@@ -287,6 +306,20 @@
         addNearbies(rearresultPlanets, 10, 'planet', localhuds)
 
         huds = localhuds
+
+        // Run all animations
+        animationArray.forEach(a => {
+          if(!a.tick())
+          {
+            // Animation has finished. Remove
+            animationArray.splice(animationArray.indexOf(a), 1)
+          }
+        })
+
+        if(animationArray.length === 0) controls.update( delta )
+
+        // Render
+        composer.render();
 
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
@@ -380,20 +413,7 @@
       connections = []
     }
 
-    tick()    
-
-
-    // ANIMATION TEST _________________
-    // view-source:https://threejs.org/docs/scenes/material-browser.html#MeshBasicMaterial
-
-    // const pipeSpline = new THREE.CatmullRomCurve3( [
-    //   new THREE.Vector3( 474002736, 131250000, 183629638, ),
-    //   new THREE.Vector3( -446655920, 306250000, 591468026 ),
-    //   new THREE.Vector3( 75628313, 656250000, -816159479, ),
-    // ])
-    // const tubeGeometry = new THREE.TubeGeometry( pipeSpline, 100000, 2000, 100, true );
-    // const meshX = new THREE.Mesh( tubeGeometry, new THREE.MeshBasicMaterial({'color': 0xff0000}) );
-    // scene.add(meshX)
+    tick()
 
 	});
 

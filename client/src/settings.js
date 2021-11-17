@@ -1,5 +1,5 @@
-exports.planetTexturesX = [
-    'l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg'
+exports.planetTexturesDebug = [
+    'mars2.jpg'
 ]
 
 exports.planetTextures = [
