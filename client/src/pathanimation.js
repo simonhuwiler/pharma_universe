@@ -3,10 +3,10 @@
 import * as THREE from 'three'
 
 class PathAnimation {
-  constructor( camera, vectors, speed )
+  constructor( camera, vectors, duration )
   {
     this.camera = camera
-    this.speed = speed ? speed : 10000
+    this.duration = duration ? duration : 10
     this.speedCorrection = 1
 
     this.pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
@@ -19,13 +19,18 @@ class PathAnimation {
     this.lookAt = new THREE.Vector3();
     this.pickt = 0;
     this.animationStart = Date.now();
+    this.animationEnd = this.animationStart + this.duration * 1000;
   }
 
   tick()
   {
     const time = Date.now();
 
-    var t = (time - this.animationStart) / this.speed
+    var x = Math.min(100, 100 / (this.animationEnd - this.animationStart) * (time - this.animationStart))
+    console.log(x)
+
+    // var t = (time - this.animationStart) / 10000
+    const t = x / 100
     if(t >= 1)   return false
     else
     {
@@ -37,11 +42,11 @@ class PathAnimation {
         dumping = 100 - 100 / 0.1 * (1 - t)
         // t = 
         // this.speedCorrection = 100 - this.speed / 100 * dumping
-        this.speedCorrection = dumping / 100 + 1
+        // this.speedCorrection = dumping / 100 + 1
         // console.log(this.speed - speedCorrection)
       }
       
-      console.log(this.speedCorrection)
+      // console.log(this.speedCorrection)
       // console.log(t, dumping)
       this.tubeGeometry.parameters.path.getPointAt( t, this.position );
       
