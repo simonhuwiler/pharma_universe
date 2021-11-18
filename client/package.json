@@ -18,6 +18,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "dat.gui": "^0.7.7",
     "format-number": "^3.0.0",
     "sirv-cli": "^1.0.0",
     "three": "^0.131.3"

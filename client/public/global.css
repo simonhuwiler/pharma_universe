@@ -11,3 +11,8 @@ body {
 	font-family: 'Roboto', sans-serif;
 	overflow: hidden;
 }
+
+.dg.ac
+{
+	z-index: 99 !important;
+}

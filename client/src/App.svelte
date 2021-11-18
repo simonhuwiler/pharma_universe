@@ -3,9 +3,9 @@
 	// import './style.css'
   import { onMount } from 'svelte';
   import * as THREE from 'three'
-  import { EffectComposer } from 'three/examples//jsm/postprocessing/EffectComposer.js';
-  import { RenderPass } from 'three/examples//jsm/postprocessing/RenderPass.js';
-  // import { OutlinePass } from 'three/examples//jsm/postprocessing/OutlinePass.js';
+  import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+  import * as dat from 'dat.gui';
 
   import { FlyControls } from './universeControls';
   import { PathAnimation } from './pathanimation'
@@ -15,19 +15,22 @@
   import Hud from './Hud.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
+  import Connection from './connection'
 
   import data from './data'
   import settings from './settings'
 
- 
-  import Connection from './connection'
 
   // --- DEBUG
   const debug = true
   // ---
-
+  
   let huds = []
   var activeAsteroid = null
+
+  // Add Gui
+  const gui = new dat.GUI({name: 'My GUI'});
+  if(!debug) gui.hide()
 
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
@@ -46,9 +49,10 @@
       settings.planetTextures.forEach(tx => loaders.push(textureLoader.load(`./textures/planets/${tx}`)))
 
     // Load Special Planet
+    var materialPlanetLava = null
     if(!debug)
     {
-      const materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
+      materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
       materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
       materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
       materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
@@ -201,6 +205,14 @@
     scene.add(camera)
     camera.position.y = data.solarsystem_r / 2
 
+    // Add to Debug Gui
+    var guiCamera = gui.addFolder('camera')
+    guiCamera.open();
+    const guiDataCamera = {x: 0, y: 0, z: 0}
+    guiCamera.add(camera.position, 'x').listen();
+    guiCamera.add(camera.position, 'y').listen();
+    guiCamera.add(camera.position, 'z').listen();    
+
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
       // https://opengameart.org/content/space-skybox-0
@@ -233,7 +245,7 @@
 
     var currentTime = 0;
 
-  // ANIMATION TEST _________________
+    // ANIMATION TEST _________________
     // view-source: https://threejs.org/examples/#webgl_geometry_extrude_splines
 
     const anim = new PathAnimation(camera, [
@@ -241,13 +253,14 @@
       [ -446655920, 306250000, 591468026 ],
       [ 75628313, 656250000, -816159479 ],
     ])
-    animationArray.push(anim)
+
+    // animationArray.push(anim)
 
 
     const tick = () =>
     {
         const delta = clock.getDelta();
-
+        camera.updateWorldMatrix()
         // Rotate Planets
         planets.forEach(p => p.rotation.y += 0.02 * delta)
 
