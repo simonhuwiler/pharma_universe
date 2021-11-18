@@ -7,7 +7,6 @@ class PathAnimation {
   {
     this.camera = camera
     this.duration = duration ? duration : 10
-    this.speedCorrection = 1
 
     this.pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
     this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2000, 100, true );
@@ -22,46 +21,49 @@ class PathAnimation {
     this.animationEnd = this.animationStart + this.duration * 1000;
   }
 
+  // By https://github.com/sole/tween.js/blob/master/src/Tween.js
+  quadraticInOut(k)
+  {
+
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k;
+    }
+
+    return - 0.5 * (--k * (k - 2) - 1);
+
+  }
+
+  cubicInOut (k) {
+
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k * k;
+    }
+
+    return 0.5 * ((k -= 2) * k * k + 2);
+
+  }
+
+  quarticInOut (k) {
+
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k * k * k;
+    }
+
+    return - 0.5 * ((k -= 2) * k * k * k - 2);
+
+  }
+
   tick()
   {
-    /* TWEEN
-    https://sole.github.io/tween.js/examples/03_graphs.html
-    https://github.com/sole/tween.js/blob/master/src/Tween.js
-    function quadraticInOut(k) {
-
-			if ((k *= 2) < 1) {
-				return 0.5 * k * k;
-			}
-
-			return - 0.5 * (--k * (k - 2) - 1);
-
-		}
-    */
 
     const time = Date.now();
 
     var x = Math.min(100, 100 / (this.animationEnd - this.animationStart) * (time - this.animationStart))
-    console.log(x)
 
-    // var t = (time - this.animationStart) / 10000
-    const t = x / 100
-    if(t >= 1)   return false
+    const t = this.quarticInOut(x / 100)
+    if(t >= 1) return false
     else
     {
-
-      // reduce speed if near target
-      var dumping = 1
-      if(t >= 0.9)
-      {
-        dumping = 100 - 100 / 0.1 * (1 - t)
-        // t = 
-        // this.speedCorrection = 100 - this.speed / 100 * dumping
-        // this.speedCorrection = dumping / 100 + 1
-        // console.log(this.speed - speedCorrection)
-      }
-      
-      // console.log(this.speedCorrection)
-      // console.log(t, dumping)
       this.tubeGeometry.parameters.path.getPointAt( t, this.position );
       
       this.binormal.subVectors( this.tubeGeometry.binormals[ this.pickt + 1 ], this.tubeGeometry.binormals[ this.pickt ] );
@@ -71,10 +73,12 @@ class PathAnimation {
       this.normal.copy( this.binormal ).cross( this.direction );
 
       this.camera.position.copy( this.position );
-
-      this.tubeGeometry.parameters.path.getPointAt( ( t + 100 / this.tubeGeometry.parameters.path.getLength() ) % 1, this.lookAt );
-
-      this.camera.matrix.lookAt( this.camera.position, this.lookAt, this.normal );
+      const lookNext = t + 30 / this.tubeGeometry.parameters.path.getLength() % 1
+      if(lookNext < 1)
+      {
+        this.tubeGeometry.parameters.path.getPointAt( lookNext, this.lookAt );
+        this.camera.matrix.lookAt( this.camera.position, this.lookAt, this.normal );
+      }
       this.camera.quaternion.setFromRotationMatrix( this.camera.matrix );
 
       this.pickt = this.pickt + 1;
