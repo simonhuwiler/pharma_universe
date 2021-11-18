@@ -23,6 +23,20 @@ class PathAnimation {
 
   tick()
   {
+    /* TWEEN
+    https://sole.github.io/tween.js/examples/03_graphs.html
+    https://github.com/sole/tween.js/blob/master/src/Tween.js
+    function quadraticInOut(k) {
+
+			if ((k *= 2) < 1) {
+				return 0.5 * k * k;
+			}
+
+			return - 0.5 * (--k * (k - 2) - 1);
+
+		}
+    */
+
     const time = Date.now();
 
     var t = (time - this.animationStart) / this.speed
