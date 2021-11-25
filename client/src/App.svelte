@@ -113,7 +113,6 @@
         nearbyPlanets.insert(object);
 
       }
-      
     })
 
     var color = '#edc99d';
@@ -239,6 +238,17 @@
     controls.autoForward = false;
     controls.dragToLook = false;
 
+    // Add Audio
+    const listener = new THREE.AudioListener();
+    camera.add( listener );
+    const sound = new THREE.PositionalAudio( listener );
+    const audioLoader = new THREE.AudioLoader();
+    audioLoader.load( 'sound/asteroid.mp3', function( buffer ) {
+      sound.setBuffer( buffer );
+	    sound.setLoop(true);
+      sound.setRefDistance( 6000000 );
+    });    
+
     // Animate
     const clock = new THREE.Clock()
     const animationArray = []
@@ -256,6 +266,45 @@
 
     // animationArray.push(anim)
 
+    const addNearbies = (nearbyMeshes, max, type, results) => {
+
+      // Get all nearby Object
+      var nearbyMeshes = [...nearbyMeshes.keys()]
+
+      // Now calculate distance to each Object
+      for(var i in nearbyMeshes)
+      {
+        const mesh = nearbyMeshes[i].id
+        mesh.userData.distance = camera.position.distanceTo(mesh.position)
+      }
+
+      // Now sort by distance
+      nearbyMeshes.sort((a, b) => a.id.userData.distance > b.id.userData.distance ? 1 : -1)
+
+      var i = 0;
+      for(let m in nearbyMeshes)
+      {
+        i++
+        const mesh = nearbyMeshes[m].id
+        var pos = mesh.position.clone()
+        pos.project(camera);
+        if(pos.z >= 1) continue
+
+        pos.x = ( pos.x * sizes.width / 2 ) + sizes.width / 2;
+        pos.y = - ( pos.y * sizes.height / 2 ) + sizes.height / 2;
+
+        if(pos.x < 0 || pos.x > sizes.width || pos.y < 0 || pos.y >= sizes.height) continue
+
+        results.push({
+          top: pos.y,
+          left: pos.x,
+          distance: Math.max(100 - Math.round(100 / nearbyFactor * mesh.userData.distance), 0),
+          label: mesh.userData.name,
+          type: type
+        });
+        if(i >= max) break
+      }
+    }
 
     const tick = () =>
     {
@@ -270,45 +319,7 @@
           console.log("Leaving Universe!")
         }
 
-        const addNearbies = (nearbyMeshes, max, type, results) => {
-
-          // Get all nearby Object
-          var nearbyMeshes = [...nearbyMeshes.keys()]
-
-          // Now calculate distance to each Object
-          for(var i in nearbyMeshes)
-          {
-            const mesh = nearbyMeshes[i].id
-            mesh.userData.distance = camera.position.distanceTo(mesh.position)
-          }
-
-          // Now sort by distance
-          nearbyMeshes.sort((a, b) => a.id.userData.distance > b.id.userData.distance ? 1 : -1)
-
-          var i = 0;
-          for(let m in nearbyMeshes)
-          {
-            i++
-            const mesh = nearbyMeshes[m].id
-            var pos = mesh.position.clone()
-            pos.project(camera);
-            if(pos.z >= 1) continue
-
-            pos.x = ( pos.x * sizes.width / 2 ) + sizes.width / 2;
-            pos.y = - ( pos.y * sizes.height / 2 ) + sizes.height / 2;
-
-            if(pos.x < 0 || pos.x > sizes.width || pos.y < 0 || pos.y >= sizes.height) continue
-
-            results.push({
-              top: pos.y,
-              left: pos.x,
-              distance: Math.max(100 - Math.round(100 / nearbyFactor * mesh.userData.distance), 0),
-              label: mesh.userData.name,
-              type: type
-            });
-            if(i >= max) break
-          }          
-        }
+        
 
         // Nearby
         const localhuds = []
@@ -361,6 +372,8 @@
             recipients: active.userData.recipients,
             type: 'planet'
           }
+          active.add(sound)
+          sound.play()
         }
         else
         {
@@ -369,6 +382,8 @@
             id: active.userData.id,
             type: 'asteroid'
           }
+          active.add(sound)
+          sound.play()
         }
 
         setTimeout(() => addConnections(active), 0)
@@ -378,6 +393,7 @@
       {
         activeAsteroid = null
         removeConnections()
+        if(sound) sound.stop()
       }
 
     }, false);
@@ -472,6 +488,7 @@
   </div>
 
 	<canvas class="webgl"></canvas>
+
 </main>
 
 <style>
