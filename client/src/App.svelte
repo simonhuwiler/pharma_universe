@@ -17,6 +17,7 @@
   import Hud from './Hud.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
+  import Intro from './Intro.svelte'
   import Connection from './connection'
 
   import data from './data'
@@ -130,9 +131,9 @@
     })
 
     var color = '#edc99d';
-    var material = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
+    var materialAsteroid = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
     // var material = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
-    material.flatShading = true
+    materialAsteroid.flatShading = true
 
     let asteroids = []
     for(let i in data.asteroids)
@@ -142,7 +143,7 @@
       // Generate Astroid
       // https://codepen.io/Divyz/pen/VPrZMy
       var geometry = new AsteroidGeometry(p.size, 1);
-      var mesh = new THREE.Mesh( geometry, material ); 
+      var mesh = new THREE.Mesh( geometry, materialAsteroid ); 
 
       mesh.position.set(p.x, p.y, p.z)
 
@@ -460,13 +461,10 @@
 
 	});
 
-
-
-
-
 </script>
 
 <main>
+  <Intro />
   <!-- <button on:click={ () => ($locale = 'en') } style='position: absolute; right: 0; bottom: 0;z-index:99999'> Click here to change to spanish </button> -->
   <div class='infoboxes'>
     {#if activeAsteroid}
