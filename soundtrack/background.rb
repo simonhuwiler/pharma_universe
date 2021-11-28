@@ -1,5 +1,7 @@
+use_bpm 60
+
 use_synth :dark_ambience
-play :c2, attack: 5, sustain: 200, amp: 0.5
+play :c2, attack: 5, sustain: 525, release: 10, amp: 0.5
 
 sleep 10
 
@@ -54,6 +56,10 @@ with_synth :hollow do
     sleep 20
     
     play_chord [:f4, :gs4, :b4, :d5], attack: 5, sustain: 20, release: 5, amp: 0.5
+    
+    sleep 20
+    
+    play_chord [:c4, :e4, :g4, :c5], attack: 5, sustain: 20, release: 5, amp: 0.5
     
     sleep 20
   end
