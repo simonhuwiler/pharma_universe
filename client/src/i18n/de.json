@@ -1,0 +1,12 @@
+{
+  "data": {
+    "chf": "CHF",
+    "spent": "Ausgegeben",
+    "numberrecipients": "Anzahl Empfänger",
+    "detailinformation": "Detaillierte Daten anzeigen"
+  },
+  "messages": {
+    "waiting": "Raumstation wird angefragt..",
+    "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt."
+  }
+}

@@ -1,4 +1,5 @@
 <script>
+  import { _ } from 'svelte-i18n'
   import format from 'format-number'
   var myFormat = format({integerSeparator: "'", suffix: ' CHF'});
 
@@ -53,7 +54,7 @@
       {#if data.state === states.waiting}
 
         {name}<br/>
-        <span class='info'>Raumstation wird angefragt...</span>
+        <span class='info'>{$_('messages.waiting')}</span>
 
       {:else if data.state === states.ready} 
 
@@ -66,10 +67,10 @@
           </tr>
           {/each}
         </table>
-        <a href='https://www.pharmagelder.ch/recipient/{data.id}-Recipient.html' target='_blank'>Detaillierte Daten anzeigen</a>    
+        <a href='https://www.pharmagelder.ch/recipient/{data.id}-Recipient.html' target='_blank'>{$_('data.detailinformation')}</a>    
       
       {:else if data.state === states.error}
-        :( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt.
+        {$_('messages.errorfetch')}
       {/if}
       
     </div>

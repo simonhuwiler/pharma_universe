@@ -2,6 +2,8 @@
 
 	// import './style.css'
   import { onMount } from 'svelte';
+  import { addMessages, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -20,6 +22,18 @@
   import data from './data'
   import settings from './settings'
 
+  // Languages
+  import en from './i18n/en.json'
+  import de from './i18n/de.json'
+
+  addMessages('en', en)
+  addMessages('de', de)
+
+  init({
+    fallbackLocale: 'en',
+    initialLocale: getLocaleFromNavigator(),
+  });
+  
 
   // --- DEBUG
   const debug = true
@@ -393,7 +407,7 @@
       {
         activeAsteroid = null
         removeConnections()
-        if(sound) sound.stop()
+          if(sound.parent) sound.stop()
       }
 
     }, false);
@@ -453,6 +467,7 @@
 </script>
 
 <main>
+  <!-- <button on:click={ () => ($locale = 'en') } style='position: absolute; right: 0; bottom: 0;z-index:99999'> Click here to change to spanish </button> -->
   <div class='infoboxes'>
     {#if activeAsteroid}
       {#if activeAsteroid.type == 'asteroid' && debug === false}
@@ -475,7 +490,7 @@
     {/if}
   </div>
 
-  <div class='hud'>
+  <div class='hud'>    
     {#each huds as h}
       <Hud
       top={h.top}

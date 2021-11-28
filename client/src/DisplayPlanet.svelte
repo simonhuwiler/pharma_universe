@@ -1,4 +1,5 @@
 <script>
+  import { _ } from 'svelte-i18n'
   import format from 'format-number'
   var myFormat = format({integerSeparator: "'"});
 
@@ -11,19 +12,18 @@
   
   <display>
     <div class='display'>
-
         {name}<br/>
         <table border=0 cellpadding=0 cellspacing=0>
           <tr>
-            <td>Ausgegeben</td>
-            <td>{myFormat(value)} CHF</td>
+            <td>{$_('data.spent')}</td>
+            <td>{myFormat(value)} {$_('data.chf')}</td>
           </tr>
           <tr>
-            <td>Anzahl Empfänger</td>
+            <td>{$_('data.numberrecipients')}</td>
             <td>{myFormat(recipients)}</td>
           </tr>
         </table>
-        <a href='https://www.pharmagelder.ch/pharma/{id}-Pharma.html' target='_blank'>Detaillierte Daten anzeigen</a>    
+        <a href='https://www.pharmagelder.ch/pharma/{id}-Pharma.html' target='_blank'>{$_('data.detailinformation')}</a>    
       
     </div>
   </display>
