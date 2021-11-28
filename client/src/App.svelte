@@ -455,7 +455,7 @@
 <main>
   <div class='infoboxes'>
     {#if activeAsteroid}
-      {#if activeAsteroid.type == 'asteroid'}
+      {#if activeAsteroid.type == 'asteroid' && debug === false}
 
         <DisplayAsteroid 
           name={activeAsteroid.name}
