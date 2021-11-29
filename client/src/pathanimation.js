@@ -3,13 +3,12 @@
 import * as THREE from 'three'
 
 class PathAnimation {
-  constructor( camera, vectors, duration )
+  constructor( vectors, duration )
   {
-    this.camera = camera
     this.duration = duration ? duration : 10
 
     this.pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
-    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2000, 100, true );
+    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2000, 100, false );
 
     this.direction = new THREE.Vector3();
     this.binormal = new THREE.Vector3();
@@ -53,7 +52,7 @@ class PathAnimation {
 
   }
 
-  tick()
+  tick(camera)
   {
 
     const time = Date.now();
@@ -72,14 +71,14 @@ class PathAnimation {
 
       this.normal.copy( this.binormal ).cross( this.direction );
 
-      this.camera.position.copy( this.position );
+      camera.position.copy( this.position );
       const lookNext = t + 30 / this.tubeGeometry.parameters.path.getLength() % 1
       if(lookNext < 1)
       {
         this.tubeGeometry.parameters.path.getPointAt( lookNext, this.lookAt );
-        this.camera.matrix.lookAt( this.camera.position, this.lookAt, this.normal );
+        camera.matrix.lookAt( camera.position, this.lookAt, this.normal );
       }
-      this.camera.quaternion.setFromRotationMatrix( this.camera.matrix );
+      camera.quaternion.setFromRotationMatrix( camera.matrix );
 
       this.pickt = this.pickt + 1;
       return true
