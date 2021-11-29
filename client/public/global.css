@@ -31,3 +31,62 @@ a:hover
 {
   color: rgb(255, 255, 255);
 }
+
+h2
+{
+  font-weight: normal;
+  font-size: 1.2em;
+  padding: 0;
+  margin: 0;
+}
+
+.infobox
+{
+	font-family: 'Titillium Web', sans-serif;
+	color: rgb(228, 228, 228);
+  border-radius: 5px;
+  padding: 15px 10px 5px 10px;
+  background-color: rgba(60, 60, 60, 0.8);
+  line-height: 1.2em;
+}
+
+.buttons
+{
+  text-align: right;
+}
+
+.buttons button
+{
+  background-color: #313636;
+  border: 1px solid white;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  background-color: #090b1d;
+  color: white;
+}
+
+.highlight
+{
+  background-color: #245050 !important;
+}
+
+.highlight:hover
+{
+  background-color: #102222 !important;
+}
+
+u
+{
+  border: 1px solid white;
+  /* margin: 3px 3px; */
+  padding: 3px;
+  text-decoration: none;
+
+}

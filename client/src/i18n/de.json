@@ -16,9 +16,15 @@
     "chapter3": "Dieser Gasplanet ist Amgen, ein mittelgrosses Exemplar. Ihn umgeht ein Asteroidengürtel. Das sind jene Geldempfänger:innen, die einzig von Amgen Geld erhalten haben. Wollen wir zu Asteroiden reisen, die von mehreren Firmen Geld erhalten, müssen wir uns ins Zentrum des Universums begeben.",
     "chapter4": "Dies etwa ist Prof. Dr. Rolf Stahel. Er war lange Leiter der Onkologie des Universitätsspitals Zürich und Präsident der Europäischen Gesellschaft für Onkologie (ESMO). Er gehört zu den Topbezügern unter den Ärzt:innen. Ein Klick auf den Asteroiden zeigt, woher er alles Zahlungen erhält.",
     "chapter5": "Je mehr Geld eine Person oder Organisation voner einer Pharmafirma erhalten hat, desto näher liegt ihr Asteroid am entsprechenden Planeten. Und je mehr Geld floss, desto grösser ist der Himmelskörper. Nun schalten wir auf manuelle Steuerung. Viel Spass!",
-    "flydirectly": "direkt losfliegen",
+    "flydirectly": "Direkt losfliegen",
     "starttour": "Tour starten",
     "next": "weiter",
-    "fly": "Los gehts!"
+    "fly": "Los gehts!",
+    "instructions": "Beschleunige mit der <u>Leertaste</u> (Für Profis: <u>WASD</u>). Lenke, in dem Du <u>die Maus</u> oder Dein <u>Smartphone</u> bewegst. Doppelklicken, um in den Vollbildmodus zu wechseln."
+  },
+  "infobox": {
+    "title": "PharmaUniverse",
+    "text": "Entwicklung & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Basierend auf Daten von <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Kontakt: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
+    "goon": "weiterfliegen"
   }
 }

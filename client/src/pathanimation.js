@@ -59,7 +59,7 @@ class PathAnimation {
 
     var x = Math.min(100, 100 / (this.animationEnd - this.animationStart) * (time - this.animationStart))
 
-    const t = this.quarticInOut(x / 100)
+    const t = this.quadraticInOut(x / 100)
     if(t >= 1) return false
     else
     {

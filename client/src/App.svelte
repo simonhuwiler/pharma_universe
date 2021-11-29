@@ -3,6 +3,7 @@
 	// import './style.css'
   import { onMount } from 'svelte';
   import { addMessages, init, getLocaleFromNavigator } from 'svelte-i18n';
+  import { fade } from 'svelte/transition';
 
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
@@ -13,11 +14,13 @@
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
+  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
   import Hud from './Hud.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
   import Intro from './Intro.svelte'
-  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
+  import Information from './Information.svelte'
+  import Instructions from './Instructions.svelte'
   import Connection from './connection'
 
   import data from './data'
@@ -41,6 +44,7 @@
 
   let activateControls = false
   let showIntro = true
+  let showInstructions = false
   var animationArray = []
   let audioAmbient
 
@@ -54,6 +58,8 @@
     {
       audioAmbient = new Audio('./sound/background.mp3');
       if(!debug) audioAmbient.play();
+      showInstructions = true
+      setTimeout(() => showInstructions = false, 10000)
     }
   });
   storeAnimationArray.subscribe(value => animationArray = value)
@@ -86,18 +92,15 @@
 
     // Path Helper
     // const vectors = [
-    //   [ -336270502, 261863738, -451570032 ],
-    //   [ -343923798, 255902837, -461127186],
-    //   [ -360043166, 243347991, -481256456],
-    //   [ -330754967, 224872917, -583446403],
-    //   [ -334367442, 349627471, -684292795],
-    //   [ -94515399, 287365692, -83480952]
+    //     [ 0, 525000000, 0 ],
+    //     [ 0, 525000000, -8273000 ],
+    //     [ 316134, 525000000, -187672734],
+    //     [ -332602038, 260559965, -462261069 ],
     // ]
     // var pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
     // var tubeGeometry = new THREE.TubeGeometry( pipeSpline, 1000, 2000, 100, false );
     // var m = new THREE.Mesh(tubeGeometry, new THREE.MeshBasicMaterial({color: 'red'}))
     // scene.add(m)
-
 
     // Generate loaders
     const loaders = []
@@ -129,7 +132,6 @@
 
       // Textures Loaded. Create Planets
       console.log("Load Planets")
-
 
       for(let i in data.planets)
       {
@@ -494,10 +496,16 @@
 </script>
 
 <main>
+  {#if showInstructions}
+    <div transition:fade style='position:absolute;left:50%;transform: translateX(-50%);z-index: 1000'><Instructions /></div>
+  {/if}
   {#if showIntro}
     <Intro />
   {/if}
-  <!-- <button on:click={ () => ($locale = 'en') } style='position: absolute; right: 0; bottom: 0;z-index:99999'> Click here to change to spanish </button> -->
+  {#if !showIntro}
+    <Information />
+  {/if}
+
   <div class='infoboxes'>
     {#if activeAsteroid}
       {#if activeAsteroid.type == 'asteroid' && debug === false}
