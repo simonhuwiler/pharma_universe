@@ -8,6 +8,7 @@
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
   import * as dat from 'dat.gui';
 
   import { FlyControls } from './universeControls';
@@ -89,6 +90,7 @@
     // Scene
     const scene = new THREE.Scene()
     const textureLoader = new THREE.TextureLoader();
+
 
     // Path Helper
     // const vectors = [
@@ -219,6 +221,16 @@
     light.position.y = data.solarsystem_r / 2
     scene.add( light );
     scene.add( ambientLight );
+
+    // Add Easteregg
+    const eeLoader = new THREE.ObjectLoader();
+    eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
+
+      loadedObj.position.set(388909804, 148202816, -334159444)
+      loadedObj.scale.set(200000, 200000, 200000)
+      loadedObj.rotation.y = 1.5
+      scene.add(loadedObj)
+    })    
 
     // Sizes
     const sizes = {
