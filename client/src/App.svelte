@@ -18,6 +18,7 @@
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
   import Intro from './Intro.svelte'
+  import { storeControlsEnabled, storeShowIntro } from './store.js';
   import Connection from './connection'
 
   import data from './data'
@@ -34,7 +35,21 @@
     fallbackLocale: 'en',
     initialLocale: getLocaleFromNavigator(),
   });
-  
+
+  let activateControls = false
+  let showIntro = true
+
+  storeControlsEnabled.subscribe(value => activateControls = value);
+  storeShowIntro.subscribe(value => {
+    showIntro = value
+
+    // Play Audio
+    if(!showIntro)
+    {
+      var audio = new Audio('./sound/background.mp3');
+      audio.play();
+    }
+  });
 
   // --- DEBUG
   const debug = true
@@ -355,7 +370,7 @@
           }
         })
 
-        if(animationArray.length === 0) controls.update( delta )
+        if(animationArray.length === 0 && activateControls) controls.update( delta )
 
         // Render
         composer.render();
@@ -466,7 +481,9 @@
 </script>
 
 <main>
-  <Intro />
+  {#if showIntro}
+    <Intro />
+  {/if}
   <!-- <button on:click={ () => ($locale = 'en') } style='position: absolute; right: 0; bottom: 0;z-index:99999'> Click here to change to spanish </button> -->
   <div class='infoboxes'>
     {#if activeAsteroid}
