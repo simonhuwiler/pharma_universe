@@ -36,7 +36,7 @@ class AsteroidGeometry extends PolyhedronGeometry {
             //a vertex' position is (vertices[i],vertices[i+1],vertices[i+2])
             
             vertices[i] += (0-Math.random()*(size/4));
-            vertices[i + 1] += (0-Math.random()*(size/2));
+            vertices[i + 1] += (0-Math.random()*(size/3));
             vertices[i + 2] += (0-Math.random()*(size/4));
         }
 

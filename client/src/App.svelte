@@ -131,8 +131,8 @@
     })
 
     var color = '#edc99d';
-    var materialAsteroid = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 1});
-    // var material = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
+    var materialAsteroid = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 0.8});
+    // var materialAsteroid = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
     materialAsteroid.flatShading = true
 
     let asteroids = []
@@ -389,6 +389,7 @@
           }
           active.add(sound)
           sound.play()
+          sound.setVolume(8)
         }
         else
         {
@@ -399,6 +400,7 @@
           }
           active.add(sound)
           sound.play()
+          sound.setVolume(1)
         }
 
         setTimeout(() => addConnections(active), 0)
@@ -408,7 +410,7 @@
       {
         activeAsteroid = null
         removeConnections()
-          if(sound.parent) sound.stop()
+        if(sound.parent) sound.stop()
       }
 
     }, false);
