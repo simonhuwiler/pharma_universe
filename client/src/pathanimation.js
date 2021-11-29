@@ -8,7 +8,7 @@ class PathAnimation {
     this.duration = duration ? duration : 10
 
     this.pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
-    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2000, 100, false );
+    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2, 100, false );
 
     this.direction = new THREE.Vector3();
     this.binormal = new THREE.Vector3();
@@ -68,17 +68,24 @@ class PathAnimation {
       this.binormal.subVectors( this.tubeGeometry.binormals[ this.pickt + 1 ], this.tubeGeometry.binormals[ this.pickt ] );
 
       this.tubeGeometry.parameters.path.getTangentAt( t, this.direction );
+      const offset = 0;
 
       this.normal.copy( this.binormal ).cross( this.direction );
 
+      this.position.add( this.normal.clone().multiplyScalar( offset ) );
+
       camera.position.copy( this.position );
-      const lookNext = t + 30 / this.tubeGeometry.parameters.path.getLength() % 1
+      // const lookNext = (t + 30 / this.tubeGeometry.parameters.path.getLength()) % 1
+      // const lookNext = this.quarticInOut(x / 100 + 0.1)
+      const lookNext = ( t + 30 / this.tubeGeometry.parameters.path.getLength() ) % 1
       if(lookNext < 1)
       {
         this.tubeGeometry.parameters.path.getPointAt( lookNext, this.lookAt );
-        camera.matrix.lookAt( camera.position, this.lookAt, this.normal );
+        this.lookAt.copy( this.position ).add( this.direction );
+        camera.lookAt(this.lookAt)
+        // camera.matrix.lookAt( camera.position, this.lookAt, this.normal );
+        // camera.quaternion.setFromRotationMatrix( camera.matrix );
       }
-      camera.quaternion.setFromRotationMatrix( camera.matrix );
 
       this.pickt = this.pickt + 1;
       return true
