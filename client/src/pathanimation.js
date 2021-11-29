@@ -8,7 +8,7 @@ class PathAnimation {
     this.duration = duration ? duration : 10
 
     this.pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
-    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 10000, 2, 100, false );
+    this.tubeGeometry = new THREE.TubeGeometry( this.pipeSpline, 1000, 2, 100, false );
 
     this.direction = new THREE.Vector3();
     this.binormal = new THREE.Vector3();

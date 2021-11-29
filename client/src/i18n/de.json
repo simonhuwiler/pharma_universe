@@ -8,5 +8,17 @@
   "messages": {
     "waiting": "Raumstation wird angefragt..",
     "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt."
+  },
+  "intro": {
+    "chapter1_title": "Hallo Reisender!",
+    "chapter1": "Jedes Jahr zahlen Novartis, Roche und rund 60 andere Pharmafirmen eine Menge Geld an Ärzt:innen und Spitäler. Jetzt stell Dir vor, diese Welt der <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder</a> wäre ein Universum: Wie würde es aussehen? Genau so! Jede Pharmafirma ist ein Planet, jede:r Geldempfänger:in ein Asteroid. Darf ich Dir eine Tour durch das Universum geben?",
+    "chapter2": "Dein Raumschiff befindet sich zur Zeit im Zentrum des Sonnensystems. An den Rändern siehst Du einzelne Planeten – die Pharmafirmen. Lass uns zu einem dieser Planeten fliegen!",
+    "chapter3": "Dieser Gasplanet ist Amgen, ein mittelgrosses Exemplar. Ihn umgeht ein Asteroidengürtel. Das sind jene Geldempfänger:innen, die einzig von Amgen Geld erhalten haben. Wollen wir zu Asteroiden reisen, die von mehreren Firmen Geld erhalten, müssen wir uns ins Zentrum des Universums begeben.",
+    "chapter4": "Dies etwa ist Prof. Dr. Rolf Stahel. Er war lange Leiter der Onkologie des Universitätsspitals Zürich und Präsident der Europäischen Gesellschaft für Onkologie (ESMO). Er gehört zu den Topbezügern unter den Ärzt:innen. Ein Klick auf den Asteroiden zeigt, woher er alles Zahlungen erhält.",
+    "chapter5": "Je mehr Geld eine Person oder Organisation voner einer Pharmafirma erhalten hat, desto näher liegt ihr Asteroid am entsprechenden Planeten. Und je mehr Geld floss, desto grösser ist der Himmelskörper. Nun schalten wir auf manuelle Steuerung. Viel Spass!",
+    "flydirectly": "direkt losfliegen",
+    "starttour": "Tour starten",
+    "next": "weiter",
+    "fly": "Los gehts!"
   }
 }

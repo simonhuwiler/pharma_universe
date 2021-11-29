@@ -2,7 +2,7 @@
 
 	// import './style.css'
   import { onMount } from 'svelte';
-  import { addMessages, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+  import { addMessages, init, getLocaleFromNavigator } from 'svelte-i18n';
 
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
@@ -10,7 +10,6 @@
   import * as dat from 'dat.gui';
 
   import { FlyControls } from './universeControls';
-  import { PathAnimation } from './pathanimation'
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
@@ -18,7 +17,7 @@
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
   import Intro from './Intro.svelte'
-  import { storeControlsEnabled, storeShowIntro } from './store.js';
+  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
   import Connection from './connection'
 
   import data from './data'
@@ -27,6 +26,10 @@
   // Languages
   import en from './i18n/en.json'
   import de from './i18n/de.json'
+
+  // --- DEBUG
+  const debug = true
+  // ---
 
   addMessages('en', en)
   addMessages('de', de)
@@ -38,7 +41,10 @@
 
   let activateControls = false
   let showIntro = true
+  var animationArray = []
+  let audioAmbient
 
+  // Stores
   storeControlsEnabled.subscribe(value => activateControls = value);
   storeShowIntro.subscribe(value => {
     showIntro = value
@@ -46,14 +52,11 @@
     // Play Audio
     if(!showIntro)
     {
-      var audio = new Audio('./sound/background.mp3');
-      audio.play();
+      audioAmbient = new Audio('./sound/background.mp3');
+      if(!debug) audioAmbient.play();
     }
   });
-
-  // --- DEBUG
-  const debug = true
-  // ---
+  storeAnimationArray.subscribe(value => animationArray = value)
   
   let huds = []
   var activeAsteroid = null
@@ -65,11 +68,36 @@
   onMount(async () => {
     const canvas = document.querySelector('canvas.webgl')
 
+    storeShowStahle.subscribe(value => {
+      if(value) 
+      {
+        const active = asteroids.find(x => x.userData.id === 6950)
+        addConnections(active)
+        active.add(sound)
+        sound.play()
+      }
+    })
+
     const groupClickable = new THREE.Group();
 
     // Scene
     const scene = new THREE.Scene()
     const textureLoader = new THREE.TextureLoader();
+
+    // Path Helper
+    // const vectors = [
+    //   [ -336270502, 261863738, -451570032 ],
+    //   [ -343923798, 255902837, -461127186],
+    //   [ -360043166, 243347991, -481256456],
+    //   [ -330754967, 224872917, -583446403],
+    //   [ -334367442, 349627471, -684292795],
+    //   [ -94515399, 287365692, -83480952]
+    // ]
+    // var pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
+    // var tubeGeometry = new THREE.TubeGeometry( pipeSpline, 1000, 2000, 100, false );
+    // var m = new THREE.Mesh(tubeGeometry, new THREE.MeshBasicMaterial({color: 'red'}))
+    // scene.add(m)
+
 
     // Generate loaders
     const loaders = []
@@ -281,20 +309,6 @@
 
     // Animate
     const clock = new THREE.Clock()
-    const animationArray = []
-
-    var currentTime = 0;
-
-    // ANIMATION TEST _________________
-    // view-source: https://threejs.org/examples/#webgl_geometry_extrude_splines
-
-    const anim = new PathAnimation(camera, [
-      [ 474002736, 131250000, 183629638 ],
-      [ -446655920, 306250000, 591468026 ],
-      [ 75628313, 656250000, -816159479 ],
-    ])
-
-    // animationArray.push(anim)
 
     const addNearbies = (nearbyMeshes, max, type, results) => {
 
@@ -349,8 +363,6 @@
           console.log("Leaving Universe!")
         }
 
-        
-
         // Nearby
         const localhuds = []
         var nearresultAsteroids = nearbyAsteroids.query(camera.position.x, camera.position.y, camera.position.z);
@@ -363,10 +375,11 @@
 
         // Run all animations
         animationArray.forEach(a => {
-          if(!a.tick())
+          if(!a.tick(camera))
           {
             // Animation has finished. Remove
             animationArray.splice(animationArray.indexOf(a), 1)
+            storeAnimationArray.set(animationArray)
           }
         })
 
@@ -378,7 +391,6 @@
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
     }
-
 
     // Raycaster
     const raycaster = new THREE.Raycaster();
@@ -455,6 +467,7 @@
       }, 50)
 
     }
+
 
     // Create Composer
     const composer = new EffectComposer( renderer )

@@ -1,34 +1,125 @@
 <script>
   import { _ } from 'svelte-i18n'
   import { addMessages, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
-  import { storeControlsEnabled, storeShowIntro } from './store.js';
+  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
+
+  import { PathAnimation } from './pathanimation'
+
+  let activeSlide = 0
+  let fadeInSlide = 0
 
   const start = () => {
     storeControlsEnabled.set(true)
     storeShowIntro.set(false)
   }
 
+  const flyAmgen = () => {
+    activeSlide = 2
+    storeAnimationArray.set([
+        new PathAnimation([
+        [ 0, 525000000, 0 ],
+        [ 0, 525000000, -8273000 ],
+        [ 0, 525000000, -30273000 ],
+        [ -4086556, 520594467, -36747020],
+        [ -336270502, 261863738, -451570032 ],
+      ], 15)
+    ])
+    setTimeout(() => fadeInSlide = 2, 15000);
+  }
+
+  const flyStahel = () => {
+    activeSlide = 3
+    storeAnimationArray.set([
+        new PathAnimation([
+          [ -336270502, 261863738, -451570032 ],
+          [ -343923798, 255902837, -461127186 ],
+          [ -360043166, 243347991, -481256456 ],
+          [ -330754967, 224872917, -583446403 ],
+          [ -334367442, 349627471, -684292795 ],
+          [ -104191398, 282550489, -76827530 ]
+        ], 15)
+    ])
+    setTimeout(() => fadeInSlide = 3, 15000);
+  }
+
+  const showStahel = () => {
+    activeSlide = 4
+    storeShowStahle.set(true)
+    setTimeout(() => fadeInSlide = 4, 2000);
+  }
+
 </script>
   
     <div class='intro'>
-      <div class='slide'>
-        <h2>Hallo Reisender!</h2>
-        <div class='i18n'>
-          <img src='./images/german.png' alt='Deutsche Sprache wählen' on:click={ () => ($locale = 'de')}/>  
-          <img src='./images/english.png' alt='Switch to english' on:click={ () => ($locale = 'en')}/>  
+
+      <!-- CHAPTER 1-->
+      {#if activeSlide === 0}
+        <div class='slide'>
+          <h2>{$_('intro.chapter1_title')}</h2>
+          <div class='i18n'>
+            <img src='./images/german.png' alt='Deutsche Sprache wählen' on:click={ () => ($locale = 'de')}/>  
+            <img src='./images/english.png' alt='Switch to english' on:click={ () => ($locale = 'en')}/>  
+          </div>
+          <p>
+            {@html $_('intro.chapter1')}
+          </p>
+          <div class='buttons'>
+            <button class='fly' on:click={start}>{$_('intro.flydirectly')}</button>
+            <button class='tour' on:click={() => {activeSlide = 1}}>{$_('intro.starttour')}</button>
+          </div>
         </div>
+      {/if}
+
+      <!-- CHAPTER 2 -->
+      {#if activeSlide === 1}
+        <div class='slide'>
+          <p>
+            {@html $_('intro.chapter2')}
+          </p>
+          <div class='buttons'>
+            <button class='tour' on:click={flyAmgen}>{$_('intro.next')}</button>
+          </div>
+        </div>
+      {/if}
+
+      <!-- CHAPTER 3 -->
+      {#if activeSlide === 2}
+
+      <div class="slide {fadeInSlide === 2 ? 'show' : 'hide'}">
         <p>
-          Jedes Jahr zahlen Novartis, Roche und rund 60 andere Pharmafirmen eine Menge Geld an Ärzt:innen und Spitäler.
-          Jetzt stell Dir vor, diese Welt der <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder</a> wäre ein Universum: Wie würde es aussehen?
-          Genau so: Pharmafirmen sind die Planeten, die Geldempfänger Asteroiden. Je mehr Geld sie erhalten, desto grösser sind sie. Je mehr Geld sie von einer Firma
-          erhalten haben, desto näher sind sie am entsprechenden Planeten. Dürfen wir Dich im PharmaUniverse herumführen?
+          {@html $_('intro.chapter3')}
         </p>
         <div class='buttons'>
-          <button class='fly' on:click={start}>direkt losfliegen</button>
-          <button class='tour'>Tour starten</button>
+          <button class='tour' on:click={flyStahel}>{$_('intro.next')}</button>
         </div>
-
       </div>
+      {/if}
+
+      <!-- CHAPTER 3 -->
+      {#if activeSlide === 3}
+        <div class="slide {fadeInSlide === 3 ? 'show' : 'hide'}">
+          <p>
+            {$_('intro.chapter4')}
+          </p>
+          <div class='buttons'>
+            <button class='tour' on:click={showStahel}>{$_('intro.next')}</button>
+          </div>
+        </div>
+      {/if}
+
+      <!-- CHAPTER 4 -->
+      {#if activeSlide === 4}
+        <div class="slide {fadeInSlide === 4 ? 'show' : 'hide'}">
+          <p>
+            {$_('intro.chapter5')}
+          </p>
+          <div class='buttons'>
+            <button class='tour' on:click={start}>{$_('intro.fly')}</button>
+          </div>
+        </div>
+      {/if}
+
+
     </div>
   
   <style>
@@ -52,6 +143,18 @@
       /* background-color: rgba(58, 58, 58, 0.432); */
       z-index: 3;
       line-height: 1.2em;
+    }
+
+    .show
+    {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    .hide
+    {
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     .i18n
@@ -96,23 +199,13 @@
       background-color: #245050 !important;
     }
 
+    .tour:hover
+    {
+      background-color: #102222 !important;
+    }
+
     .buttons button:hover {
       background-color: #090b1d;
       color: white;
-    }
-
-    a
-    {
-      color: white;
-    }
-
-    a, a:visited, a:active
-    {
-      color: rgb(228, 228, 228);
-    }
-
-    a:hover
-    {
-      color: rgb(255, 255, 255);
     }
   </style>

@@ -291,9 +291,7 @@ class FlyControls extends EventDispatcher {
 		this.dispose = function () {
 
 			this.domElement.removeEventListener( 'contextmenu', contextmenu );
-			// this.domElement.removeEventListener( 'mousedown', _mousedown );
 			this.domElement.removeEventListener( 'mousemove', _mousemove );
-			// this.domElement.removeEventListener( 'mouseup', _mouseup );
 
 			window.removeEventListener( 'keydown', _keydown );
 			window.removeEventListener( 'keyup', _keyup );
@@ -309,8 +307,6 @@ class FlyControls extends EventDispatcher {
 		this.domElement.addEventListener( 'contextmenu', contextmenu );
 
 		this.domElement.addEventListener( 'mousemove', _mousemove );
-		// this.domElement.addEventListener( 'mousedown', _mousedown );
-		// this.domElement.addEventListener( 'mouseup', _mouseup );
 
 		window.addEventListener( 'keydown', _keydown );
 		window.addEventListener( 'keyup', _keyup );

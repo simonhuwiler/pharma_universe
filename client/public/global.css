@@ -16,3 +16,18 @@ body {
 {
 	z-index: 99 !important;
 }
+
+a
+{
+  color: white;
+}
+
+a, a:visited, a:active
+{
+  color: rgb(228, 228, 228);
+}
+
+a:hover
+{
+  color: rgb(255, 255, 255);
+}
