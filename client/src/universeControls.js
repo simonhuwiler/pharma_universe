@@ -8,9 +8,11 @@ const _changeEvent = { type: 'change' };
 
 class FlyControls extends EventDispatcher {
 
-	constructor( object, domElement ) {
+	constructor( object, domElement, forwardOnly ) {
 
 		super();
+
+		this.forwardOnly = forwardOnly ? forwardOnly : false
 
 		if ( domElement === undefined ) {
 
@@ -290,23 +292,29 @@ class FlyControls extends EventDispatcher {
 
 		this.dispose = function () {
 
-			this.domElement.removeEventListener( 'contextmenu', contextmenu );
-			this.domElement.removeEventListener( 'mousemove', _mousemove );
+			if(!this.forwardOnly)
+			{
+				this.domElement.removeEventListener( 'contextmenu', contextmenu );
+				this.domElement.removeEventListener( 'mousemove', _mousemove );
+			}
 
 			window.removeEventListener( 'keydown', _keydown );
 			window.removeEventListener( 'keyup', _keyup );
 
 		};
 
-		const _mousemove = this.mousemove.bind( this );
-		const _mousedown = this.mousedown.bind( this );
-		const _mouseup = this.mouseup.bind( this );
+		var _mousemove, _mousedown, _mouseup;
+		if(!this.forwardOnly)
+		{
+			_mousemove = this.mousemove.bind( this );
+			_mousedown = this.mousedown.bind( this );
+			_mouseup = this.mouseup.bind( this );
+			this.domElement.addEventListener( 'mousemove', _mousemove );
+		}
 		const _keydown = this.keydown.bind( this );
 		const _keyup = this.keyup.bind( this );
 
 		this.domElement.addEventListener( 'contextmenu', contextmenu );
-
-		this.domElement.addEventListener( 'mousemove', _mousemove );
 
 		window.addEventListener( 'keydown', _keydown );
 		window.addEventListener( 'keyup', _keyup );

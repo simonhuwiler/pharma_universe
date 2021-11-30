@@ -1,9 +1,14 @@
 <script>
-    import { _ } from 'svelte-i18n'
+  import { _ } from 'svelte-i18n'
+  import isMobile from 'ismobilejs';
 </script>
     
 <div class='instructions'>
-  {@html $_('intro.instructions')}
+  {#if isMobile(window.navigator).any}
+    {@html $_('intro.instructionmobile')}
+  {:else}
+    {@html $_('intro.instructiondesktop')}
+  {/if}
 </div>
 
 <style>

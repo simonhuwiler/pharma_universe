@@ -309,20 +309,22 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     // Detect if mobile (motion sensor) or mouse
-    var controls;
+    var controlAccelerator, controlMouse;
     if(isMobile(window.navigator).any)
     {
-      controls = new DeviceOrientationControls(camera)
+      controlAccelerator = new DeviceOrientationControls(camera)
+      controlMouse = new FlyControls( camera, renderer.domElement, true );
     }
     else
     {
-      controls = new FlyControls( camera, renderer.domElement );
-      controls.movementSpeed = 40000000;
-      controls.domElement = renderer.domElement;
-      controls.rollSpeed = Math.PI / 12;
-      controls.autoForward = false;
-      controls.dragToLook = false;
+      controlMouse = new FlyControls( camera, renderer.domElement, false );
     }
+
+    controlMouse.movementSpeed = 40000000;
+    controlMouse.domElement = renderer.domElement;
+    controlMouse.rollSpeed = Math.PI / 12;
+    controlMouse.autoForward = false;
+    controlMouse.dragToLook = false;
 
     // Add Audio
     const listener = new THREE.AudioListener();
@@ -411,7 +413,11 @@
           }
         })
 
-        if(animationArray.length === 0 && activateControls) controls.update( delta )
+        if(animationArray.length === 0 && activateControls)
+        {
+          controlMouse.update( delta )
+          if(controlAccelerator) controlAccelerator.update( delta )
+        }
 
         // Render
         composer.render();
@@ -531,6 +537,9 @@
   {#if !showIntro}
     <Information />
   {/if}
+  {#if !showIntro && isMobile(window.navigator).any}
+    <div class='throttle' />
+  {/if}
 
   <div class='infoboxes'>
     {#if activeAsteroid}
@@ -596,6 +605,21 @@
   .infoboxes
   {
     z-index: 3;
+  }
+
+  .throttle
+  {
+    position: absolute;
+    z-index: 1000;
+    bottom: 10px;
+    left: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background: rgb(124,124,124);
+    background: linear-gradient(90deg, rgba(124,124,124,1) 0%, rgba(79,80,80,1) 100%);
+    border: 1px solid #ababab;
+    opacity: 0.8;
   }
 
 </style>
