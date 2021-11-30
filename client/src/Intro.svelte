@@ -1,12 +1,22 @@
 <script>
-  import { _ } from 'svelte-i18n'
-  import { addMessages, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+  // import { _ } from 'svelte-i18n'
+  import { _, locale } from 'svelte-i18n';
+  import isMobile from 'ismobilejs';
   import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
 
   import { PathAnimation } from './pathanimation'
 
   let activeSlide = 0
   let fadeInSlide = 0
+
+  let isPortrait = false;
+  const checkPortrait = () => {
+    if(isMobile(window.navigator).any && (window.innerHeight > window.innerWidth)) isPortrait = true
+    else isPortrait = false
+  }
+  checkPortrait()
+
+  window.addEventListener('resize', checkPortrait)
 
   const start = () => {
     storeControlsEnabled.set(true)
@@ -58,6 +68,9 @@
             <img src='./images/english.png' alt='Switch to english' on:click={ () => ($locale = 'en')}/>  
           </div>
           <p>
+            {#if isPortrait}
+              <b>{$_('intro.turnyoursmartphone')}</b>
+            {/if}
             {@html $_('intro.chapter1')}
           </p>
           <div class='buttons'>
@@ -131,10 +144,8 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 450px;
-      max-width: 100vw;
       z-index: 3;
-    }
+    }       
 
     .show
     {

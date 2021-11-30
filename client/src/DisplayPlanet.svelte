@@ -43,6 +43,8 @@
       background-color: rgba(210, 225, 226, 0.432);
       z-index: 3;
       line-height: 1.1em;
+      max-height: 90vh;
+      overflow-y: scroll;
     }
 
     table

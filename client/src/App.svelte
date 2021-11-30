@@ -10,8 +10,10 @@
   import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
   import * as dat from 'dat.gui';
+  import isMobile from 'ismobilejs';
 
   import { FlyControls } from './universeControls';
+  import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js'
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
@@ -223,14 +225,17 @@
     scene.add( ambientLight );
 
     // Add Easteregg
-    const eeLoader = new THREE.ObjectLoader();
-    eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
+    if(!debug)
+    {
+      const eeLoader = new THREE.ObjectLoader();
+      eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
 
-      loadedObj.position.set(388909804, 148202816, -334159444)
-      loadedObj.scale.set(200000, 200000, 200000)
-      loadedObj.rotation.y = 1.5
-      scene.add(loadedObj)
-    })    
+        loadedObj.position.set(388909804, 148202816, -334159444)
+        loadedObj.scale.set(200000, 200000, 200000)
+        loadedObj.rotation.y = 1.5
+        scene.add(loadedObj)
+      })
+    }
 
     // Sizes
     const sizes = {
@@ -303,12 +308,21 @@
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-    let controls = new FlyControls( camera, renderer.domElement );
-    controls.movementSpeed = 40000000;
-    controls.domElement = renderer.domElement;
-    controls.rollSpeed = Math.PI / 12;
-    controls.autoForward = false;
-    controls.dragToLook = false;
+    // Detect if mobile (motion sensor) or mouse
+    var controls;
+    if(isMobile(window.navigator).any)
+    {
+      controls = new DeviceOrientationControls(camera)
+    }
+    else
+    {
+      controls = new FlyControls( camera, renderer.domElement );
+      controls.movementSpeed = 40000000;
+      controls.domElement = renderer.domElement;
+      controls.rollSpeed = Math.PI / 12;
+      controls.autoForward = false;
+      controls.dragToLook = false;
+    }
 
     // Add Audio
     const listener = new THREE.AudioListener();
