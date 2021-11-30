@@ -34,7 +34,7 @@
   import de from './i18n/de.json'
 
   // --- DEBUG
-  const debug = true
+  const debug = false
   // ---
 
   addMessages('en', en)
@@ -50,6 +50,7 @@
   let showInstructions = false
   var animationArray = []
   let audioAmbient
+  var controlAccelerator, controlMouse;
 
   // Stores
   storeControlsEnabled.subscribe(value => activateControls = value);
@@ -284,7 +285,6 @@
     // Add to Debug Gui
     var guiCamera = gui.addFolder('camera')
     guiCamera.open();
-    const guiDataCamera = {x: 0, y: 0, z: 0}
     guiCamera.add(camera.position, 'x').listen();
     guiCamera.add(camera.position, 'y').listen();
     guiCamera.add(camera.position, 'z').listen();    
@@ -309,7 +309,6 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     // Detect if mobile (motion sensor) or mouse
-    var controlAccelerator, controlMouse;
     if(isMobile(window.navigator).any)
     {
       controlAccelerator = new DeviceOrientationControls(camera)
@@ -538,7 +537,7 @@
     <Information />
   {/if}
   {#if !showIntro && isMobile(window.navigator).any}
-    <div class='throttle' />
+    <div class='throttle' on:touchstart={() => controlMouse.forward(true)} on:touchend={() => controlMouse.forward(false)} />
   {/if}
 
   <div class='infoboxes'>

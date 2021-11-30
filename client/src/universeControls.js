@@ -324,6 +324,16 @@ class FlyControls extends EventDispatcher {
 
 	}
 
+	forward(b)
+	{
+		if(b)
+		{
+			this.moveState.forward = 1;
+			this.damping = 1			
+		}
+		else this.moveState.forward = 0
+	}
+
 }
 
 function contextmenu( event ) {
