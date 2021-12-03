@@ -1,7 +1,6 @@
 
 use_bpm 160
 
-
 use_synth :dark_ambience
 play "C2", attack: 15, sustain: 250, amp: 0.5
 
@@ -88,7 +87,7 @@ define :rythm_with_slight_bass do
   
   with_synth :prophet do
     with_fx :reverb, room: 1, amp: 0.6, amp_slide: 5 do |fx|
-      1.times do
+      2.times do
         
         8.times do
           play_pattern_timed [:f4, :gs4, :c5], 0.33, release: 0.2, attack: 0.05, cutoff: rrand(60, 90), amp: 0.4
@@ -115,23 +114,23 @@ define :rythm_with_slight_bass do
   end
 end
 
-
 define :beep_beep do |n|
-  4.times do
-    with_fx :reverb, room: 0.5 do
-      with_fx :krush, gain: 5 do
-        play n, attack: 0.1, release: 0.5, amp: 1
-        sleep 1
-        3.times do
-          play n, release: 0.3, attack: 0.1, amp: 1
-          sleep 0.33
+  with_synth :hollow do
+    4.times do
+      with_fx :reverb, room: 0.5 do
+        with_fx :krush, gain: 5 do
+          play n, attack: 0.1, release: 0.5, amp: 1
+          sleep 1
+          3.times do
+            play n, release: 0.3, attack: 0.1, amp: 1
+            sleep 0.33
+          end
+          sleep 0.01
         end
-        sleep 0.01
       end
     end
   end
 end
-
 
 rythm_with_slight_bass
 
@@ -143,45 +142,61 @@ with_fx :reverb, room: 1 do
 end
 
 in_thread do
-  
-  beep_beep :f4
-  beep_beep :as4
-  beep_beep :f4
-  beep_beep :c4
-  
+  8.times do
+    beep_beep :f4
+    beep_beep :as4
+    beep_beep :f4
+    beep_beep :c4
+  end
 end
 
-rythm_with_slight_bass
-
-sleep 8
 
 in_thread do
-  with_fx :reverb, room: 0.5 do
-    with_fx :krush, gain: 5 do
-      2.times do
-        play_pattern_timed [:f4, :gs4, :f4, :gs4, :f4, :g4], 0.33, attack: 0, release: 0.4, amp: 1
-        sleep 0.02
-        play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
-      end
-      
-      2.times do
-        play_pattern_timed [:as4, :cs5,:as4, :cs5, :as4, :c5, :cs5, :c5, :as4, :f4, :ds4, :cs4], 0.33, attack: 0, release: 0.4, amp: 1
-        sleep 0.04
-      end
-      
-      2.times do
-        play_pattern_timed [:f4, :gs4, :f4, :as4, :cs5, :g4], 0.33, attack: 0, release: 0.4, amp: 1
-        sleep 0.02
-        play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
-      end
-      
+  2.times do
+    rythm_with_slight_bass
+    16.times do
       4.times do
-        
-        play_pattern_timed [:f4, :ds4, :cs4, :ds4, :cs4, :c4], 0.33, attack: 0, release: 0.4, amp: 1
-        sleep 0.02
+        sample :bd_haus
+        sleep 1
       end
-      #play :as3, release: 1
-      
+    end
+  end
+
+
+end
+
+sleep 32
+rythm_with_slight_bass
+
+in_thread do
+  with_synth :dsaw do
+    with_fx :reverb, room: 0.8, amp: 0.6 do
+      with_fx :krush, gain: 5 do
+        2.times do
+          play_pattern_timed [:f4, :gs4, :f4, :gs4, :f4, :g4], 0.33, attack: 0, release: 0.4, amp: 1
+          sleep 0.02
+          play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
+        end
+
+        2.times do
+          play_pattern_timed [:as4, :cs5,:as4, :cs5, :as4, :c5, :cs5, :c5, :as4, :f4, :ds4, :cs4], 0.33, attack: 0, release: 0.4, amp: 1
+          sleep 0.04
+        end
+
+        2.times do
+          play_pattern_timed [:f4, :gs4, :f4, :as4, :cs5, :g4], 0.33, attack: 0, release: 0.4, amp: 1
+          sleep 0.02
+          play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
+        end
+
+        4.times do
+
+          play_pattern_timed [:f4, :ds4, :cs4, :ds4, :cs4, :c4], 0.33, attack: 0, release: 0.4, amp: 1
+          sleep 0.02
+        end
+        #play :as3, release: 1
+
+      end
     end
   end
 end

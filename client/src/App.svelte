@@ -2,13 +2,12 @@
 
 	// import './style.css'
   import { onMount } from 'svelte';
-  import { addMessages, init, getLocaleFromNavigator } from 'svelte-i18n';
+  import { _, addMessages, init, getLocaleFromNavigator } from 'svelte-i18n';
   import { fade } from 'svelte/transition';
 
   import * as THREE from 'three'
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
   import Stats from 'three/examples/jsm/libs/stats.module.js'
   import * as dat from 'dat.gui';
   import isMobile from 'ismobilejs';
@@ -33,10 +32,9 @@
   // Languages
   import en from './i18n/en.json'
   import de from './i18n/de.json'
-import { insert } from 'svelte/internal';
 
   // --- DEBUG
-  const debug = true
+  const debug = false
   // ---
 
   addMessages('en', en)
@@ -47,6 +45,7 @@ import { insert } from 'svelte/internal';
     initialLocale: getLocaleFromNavigator(),
   });
 
+  var loadingCounter = 0
   let activateControls = false
   let showIntro = true
   let showInstructions = false
@@ -87,6 +86,7 @@ import { insert } from 'svelte/internal';
   if(!debug) gui.hide()
 
   onMount(async () => {
+    loadingCounter++;
     const canvas = document.querySelector('canvas.webgl')
 
     storeShowStahle.subscribe(value => {
@@ -143,6 +143,7 @@ import { insert } from 'svelte/internal';
     const nearbyPlanets = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r);
     const nearbyVisible = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor * (isMobile(window.navigator).any ? 1 : 4));
     const planets = []
+    loadingCounter++
     const texturePromis = Promise.all(loaders, (resolve, reject) => {
       resolve(texturePromis);
     }).then(textures => {
@@ -190,16 +191,16 @@ import { insert } from 'svelte/internal';
         nearbyPlanets.insert(object);
 
       }
+      loadingCounter++
     })
 
     var color = '#edc99d';
     var materialAsteroid = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 0.8});
-    var materialTest = new THREE.MeshBasicMaterial({color: 'red'})
-    // var materialAsteroid = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
     materialAsteroid.flatShading = true
 
     let asteroids = []
     var moonCount = 0
+    loadingCounter++
     for(let i in data.asteroids)
     {
       let p = data.asteroids[i]
@@ -232,7 +233,7 @@ import { insert } from 'svelte/internal';
       nearbyVisible.insert(object);
 
     }
-    console.log(hideableObjects.length)
+    loadingCounter = 0
 
     asteroids.forEach(p => groupClickable.add(p))
 
@@ -248,6 +249,7 @@ import { insert } from 'svelte/internal';
     if(!debug)
     {
       const eeLoader = new THREE.ObjectLoader();
+      loadingCounter++
       eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
 
         loadedObj.position.set(388909804, 148202816, -334159444)
@@ -264,7 +266,7 @@ import { insert } from 'svelte/internal';
 
         // Add to nearbylist
         nearbyVisible.createObject(loadedObj, box);        
-          
+        loadingCounter--
       })
     }
 
@@ -576,12 +578,17 @@ import { insert } from 'svelte/internal';
       }      
 
     }, 500)
-
+    loadingCounter--
 	});
 
 </script>
 
 <main>
+  {#if loadingCounter > 0}
+    <div class='loading'>
+      <div class='loadingtext'>{$_('messages.loading')}</div>
+    </div>
+  {/if}
   {#if showInstructions}
     <div transition:fade style='position:absolute;left:50%;transform: translateX(-50%);z-index: 1000'><Instructions /></div>
   {/if}
@@ -675,5 +682,36 @@ import { insert } from 'svelte/internal';
     border: 1px solid #ababab;
     opacity: 0.8;
   }
+
+  .loading
+  {
+    position: fixed;
+    z-index: 9000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/loading.jpg');
+    background-size: cover;
+  }
+
+  .loadingtext
+  {
+    color: white;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 1.5em;
+    text-align: right;
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+  }
+
+  @media (min-width: 800px) {
+    .loadingtext
+    {
+      font-size: 3em;
+    }
+  }  
 
 </style>

@@ -1,3 +1,4 @@
+// https://www.npmjs.com/package/nearby-js?activeTab=readme
 var Nearby = function (width, height, depth, binSize){
   this.limitBox = this.createBox(0, 0, 0, width, height, depth);
   this.binSize = binSize;
