@@ -9,6 +9,7 @@
   import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
   import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+  import Stats from 'three/examples/jsm/libs/stats.module.js'
   import * as dat from 'dat.gui';
   import isMobile from 'ismobilejs';
 
@@ -32,9 +33,10 @@
   // Languages
   import en from './i18n/en.json'
   import de from './i18n/de.json'
+import { insert } from 'svelte/internal';
 
   // --- DEBUG
-  const debug = false
+  const debug = true
   // ---
 
   addMessages('en', en)
@@ -49,6 +51,8 @@
   let showIntro = true
   let showInstructions = false
   var animationArray = []
+  var hideableObjects = []
+  var timerHideableObjects
   let audioAmbient
   var controlAccelerator, controlMouse;
 
@@ -73,6 +77,13 @@
 
   // Add Gui
   const gui = new dat.GUI({name: 'My GUI'});
+  var stats
+  if(debug)
+  {
+    stats = new Stats()
+    stats.showPanel( 0 )
+    document.body.appendChild( stats.dom );
+  }
   if(!debug) gui.hide()
 
   onMount(async () => {
@@ -130,6 +141,7 @@
     const nearbyFactor = 100000000
     const nearbyAsteroids = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor);
     const nearbyPlanets = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r);
+    const nearbyVisible = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor * (isMobile(window.navigator).any ? 1 : 4));
     const planets = []
     const texturePromis = Promise.all(loaders, (resolve, reject) => {
       resolve(texturePromis);
@@ -182,10 +194,12 @@
 
     var color = '#edc99d';
     var materialAsteroid = new THREE.MeshStandardMaterial({color:color, roughness: 0.8, metalness: 0.8});
+    var materialTest = new THREE.MeshBasicMaterial({color: 'red'})
     // var materialAsteroid = new THREE.MeshPhongMaterial({color:color, roughness: 0.8, metalness: 1});
     materialAsteroid.flatShading = true
 
     let asteroids = []
+    var moonCount = 0
     for(let i in data.asteroids)
     {
       let p = data.asteroids[i]
@@ -204,6 +218,9 @@
       mesh.userData.id = p.id
 
       asteroids.push(mesh)
+      if(p.type == 'moon') moonCount++
+      if(p.type == 'asteroid' && p.size < 900000) hideableObjects.push(mesh)
+      if(p.type == 'moon' && moonCount % 3 == 0) hideableObjects.push(mesh)
 
       // Add Nearby
       var box = nearbyAsteroids.createBox(
@@ -211,9 +228,11 @@
         p.size, p.size, p.size
       );
       var object = nearbyAsteroids.createObject(mesh, box);
-      nearbyAsteroids.insert(object);      
+      nearbyAsteroids.insert(object);
+      nearbyVisible.insert(object);
 
     }
+    console.log(hideableObjects.length)
 
     asteroids.forEach(p => groupClickable.add(p))
 
@@ -235,6 +254,17 @@
         loadedObj.scale.set(200000, 200000, 200000)
         loadedObj.rotation.y = 1.5
         scene.add(loadedObj)
+        hideableObjects.push(loadedObj)
+
+        // Add Nearby
+        var box = nearbyVisible.createBox(
+          loadedObj.position.x, loadedObj.position.y, loadedObj.position.z,
+          10000, 10000, 10000
+        );
+
+        // Add to nearbylist
+        nearbyVisible.createObject(loadedObj, box);        
+          
       })
     }
 
@@ -287,7 +317,13 @@
     guiCamera.open();
     guiCamera.add(camera.position, 'x').listen();
     guiCamera.add(camera.position, 'y').listen();
-    guiCamera.add(camera.position, 'z').listen();    
+    guiCamera.add(camera.position, 'z').listen();   
+    var test = {'test': () => {
+      clearInterval(timerHideableObjects)
+      hideableObjects.forEach(o => o.visible = true)
+
+    }} 
+    gui.add(test, "test")
 
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
@@ -421,6 +457,8 @@
         // Render
         composer.render();
 
+        if(stats) stats.update();
+
         // Call tick again on the next frame
         window.requestAnimationFrame(tick)
     }
@@ -521,6 +559,23 @@
     }
 
     tick()
+
+    // Nearbychecker
+    timerHideableObjects = setInterval(() => {
+
+      hideableObjects.forEach(o => o.visible = false)
+      // hideableObjects.forEach(o => o.material = materialTest)
+
+      let nearbyMeshes = [...nearbyVisible.query(camera.position.x, camera.position.y, camera.position.z).keys()]
+      // Now calculate distance to each Object
+      for(var i in nearbyMeshes)
+      {
+        const mesh = nearbyMeshes[i].id
+        // mesh.material = materialAsteroid
+        mesh.visible = true
+      }      
+
+    }, 500)
 
 	});
 
