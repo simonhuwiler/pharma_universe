@@ -6,7 +6,7 @@
     "detailinformation": "Detaillierte Daten anzeigen"
   },
   "messages": {
-    "loading": "laden...",
+    "loading": "laden",
     "waiting": "Raumstation wird angefragt...",
     "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt."
   },

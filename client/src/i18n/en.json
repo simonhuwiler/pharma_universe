@@ -6,7 +6,7 @@
     "detailinformation": "Show detailed data"
   },
   "messages": {
-    "loading": "loading...",
+    "loading": "loading",
     "waiting": "Space station is requested...",
     "errorfetch": ":( Space station could not be found. Perhaps it was swallowed by a black hole."
   },
