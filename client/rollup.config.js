@@ -11,7 +11,8 @@ import del from 'rollup-plugin-delete'
 
 const production = !process.env.ROLLUP_WATCH;
 
-const hash = (Math.random() + 1).toString(36).substring(7);
+var hash = (Math.random() + 1).toString(36).substring(7);
+hash = production ? hash : '0'
 
 function serve() {
 	let server;
@@ -48,12 +49,32 @@ const htmlTemplate = {
 			})
 			.join('\n');
 		return `<!DOCTYPE html>
-			<html lang="en">
+			<html lang="de">
 			<head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width,initial-scale=1'>
-        <meta name='apple-mobile-web-app-capable' content='yes'>
+        <meta name="author" content="Simon Huwiler">
+        <meta name="apple-mobile-web-app-capable" content="yes" />        
+
+        <meta name="description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
+        
+        <!-- FACEBOOK -->
+        <meta property="og:url"           content="https://www.journalist.sh/pharmauniverse" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Das Pharma-Universum | The Pharma-Universe" />
+        <meta property="og:description"   content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
+        <meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg" />
+    
+        <!-- TWITTER -->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" content="@simon_huwiler"/>
+        <meta name="twitter:url" content="https://www.journalist.sh/pharmauniverse" />
+        <meta name="twitter:title" content="Das Pharma-Universum | The Pharma-Universe"/>
+        <meta name="twitter:description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus."/>
+        <meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg"/>
+
         <title>PharmaUniverse</title>
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap" rel="stylesheet">

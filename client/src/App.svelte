@@ -15,7 +15,7 @@
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
-  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
+  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle, storeShowEasteregg } from './store.js';
   import Hud from './Hud.svelte'
   import Loading from './Loading.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
@@ -23,6 +23,7 @@
   import Intro from './Intro.svelte'
   import Information from './Information.svelte'
   import Instructions from './Instructions.svelte'
+  import Easteregg from './Easteregg.svelte'
   import Connection from './connection'
 
   import settings from './settings'
@@ -46,6 +47,7 @@
   var loadingCounter = 0
   let activateControls = false
   let showIntro = true
+  let showEasteregg = false
   let showInstructions = false
   var animationArray = []
   var hideableObjects = []
@@ -68,6 +70,7 @@
     }
   });
   storeAnimationArray.subscribe(value => animationArray = value)
+  storeShowEasteregg.subscribe(value => showEasteregg = value)
   
   let huds = []
   var activeAsteroid = null
@@ -234,10 +237,6 @@
       }
       loadingCounter = 0
 
-      asteroids.forEach(p => groupClickable.add(p))
-
-      scene.add(groupClickable)
-
       const light = new THREE.PointLight( 0xffffff, 1 );
       const ambientLight = new THREE.AmbientLight( 0xffffff, 0.1 );
       light.position.y = data.solarsystem_r / 2
@@ -250,24 +249,29 @@
         const eeLoader = new THREE.ObjectLoader();
         loadingCounter++
         eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
-
           loadedObj.position.set(388909804, 148202816, -334159444)
           loadedObj.scale.set(200000, 200000, 200000)
           loadedObj.rotation.y = 1.5
-          scene.add(loadedObj)
+          loadedObj.userData = {type: 'easteregg'}
+          loadedObj.children.forEach(m => m.userData = loadedObj.userData)
+          groupClickable.add(loadedObj)
           hideableObjects.push(loadedObj)
 
           // Add Nearby
           var box = nearbyVisible.createBox(
             loadedObj.position.x, loadedObj.position.y, loadedObj.position.z,
-            10000, 10000, 10000
+            200000, 200000, 200000
           );
 
           // Add to nearbylist
-          nearbyVisible.createObject(loadedObj, box);        
+          var object = nearbyVisible.createObject(loadedObj, box); 
+          nearbyVisible.insert(object);
           loadingCounter--
         })
       }
+
+      asteroids.forEach(p => groupClickable.add(p))
+      scene.add(groupClickable)
 
       // Sizes
       const sizes = {
@@ -471,7 +475,7 @@
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
         pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
         raycaster.setFromCamera( pointer, camera );
-        const intersects = raycaster.intersectObjects( groupClickable.children );
+        const intersects = raycaster.intersectObjects( groupClickable.children, true );
         
         if(intersects.length > 0)
         {
@@ -489,8 +493,9 @@
             active.add(sound)
             sound.play()
             sound.setVolume(8)
+            setTimeout(() => addConnections(active), 0)
           }
-          else
+          else if(active.userData.type == 'asteroid')
           {
             activeAsteroid = {
               name: active.userData.name,
@@ -500,10 +505,17 @@
             active.add(sound)
             sound.play()
             sound.setVolume(1)
+            setTimeout(() => addConnections(active), 0)
           }
+          else if(active.userData.type == 'easteregg')
+          {
+            console.log("EASTER")
+            audioAmbient.pause()
+            storeShowEasteregg.set(true)
 
-          setTimeout(() => addConnections(active), 0)
-          
+            let audioBonus = new Audio('./sound/t1.mp3');
+            audioBonus.play();
+          }
         }
         else 
         {
@@ -594,6 +606,9 @@
   {/if}
   {#if !showIntro}
     <Information />
+  {/if}
+  {#if showEasteregg}
+    <Easteregg />
   {/if}
   {#if !showIntro && isMobile(window.navigator).any}
     <div class='throttle' on:touchstart={() => controlMouse.forward(true)} on:touchend={() => controlMouse.forward(false)} />

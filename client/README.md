@@ -19,6 +19,8 @@ Skybox: https://opengameart.org/content/space-skybox-0
 
 Asteroids inspired by: https://codepen.io/Divyz/pen/VPrZMy
 
+F35 by [Celinsky](https://sketchfab.com/Cellinsky)
+
 ## Installation
 ```bash
 cd client

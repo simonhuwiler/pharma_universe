@@ -69,7 +69,7 @@
 
     a
     {
-      background: url('../images/link.png') no-repeat left;
+      background: url('./images/link.png') no-repeat left;
       padding-left: 18px;
       background-size: 15px 15px;
       font-size: 0.8em;

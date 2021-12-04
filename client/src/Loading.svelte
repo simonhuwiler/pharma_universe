@@ -22,6 +22,8 @@
 		width: 100%;
 		height: 100%;
 		background-color: black;
+		background-image: url('./textures/skybox/6.png');
+		background-size: cover;
 	}
 	
 	.text

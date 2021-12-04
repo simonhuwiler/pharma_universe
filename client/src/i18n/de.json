@@ -29,5 +29,9 @@
     "title": "PharmaUniverse",
     "text": "Entwicklung & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Basierend auf Daten von <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Kontakt: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
     "goon": "weiterfliegen"
+  },
+  "easteregg": {
+    "title": "Wohooo!",
+    "text": "Gratuliere, Du hast das versteckte Easteregg gefunden! Natürlich hat ein F-35-Jet nichts in diesem Universum verloren. Als Belohnung erhältst Du einen unfertigen Bonustrack (er läuft bereits). Ja, er fängt gleich an wie die Hintergrundmusik. Falls Du ihn fertig schreiben möchtest, findest Du ihn <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>hier</a>. Du brauchst <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> dazu."
   }
 }
