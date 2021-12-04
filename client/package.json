@@ -24,6 +24,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "dat.gui": "^0.7.7",
     "format-number": "^3.0.0",
+    "ismobilejs": "^1.1.1",
     "sirv-cli": "^1.0.0",
     "svelte-i18n": "^3.3.13",
     "three": "^0.131.3"
