@@ -1,4 +1,4 @@
-<script>
+b<script>
   import { _ } from 'svelte-i18n'
   import format from 'format-number'
   var myFormat = format({integerSeparator: "'", suffix: ' CHF'});
@@ -97,7 +97,7 @@
       z-index: 3;
       line-height: 1.1em;
       max-height: 90vh;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     .info
