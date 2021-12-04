@@ -143,7 +143,7 @@
       const nearbyFactor = 100000000
       const nearbyAsteroids = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor);
       const nearbyPlanets = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r);
-      const nearbyVisible = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor * (isMobile(window.navigator).any ? 1 : 4));
+      const nearbyVisible = new Nearby(data.solarsystem_r * 2, data.solarsystem_r * 2, data.solarsystem_r * 2, nearbyFactor * (isMobile(window.navigator).any ? 1 : 3));
       const planets = []
       loadingCounter++
       const texturePromis = Promise.all(loaders, (resolve, reject) => {
