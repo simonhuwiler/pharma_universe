@@ -122,6 +122,7 @@ with_fx :reverb, room: 1 do
   #end
 end
 
+background 1
 rythm_with_slight_bass 1
 in_thread do
   8.times do
@@ -148,43 +149,48 @@ end
 
 
 sleep 32
+background 2
 rythm_with_slight_bass 2
 
 in_thread do
   2.times do
-    with_synth :fm do
-      with_fx :reverb, room: 0.8, amp: 0.6 do
-        with_fx :krush, gain: 5, mix: 0.1 do |fx|
-          2.times do
-            play_pattern_timed [:f4, :gs4, :f4, :gs4, :f4, :g4], 0.33, attack: 0, release: 0.4, amp: 1
-            sleep 0.02
-            play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
-          end
-          
-          2.times do
-            play_pattern_timed [:as4, :cs5,:as4, :cs5, :as4, :c5, :cs5, :c5, :as4, :f4, :ds4, :cs4], 0.33, attack: 0, release: 0.4, amp: 1
-            sleep 0.04
-          end
-          
-          2.times do
-            play_pattern_timed [:f4, :gs4, :f4, :as4, :cs5, :g4], 0.33, attack: 0, release: 0.4, amp: 1
-            sleep 0.02
-            play_pattern_timed [:gs4, :f4], 1, attack: 0,  release: 0.9, amp: 1
-          end
-          
-          4.times do
-            
-            play_pattern_timed [:f4, :ds4, :cs4, :ds4, :cs4, :c4], 0.33, attack: 0, release: 0.4, amp: 1
-            sleep 0.02
-          end
+    with_synth :tb303 do
+      with_fx :reverb do |rev|
+        control rev, mix: rrand(0, 0.6)
+        r = 0.1
+        g_amp = 0.8
+        
+        2.times do
+          play_pattern_timed [:f4, :gs4, :f4, :gs4, :f4, :g4], 0.33, release: r, cutoff: rrand(70, 90), amp: g_amp
+          sleep 0.02
+          play_pattern_timed [:gs4, :f4], 1, release: r , cutoff: rrand(70, 90), amp: g_amp - 0.2
         end
+        
+        2.times do
+          play_pattern_timed [:as4, :cs5,:as4, :cs5, :as4, :c5, :cs5, :c5, :as4, :f4, :ds4, :cs4], 0.33, release: r, cutoff: rrand(70, 90), amp: g_amp
+          sleep 0.04
+        end
+        
+        2.times do
+          play_pattern_timed [:f4, :gs4, :f4, :as4, :cs5, :g4], 0.33, release: r, cutoff: rrand(70, 90), amp: g_amp
+          sleep 0.02
+          play_pattern_timed [:gs4, :f4], 1, release: r, cutoff: rrand(70, 90), amp: g_amp - 0.2
+        end
+        
+        4.times do
+          
+          play_pattern_timed [:f4, :ds4, :cs4, :ds4, :cs4, :c4], 0.33, release: r, cutoff: rrand(70, 90), amp: g_amp
+          sleep 0.02
+        end
+        
       end
     end
   end
 end
 
+sleep 32
 
-
+background 4
 rythm_with_slight_bass 2
 
 =begin
