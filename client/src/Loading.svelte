@@ -1,9 +1,9 @@
 <script>
 	import { _ } from 'svelte-i18n';
 	let dots = ''
-	setInterval(() => {
-		dots = dots.length % 4 == 3 ? '' : dots + '.'
-	}, 200)
+	// setInterval(() => {
+	// 	dots = dots.length % 4 == 3 ? '' : dots + '.'
+	// }, 200)
 
 
 </script>
@@ -33,9 +33,25 @@
 		font-size: 1.0em;
 		position: absolute;
 		top: 50%;
-		left: 45%;
+		left: 50%;
 		transform: translateY(-50%);
+    animation: pulse 1s infinite;
+		animation-direction: alternate;
 	}
+
+	@keyframes pulse {
+    0% {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 
 	/*
 @media (min-width: 800px) {
