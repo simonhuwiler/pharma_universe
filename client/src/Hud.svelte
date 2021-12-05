@@ -46,10 +46,12 @@
   .label.asteroid
   {
     color: rgba(255, 255, 255, 0.35);
+    user-select: none;
   }
 
   .label.planet
   {
     color: rgba(2, 202, 216, 0.35);
+    user-select: none;
   }
 </style>
