@@ -26,8 +26,8 @@
     "instructionmobile": "Accelerate by clicking the <u>button</u> the button in the left corner. Steer by moving your <u>Smartphone</u>. Double click to switch to full screen mode."
   },
   "infobox": {
-    "title": "PharmaUniverse",
-    "text": "Development & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code and Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Based on data from <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Contact <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
+    "title": "The Pharma-Universe",
+    "text": "Development & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code and full Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Based on data from: <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Contact: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
     "goon": "fly on"
   },
   "easteregg": {

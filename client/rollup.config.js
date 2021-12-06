@@ -59,19 +59,19 @@ const htmlTemplate = {
 				<meta name="description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
 
 				<! -- FAVICON -->
-				<link rel="shortcut icon" href="/favicon.ico">
-				<link rel="icon" type="image/png" href="./favicon.png" sizes="32x32">
-				<link rel="icon" type="image/png" href="./favicon.png" sizes="96x96">
-				<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+				<link rel="shortcut icon" href="/favicon-16x16.ico">
+				<link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32">
+				<link rel="icon" type="image/png" href="./favicon-96x96.png" sizes="96x96">
+				<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png">
 				<meta name="msapplication-TileColor" content="#ffffff">
-				<meta name="msapplication-TileImage" content="./mstile-144x144.png">        
+				<meta name="msapplication-TileImage" content="./mstile-150x150.png">        
 				
 				<!-- FACEBOOK -->
 				<meta property="og:url"           content="https://www.journalist.sh/pharmauniverse" />
 				<meta property="og:type"          content="website" />
 				<meta property="og:title"         content="Das Pharma-Universum | The Pharma-Universe" />
 				<meta property="og:description"   content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
-				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg" />
+				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebookb.jpg" />
 			
 				<!-- TWITTER -->
 				<meta name="twitter:card" content="summary_large_image"/>
@@ -79,9 +79,9 @@ const htmlTemplate = {
 				<meta name="twitter:url" content="https://www.journalist.sh/pharmauniverse" />
 				<meta name="twitter:title" content="Das Pharma-Universum | The Pharma-Universe"/>
 				<meta name="twitter:description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus."/>
-				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg"/>
+				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebookb.jpg"/>
 
-				<title>PharmaUniverse</title>
+				<title>Das Pharma-Universum | The Pharma-Universe</title>
 
 				<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
