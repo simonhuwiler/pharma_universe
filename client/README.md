@@ -8,7 +8,7 @@ Pharmaceutical companies pay money to doctors and organizations every year. We c
 You may use this at your wish with one restriction: The mesh of the lava planet (Novartis) is not free. You need to buy it as well. You will [find it here](https://www.cgtrader.com/3d-models/textures/natural/lava-pbr-seamless-texture).
 
 ## Credits
-Background music and bonus track: shu
+Background music and bonus track: Made with sonic pi. You will find the code for the music in the repository
 
 Planet textures made with:
 * https://www.texturesforplanets.com/
@@ -19,7 +19,7 @@ Skybox: https://opengameart.org/content/space-skybox-0
 
 Asteroids inspired by: https://codepen.io/Divyz/pen/VPrZMy
 
-F35 by [Celinsky](https://sketchfab.com/Cellinsky)
+Easter egg by [Celinsky](https://sketchfab.com/Cellinsky)
 
 ## Installation
 ```bash
