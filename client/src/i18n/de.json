@@ -26,8 +26,8 @@
     "instructionmobile": "Beschleunige, in dem Du auf den <u>Knopf</u> in der linken Ecke klickst. Lenke, in dem Du Dein <u>Smartphone</u> bewegst. Doppelklicken, um in den Vollbildmodus zu wechseln."
   },
   "infobox": {
-    "title": "PharmaUniverse",
-    "text": "Entwicklung & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Basierend auf Daten von <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Kontakt: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
+    "title": "Das Pharma-Universum",
+    "text": "Entwicklung & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Basierend auf Daten von: <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Kontakt: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
     "goon": "weiterfliegen"
   },
   "easteregg": {

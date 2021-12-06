@@ -81,7 +81,7 @@ const htmlTemplate = {
 				<meta name="twitter:description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus."/>
 				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg"/>
 
-				<title>PharmaUniverse</title>
+				<title>Das Pharma-Universum | The Pharma-Universe</title>
 
 				<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
