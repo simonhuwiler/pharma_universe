@@ -71,7 +71,7 @@ const htmlTemplate = {
 				<meta property="og:type"          content="website" />
 				<meta property="og:title"         content="Das Pharma-Universum | The Pharma-Universe" />
 				<meta property="og:description"   content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
-				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg" />
+				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebookb.jpg" />
 			
 				<!-- TWITTER -->
 				<meta name="twitter:card" content="summary_large_image"/>
@@ -79,7 +79,7 @@ const htmlTemplate = {
 				<meta name="twitter:url" content="https://www.journalist.sh/pharmauniverse" />
 				<meta name="twitter:title" content="Das Pharma-Universum | The Pharma-Universe"/>
 				<meta name="twitter:description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus."/>
-				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebook.jpg"/>
+				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebookb.jpg"/>
 
 				<title>Das Pharma-Universum | The Pharma-Universe</title>
 
