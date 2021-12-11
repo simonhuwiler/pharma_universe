@@ -30,6 +30,13 @@
     "text": "Development & Audio: shu (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code and full Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Based on data from: <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Contact: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
     "goon": "fly on"
   },
+  "search":
+  {
+    "title": "Search",
+    "placeholder": "Start writing...",
+    "morethan10": "More than 10 results found...",
+    "nothingfound": "Nothing found (yet)"
+  },  
   "easteregg": {
     "title": "Wohooo!",
     "text": "Congratulations, you found the hidden Easteregg! Of course, an F-35 jet has no place in this universe. As a reward you get an unfinished bonus track (it's already running). Yes, it starts the same as the background music. If you want to finish it, you can find it <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>here</a>. You need <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> to do it."

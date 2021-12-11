@@ -15,13 +15,14 @@
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
-  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle, storeShowEasteregg } from './store.js';
+  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle, storeShowEasteregg, storeData, storeSearchItem } from './store.js';
   import Hud from './Hud.svelte'
   import Loading from './Loading.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
   import Intro from './Intro.svelte'
   import Information from './Information.svelte'
+  import Search from './Search.svelte'
   import Instructions from './Instructions.svelte'
   import Easteregg from './Easteregg.svelte'
   import Connection from './connection'
@@ -59,6 +60,7 @@
   let showIntro = true
   let showEasteregg = false
   let showInstructions = false  
+  let searchItem = null
 
   storeControlsEnabled.subscribe(value => activateControls = value);
   storeShowIntro.subscribe(value => {
@@ -75,9 +77,8 @@
   });
   storeAnimationArray.subscribe(value => animationArray = value)
   storeShowEasteregg.subscribe(value => showEasteregg = value)
+  storeSearchItem.subscribe(value => searchItem = value)
   
-
-
   // ----------------------- Add dat.gui
   const gui = new dat.GUI({name: 'Debug'});
   var stats
@@ -94,6 +95,7 @@
   fetch('./data.json')
     .then(response => response.json())
     .then(data => {
+      storeData.set(data)
       const canvas = document.querySelector('canvas.webgl')
 
       // Subscribe intro click on astesroid 6950
@@ -193,6 +195,7 @@
           );
           var object = nearbyPlanets.createObject(sphere, box);
           nearbyPlanets.insert(object);
+          planet.mesh = sphere
 
         }
         loadingCounter++
@@ -238,6 +241,7 @@
         var object = nearbyAsteroids.createObject(mesh, box);
         nearbyAsteroids.insert(object);
         nearbyVisible.insert(object);
+        p.mesh = mesh
 
       }
       loadingCounter = 0
@@ -386,7 +390,6 @@
         sound.setRefDistance( 6000000 );
       });    
 
-
       // ----------------------- Decide, which asteroids are far enough and hide them
       const addNearbies = (nearbyMeshes, max, type, results) => {
 
@@ -428,6 +431,44 @@
         }
       }
 
+      const addSearchItem = () => {
+        if(!searchItem) return null
+
+        var pos = searchItem.mesh.position.clone()
+        pos.project(camera);
+
+        pos.x = ( pos.x * sizes.width / 2 ) + sizes.width / 2;
+        pos.y = - ( pos.y * sizes.height / 2 ) + sizes.height / 2;        
+
+        let left = pos.x
+        let top = pos.y
+        if(pos.z >= 1)
+        {
+          left = left * -1
+          top = top * -1
+        }
+
+        left = Math.max(left, 10)
+        left = Math.min(left, sizes.width)
+
+        top = Math.max(top, 10)
+        top = Math.min(top, sizes.height)
+
+        let distance = camera.position.distanceTo(searchItem.mesh.position)
+        let label = searchItem.mesh.userData.name
+
+        // If near, remove item
+        if(distance  / 10000 < 800)
+          storeSearchItem.set(null)
+
+        return {
+          top: top,
+          left: left,
+          distance: Math.round(distance / 10000),
+          label: label,
+          type: 'search'
+        }
+      }
       
       // ----------------------- Animate
       const clock = new THREE.Clock()
@@ -455,6 +496,10 @@
           addNearbies(rearresultPlanets, 10, 'planet', localhuds)
 
           huds = localhuds
+
+          // Add Search Hud if any
+          const searchHud = addSearchItem()
+          if(searchHud) huds.push(searchHud)
 
           // Run all animations
           animationArray.forEach(a => {
@@ -621,6 +666,7 @@
   {/if}
   {#if !showIntro}
     <Information />
+    <Search/>
   {/if}
   {#if showEasteregg}
     <Easteregg />
@@ -654,12 +700,12 @@
   <div class='hud'>    
     {#each huds as h}
       <Hud
-      top={h.top}
-      left={h.left}
-      distance={h.distance}
-      label={h.label}
-      type={h.type}  
-    />
+        top={h.top}
+        left={h.left}
+        distance={h.distance}
+        label={h.label}
+        type={h.type}  
+      />
     {/each}
   </div>
 
