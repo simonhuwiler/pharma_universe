@@ -17,6 +17,9 @@
         const filteredAsteroids = data.asteroids.filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
         let filtered = filteredPlanets.concat(filteredAsteroids)
 
+        // Sort
+        filtered.sort((a, b) => a.name > b.name ? 1 : -1)
+
         moreThan10 = filtered.length > 10
         filtered = filtered.slice(0, 10)
         searchResults = filtered

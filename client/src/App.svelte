@@ -448,11 +448,11 @@
           top = top * -1
         }
 
-        left = Math.max(left, 10)
-        left = Math.min(left, sizes.width)
+        left = Math.max(left, 15)
+        left = Math.min(left, sizes.width - 15)
 
-        top = Math.max(top, 10)
-        top = Math.min(top, sizes.height)
+        top = Math.max(top, 15)
+        top = Math.min(top, sizes.height - 15)
 
         let distance = camera.position.distanceTo(searchItem.mesh.position)
         let label = searchItem.mesh.userData.name
