@@ -1,6 +1,6 @@
 <script>
     import { _ } from 'svelte-i18n'
-    import { storeData, storeSearchItem } from './store.js';
+    import { storeData, storeSearchItem, storeControlsEnabled } from './store.js';
 
     var showSearchbox = false
     var data = null
@@ -29,7 +29,10 @@
     }
 </script>
     
-<div class='search' on:click={() => showSearchbox = true}>
+<div class='search' on:click={() => {
+    showSearchbox = true
+    storeControlsEnabled.set(false)
+  }}>
   <img src='./images/search.png' alt='Suchen' />
 </div>
 
@@ -49,6 +52,7 @@
             storeSearchItem.set(item)
             searchResults = []
             moreThan10 = false
+            storeControlsEnabled.set(true)
           }}>{item.name}</li>
         {/each}
       </ul>
@@ -57,7 +61,12 @@
       <span>{$_('search.morethan10')}</span>
     {/if}
     <div class='buttons'>
-      <button class='tour' on:click={() => showSearchbox = false}>{$_('infobox.goon')}</button>
+      <button class='tour' on:click={() => {
+        showSearchbox = false
+        searchResults = []
+        moreThan10 = false
+        storeControlsEnabled.set(true)
+      }}>{$_('infobox.goon')}</button>
     </div>
   </div>
 {/if}

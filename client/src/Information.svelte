@@ -1,9 +1,14 @@
 <script>
     import { _ } from 'svelte-i18n'
+    import { storeControlsEnabled } from './store.js';
+
     var showInfobox = false
 </script>
     
-<div class='information' on:click={() => showInfobox = true}>
+<div class='information' on:click={() => {
+  showInfobox = true
+  storeControlsEnabled.set(false)
+}}>
   <img src='./images/information.png' alt='Information' />
 </div>
 
@@ -14,7 +19,10 @@
       {@html $_('infobox.text')}
     </p>
     <div class='buttons'>
-      <button class='tour' on:click={() => showInfobox = false}>{$_('infobox.goon')}</button>
+      <button class='tour' on:click={() => {
+        showInfobox = false
+        storeControlsEnabled.set(true)
+      }}>{$_('infobox.goon')}</button>
     </div>
   </div>
 {/if}
