@@ -98,11 +98,11 @@
       storeData.set(data)
       const canvas = document.querySelector('canvas.webgl')
 
-      // Subscribe intro click on astesroid 6950
+      // Subscribe intro click on astesroid 8713
       storeShowStahle.subscribe(value => {
         if(value) 
         {
-          const active = asteroids.find(x => x.userData.id === 6950)
+          const active = asteroids.find(x => x.userData.id === 8713)
           addConnections(active)
           active.add(sound)
           sound.play()
@@ -259,7 +259,7 @@
         const eeLoader = new THREE.ObjectLoader();
         loadingCounter++
         eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
-          loadedObj.position.set(388909804, 148202816, -334159444)
+          loadedObj.position.set(717387321, 300192394, 188333836)
           loadedObj.scale.set(200000, 200000, 200000)
           loadedObj.rotation.y = 1.5
           loadedObj.userData = {type: 'easteregg'}

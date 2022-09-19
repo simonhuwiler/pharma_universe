@@ -40,7 +40,7 @@
   <div class='infobox searchbox'>
     <h2>{$_('search.title')}</h2>
     <p>
-      <input type='text' placeholder={$_('search.placeholder')} on:input={inputChange} />
+      <input type='text' placeholder={$_('search.placeholder')} on:input={inputChange} autofocus={true}/>
     </p>
     {#if searchResults.length == 0}
       <span>{$_('search.nothingfound')}</span>
