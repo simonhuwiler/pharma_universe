@@ -2,6 +2,54 @@
 
 import * as THREE from 'three'
 
+class RotateAnimation {
+  constructor( target, duration )
+  {
+    this.duration = duration ? duration : 0.5
+
+    this.target = target
+    this.targetQuaternion = null
+    this.animationStart = Date.now();
+    this.animationEnd = this.animationStart + this.duration * 1000;
+    this.startQuaternion = null
+  }
+
+  quadraticInOut(k)
+  {
+
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k;
+    }
+
+    return - 0.5 * (--k * (k - 2) - 1);
+
+  }  
+
+  tick(camera)
+  {
+    const time = Date.now();
+
+    if(!this.startQuaternion)
+    {
+      // Camera is null, is first tick
+      this.startQuaternion = new THREE.Quaternion().copy(camera.quaternion)
+
+      camera.lookAt(new THREE.Vector3(this.target[0], this.target[1], this.target[2]))
+      this.targetQuaternion = new THREE.Quaternion().copy(camera.quaternion)
+      camera.quaternion.copy(this.startQuaternion)
+    }
+
+    var x = Math.min(100, 100 / (this.animationEnd - this.animationStart) * (time - this.animationStart))
+
+    const t = this.quadraticInOut(x / 100)
+    if(t >= 1) return false
+    else camera.quaternion.slerpQuaternions(this.startQuaternion, this.targetQuaternion, t)
+
+    return true
+
+  }
+}
+
 class PathAnimation {
   constructor( vectors, duration )
   {
@@ -93,4 +141,4 @@ class PathAnimation {
   }
 }
 
-export { PathAnimation };
+export { PathAnimation, RotateAnimation };

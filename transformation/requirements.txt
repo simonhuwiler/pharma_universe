@@ -1,2 +1,6 @@
-python-igraph==0.9.6
+python-igraph==0.10.8
 texttable==1.6.4
+pandas==2.1.1
+ipykernel==6.25.2
+mysql-connector-python==8.1.0
+matplotlib==3.8.0

@@ -102,7 +102,7 @@
       storeShowStahle.subscribe(value => {
         if(value) 
         {
-          const active = asteroids.find(x => x.userData.id === 8713)
+          const active = asteroids.find(x => x.userData.id === 9021)
           addConnections(active)
           active.add(sound)
           sound.play()

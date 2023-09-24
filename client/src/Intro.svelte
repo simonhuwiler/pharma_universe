@@ -4,7 +4,7 @@
   import isMobile from 'ismobilejs';
   import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
 
-  import { PathAnimation } from './pathanimation'
+  import { PathAnimation, RotateAnimation } from './pathanimation'
 
   let activeSlide = 0
   let fadeInSlide = 0
@@ -25,28 +25,40 @@
 
   const flyAmgen = () => {
     activeSlide = 2
+    const target = [ 515223815, 630095668, 261381870 ]
     storeAnimationArray.set([
+        new RotateAnimation(target, 0.5)
+    ])
+
+    setTimeout(() => {
+      storeAnimationArray.set([
         new PathAnimation([
           [ 0, 525000000, 0 ],
-          [ 0, 525000000, -20273000 ],
-          [ 60450255, 208149014, -206199116]
-      ], 10)
-    ])
+          target
+      ], 10)])      
+    }, 550)
+
     setTimeout(() => fadeInSlide = 2, 10000);
   }
 
   const flyStahel = () => {
     activeSlide = 3
+    const target = [ 162041337, 447155759, 70319418 ]
+
     storeAnimationArray.set([
-        new PathAnimation([
-          [ 60450255, 208149014, -206199116],
-          [ 67641984, 170453451, -228311716],
-          [ 42165377, 126628580, -370199153],
-          [-250308124, 405162225, -170651413],
-          [ -104048951, 433045497, 179994316]
-        ], 15)
+        new RotateAnimation((target), 0.5)
     ])
-    setTimeout(() => fadeInSlide = 3, 16000);
+
+    setTimeout(() => {
+      storeAnimationArray.set([
+        new PathAnimation([
+          [ 515223815, 630095668, 261381870 ],
+          target,
+        ], 10)
+      ])
+    }, 550)
+    setTimeout(() => fadeInSlide = 3, 10000);
+
   }
 
   const showStahel = () => {
