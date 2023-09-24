@@ -59,7 +59,7 @@ const htmlTemplate = {
 				<meta name="description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
 
 				<! -- FAVICON -->
-				<link rel="shortcut icon" href="/favicon-16x16.ico">
+				<link rel="shortcut icon" href="./favicon-16x16.ico">
 				<link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32">
 				<link rel="icon" type="image/png" href="./favicon-96x96.png" sizes="96x96">
 				<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png">
