@@ -25,9 +25,9 @@
 
   const flyAmgen = () => {
     activeSlide = 2
-    const target = [ 515223815, 630095668, 261381870 ]
+    const target = [ -348447887, 252726799, -81514858 ]
     storeAnimationArray.set([
-        new RotateAnimation(target, 0.5)
+        new RotateAnimation(target, 1)
     ])
 
     setTimeout(() => {
@@ -35,15 +35,15 @@
         new PathAnimation([
           [ 0, 525000000, 0 ],
           target
-      ], 10)])      
-    }, 550)
+      ], 8)])      
+    }, 1050)
 
-    setTimeout(() => fadeInSlide = 2, 10000);
+    setTimeout(() => fadeInSlide = 2, 9000);
   }
 
   const flyStahel = () => {
     activeSlide = 3
-    const target = [ 162041337, 447155759, 70319418 ]
+    const target = [ -61173741, 348827190, -23999822 ]
 
     storeAnimationArray.set([
         new RotateAnimation((target), 0.5)
@@ -52,7 +52,7 @@
     setTimeout(() => {
       storeAnimationArray.set([
         new PathAnimation([
-          [ 515223815, 630095668, 261381870 ],
+          [ -348447887, 252726799, -81514858 ],
           target,
         ], 10)
       ])
