@@ -7,7 +7,9 @@ b<script>
   export let name
   const states = {waiting: 0, ready: 1, nothing: 99, error: -1}
 
-  var data = {state: states.nothing}
+  var data = {
+    state: states.nothing,
+  }
 
   $: {
     if(id) 
@@ -17,31 +19,17 @@ b<script>
         .then(request => request.json())
         .then(res => {
 
-          const pharmas = []
-
-          for(let year in res.transactions)
-          {
-            for(let t in res.transactions[year][1])
-            {
-              let trans = res.transactions[year][1][t]
-              let pharma = pharmas.filter(p => p.name === trans.pharma_name)
-              if(pharma.length == 0)
-                pharmas.push({'name': trans.pharma_name, 'value': Math.round(trans.value)})
-              else
-                pharma[0].value = pharma[0].value + Math.round(trans.value)
-            }
-          }
-
-          // Add Total
-          const t = pharmas.reduce((a, b) => {return {'value': (a.value + b.value)}})
-          pharmas.push({'name': 'Total', 'value': Math.round(t.value)})
+          // let totalSum = res.aggregation.reduce((sum, item) => sum + item.total, 0);
+          const totalSum = Math.max(...res.aggregation.map(item => item.total));
+          res.aggregation.forEach(a => {
+            a.percentage = Math.max(1, 100 / totalSum * Math.round(a.total))
+          })
 
           data = {
             state: states.ready,
             id: res.recipient.id,
             name: res.recipient.name + ', ' + res.recipient.location,
-            transactions: pharmas
-
+            aggregation: res.aggregation
           }
 
         })
@@ -60,10 +48,11 @@ b<script>
 
         {data.name}<br/>
         <table border=0 cellpadding=0 cellspacing=0>
-          {#each data.transactions as t}
+          {#each data.aggregation as t}
           <tr>
-            <td>{t.name}</td>
-            <td>{myFormat(t.value)}</td>
+            <td>{t.year}</td>
+            <td><span class="bar" style='width:{t.percentage}%' /></td>
+            <td>{@html myFormat(t.total)}</td>
           </tr>
           {/each}
         </table>
@@ -120,15 +109,33 @@ b<script>
       line-height: 1.2;
     }
 
-    table tr:last-child td
+    /* table tr:last-child td
     {
       border-top: 1px solid grey;
+    } */
+    
+    tr td:nth-child(1)
+    {
+      min-width: 45px;
     }
-
+    
     tr td:nth-child(2)
     {
+      width: 100%;
+    }
+
+    tr td:nth-child(3)
+    {
       text-align: right;
-      min-width: 80px;
+      white-space: nowrap;
+      padding-left: 5px;
+    }
+
+    .bar
+    {
+      display: block;
+      height: 10px;
+      background-color: #00d0ff;
     }
 
     a

@@ -8,22 +8,63 @@
   export let value
   export let recipients
 
+  const states = {waiting: 0, ready: 1, nothing: 99, error: -1}
+
+  var data = {
+    state: states.nothing,
+  }
+
+  $: {
+    if(id) 
+    {
+      data = {state: states.waiting}
+      fetch(`https://api.pharmagelder.ch/pharma/id/${id}`)
+        .then(request => request.json())
+        .then(res => {
+
+          const totalSum = Math.max(...res.years.map(item => item.sumValue));
+          res.years.forEach(a => {
+            a.percentage = Math.max(1, 100 / totalSum * Math.round(a.sumValue))
+          })
+
+          data = {
+            state: states.ready,
+            id: res.pharma.id,
+            name: res.pharma.name,
+            aggregation: res.years
+          }
+
+        })
+      }
+    }  
+
 </script>
   
   <display>
     <div class='display'>
+
+      {#if data.state === states.waiting}
+
         {name}<br/>
+        <span class='info'>{$_('messages.waiting')}</span>
+
+      {:else if data.state === states.ready} 
+
+        {data.name}<br/>
         <table border=0 cellpadding=0 cellspacing=0>
+          {#each data.aggregation as t}
           <tr>
-            <td>{$_('data.spent')}</td>
-            <td>{myFormat(value)} {$_('data.chf')}</td>
+            <td>{t.year}</td>
+            <td><span class="bar" style='width:{t.percentage}%' /></td>
+            <td>{@html myFormat(t.sumValue)}</td>
           </tr>
-          <tr>
-            <td>{$_('data.numberrecipients')}</td>
-            <td>{myFormat(recipients)}</td>
-          </tr>
+          {/each}
         </table>
-        <a href='https://www.pharmagelder.ch/pharma/{id}-Pharma.html' target='_blank'>{$_('data.detailinformation')}</a>    
+        <a href='https://www.pharmagelder.ch/pharma/{data.id}-Pharma.html' target='_blank'>{$_('data.detailinformation')}</a>    
+      
+      {:else if data.state === states.error}
+        {$_('messages.errorfetch')}
+      {/if}
       
     </div>
   </display>
@@ -62,9 +103,33 @@
       line-height: 1.2;
     }
 
+    /* table tr:last-child td
+    {
+      border-top: 1px solid grey;
+    } */
+    
+    tr td:nth-child(1)
+    {
+      min-width: 45px;
+    }
+    
     tr td:nth-child(2)
     {
+      width: 100%;
+    }
+
+    tr td:nth-child(3)
+    {
       text-align: right;
+      white-space: nowrap;
+      padding-left: 5px;
+    }
+
+    .bar
+    {
+      display: block;
+      height: 10px;
+      background-color: #00d0ff;
     }
 
     a
