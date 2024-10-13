@@ -256,31 +256,28 @@
       scene.add( ambientLight );
 
       // ----------------------- Add Easteregg
-      if(!debug)
-      {
-        const eeLoader = new THREE.ObjectLoader();
-        loadingCounter++
-        eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
-          loadedObj.position.set(717387321, 300192394, 188333836)
-          loadedObj.scale.set(200000, 200000, 200000)
-          loadedObj.rotation.y = 1.5
-          loadedObj.userData = {type: 'easteregg'}
-          loadedObj.children.forEach(m => m.userData = loadedObj.userData)
-          groupClickable.add(loadedObj)
-          hideableObjects.push(loadedObj)
+      const eeLoader = new THREE.ObjectLoader();
+      loadingCounter++
+      eeLoader.load('./mesh/f35/lightning.obj', function(loadedObj, materials) {
+        loadedObj.position.set(520553212, 563734939, -703080680)
+        loadedObj.scale.set(200000, 200000, 200000)
+        // loadedObj.rotation.y = 1.5
+        loadedObj.userData = {type: 'easteregg'}
+        loadedObj.children.forEach(m => m.userData = loadedObj.userData)
+        groupClickable.add(loadedObj)
+        hideableObjects.push(loadedObj)
 
-          // Add Nearby
-          var box = nearbyVisible.createBox(
-            loadedObj.position.x, loadedObj.position.y, loadedObj.position.z,
-            200000, 200000, 200000
-          );
+        // Add Nearby
+        var box = nearbyVisible.createBox(
+          loadedObj.position.x, loadedObj.position.y, loadedObj.position.z,
+          200000, 200000, 200000
+        );
 
-          // Add to nearbylist
-          var object = nearbyVisible.createObject(loadedObj, box); 
-          nearbyVisible.insert(object);
-          loadingCounter--
-        })
-      }
+        // Add to nearbylist
+        var object = nearbyVisible.createObject(loadedObj, box); 
+        nearbyVisible.insert(object);
+        loadingCounter--
+      })
 
       // ----------------------- Add Asteroids to scene
       asteroids.forEach(p => groupClickable.add(p))

@@ -1,5 +1,6 @@
 <script>
     import { _ } from 'svelte-i18n'
+    import * as THREE from 'three'
     import { storeData, storeSearchItem, storeControlsEnabled } from './store.js';
 
     var showSearchbox = false
@@ -10,6 +11,21 @@
 
     const inputChange = e => {
       let search = e.target.value
+
+      if(search == 'easteregg')
+      {
+        showSearchbox = false
+        storeControlsEnabled.set(true)
+
+        storeSearchItem.set({
+          mesh: {
+            userData: {name: 'Easter Egg'},
+            position: new THREE.Vector3(520553212, 563734939, -703080680)
+          }
+        })
+        return
+      }
+
       if(search.length > 0)
       {
         // Search Planets
