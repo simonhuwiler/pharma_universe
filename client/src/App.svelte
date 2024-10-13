@@ -69,10 +69,12 @@
     // Play Audio
     if(!showIntro)
     {
-      // audioAmbient = new Audio('./sound/background.mp3');
-      // if(!debug) audioAmbient.play();
-      // showInstructions = true
-      // setTimeout(() => showInstructions = false, 10000)
+      //TODO: Aktivieren!
+      // console.log("MUSIK DEAKTIVIERT!")
+      audioAmbient = new Audio('./sound/background.mp3');
+      if(!debug) audioAmbient.play();
+      showInstructions = true
+      setTimeout(() => showInstructions = false, 10000)
     }
   });
   storeAnimationArray.subscribe(value => animationArray = value)

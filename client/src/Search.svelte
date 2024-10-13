@@ -33,7 +33,10 @@
     showSearchbox = true
     storeControlsEnabled.set(false)
   }}>
-  <img src='./images/search.png' alt='Suchen' />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88">
+      <defs><style>.cls-1{fill-rule:evenodd;}</style></defs>
+      <path class="cls-1" fill='white' d="M42.31,0A42.31,42.31,0,0,1,77.52,65.75l8.56,8.56.09-.09a5.38,5.38,0,0,1,7.59,0l27.55,27.55a5.39,5.39,0,0,1,0,7.59l-12,12a5.39,5.39,0,0,1-7.59,0L74.22,93.76a5.38,5.38,0,0,1,0-7.59l.09-.09-8.56-8.56A42.31,42.31,0,1,1,42.31,0Zm0,9.5A32.81,32.81,0,1,1,9.5,42.31,32.81,32.81,0,0,1,42.31,9.5Z"/>
+    </svg>
 </div>
 
 {#if showSearchbox}
@@ -78,14 +81,19 @@
     position: absolute;
     top: 50px;
     right: 10px;
+    width: 22px;
+    height: 22px;
+    background: #245050;
+    border: 1px solid #419696;
+    opacity: 1;
+    padding: 4px;    
   }
 
-  .search img
+  .search svg
   {
-    width: 30px;
-    opacity: 0.8;
+    width: 100%;
     cursor: pointer;
-  }
+  }  
 
   .searchbox
   {
@@ -96,6 +104,7 @@
     transform: translateX(-50%);
     width: 450px;
     max-width: 100vw;
+    border: 1px solid #419696;
   }
 
   @media (min-width: 800px) {

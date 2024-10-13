@@ -69,6 +69,7 @@ h2
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .buttons button:hover {
