@@ -41,13 +41,13 @@
     border: 1px solid #419696;
     opacity: 1;
     padding: 4px;
+    cursor: pointer;
   }
 
   .information svg
   {
     position: relative;
     height: 100%;
-    cursor: pointer;
     left: 6px;
   }
 

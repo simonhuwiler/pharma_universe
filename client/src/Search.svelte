@@ -87,12 +87,12 @@
     border: 1px solid #419696;
     opacity: 1;
     padding: 4px;    
+    cursor: pointer;
   }
 
   .search svg
   {
     width: 100%;
-    cursor: pointer;
   }  
 
   .searchbox
