@@ -11,7 +11,6 @@
   import isMobile from 'ismobilejs';
 
   import { FlyControls } from './universeControls';
-  import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js'
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
@@ -26,6 +25,7 @@
   import Instructions from './Instructions.svelte'
   import Easteregg from './Easteregg.svelte'
   import Connection from './connection'
+  import { activateFullScreen } from './helpers'
 
   import settings from './settings'
 
@@ -52,7 +52,7 @@
   var hideableObjects = []
   var timerHideableObjects
   let audioAmbient
-  var controlAccelerator, controlMouse;
+  var controlMouse;
   let huds = []
   var activeAsteroid = null
 
@@ -306,23 +306,7 @@
       })
 
       // ----------------------- Add Fullsize event
-      document.addEventListener('dblclick', () => {
-        var elem = document.querySelector('main')
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-            /* Firefox */
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-            /* Chrome, Safari & Opera */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            /* IE/Edge */
-            elem.msRequestFullscreen();
-        }
-        elem.style.width = '100%';
-        elem.style.height = '100%';      
-      })
+      document.addEventListener('dblclick', activateFullScreen)
 
       // ----------------------- Add Camera
       const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1000, data.solarsystem_r * 2)
@@ -365,7 +349,6 @@
       // ----------------------- Detect if mobile (motion sensor) or mouse
       if(isMobile(window.navigator).any)
       {
-        controlAccelerator = new DeviceOrientationControls(camera)
         controlMouse = new FlyControls( camera, renderer.domElement, true );
       }
       else
@@ -514,7 +497,6 @@
           if(animationArray.length === 0 && activateControls)
           {
             controlMouse.update( delta )
-            if(controlAccelerator) controlAccelerator.update( delta )
           }
 
           // Render
@@ -672,7 +654,7 @@
     <Easteregg />
   {/if}
   {#if !showIntro && isMobile(window.navigator).any}
-    <div class='throttle' on:touchstart={() => controlMouse.forward(true)} on:touchend={() => controlMouse.forward(false)} />
+    <!-- <MobileControls controlMouse = {controlMouse} /> -->
   {/if}
 
   <div class='infoboxes'>
@@ -739,21 +721,6 @@
   .infoboxes
   {
     z-index: 3;
-  }
-
-  .throttle
-  {
-    position: absolute;
-    z-index: 1000;
-    bottom: 10px;
-    left: 10px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    background: rgb(124,124,124);
-    background: linear-gradient(90deg, rgba(124,124,124,1) 0%, rgba(79,80,80,1) 100%);
-    border: 1px solid #ababab;
-    opacity: 0.8;
   }
 
 </style>

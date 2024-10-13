@@ -23,7 +23,7 @@
     "next": "next",
     "fly": "Let's go!",
     "instructiondesktop": "Accelerate with the <u>space bar</u> (for pros: <u>WASD</u>). Steer by moving <u>the mouse</u>. Double click to switch to full screen mode.",
-    "instructionmobile": "Accelerate by clicking the <u>button</u> the button in the left corner. Steer by moving your <u>Smartphone</u>. Double click to switch to full screen mode."
+    "instructionmobile": "Accelerate by <u>touching</u> the display. Steer by <u>moving</u> your finger on the screen."
   },
   "infobox": {
     "title": "The Pharma-Universe",

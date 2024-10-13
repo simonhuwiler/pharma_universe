@@ -8,11 +8,11 @@ const _changeEvent = { type: 'change' };
 
 class FlyControls extends EventDispatcher {
 
-	constructor( object, domElement, forwardOnly ) {
+	constructor( object, domElement, isMobileDevice ) {
 
 		super();
 
-		this.forwardOnly = forwardOnly ? forwardOnly : false
+		this.isMobileDevice = isMobileDevice ? isMobileDevice : false
 
 		if ( domElement === undefined ) {
 
@@ -28,10 +28,11 @@ class FlyControls extends EventDispatcher {
 
 		this.movementSpeed = 1.0;
 		this.rollSpeed = 0.005;
-        this.movementSpeedMultiplier = 1
-        this.damping = 0
+    this.movementSpeedMultiplier = 1
+    this.damping = 0
+		this.allowMoving = false
 
-		this.dragToLook = false;
+		this.dragToLook = true;
 		this.autoForward = false;
 
 		// disable default target object behavior
@@ -66,7 +67,7 @@ class FlyControls extends EventDispatcher {
 				case 'ShiftRight': this.movementSpeedMultiplier = 3; break;
 
 				case 'KeyW':
-                case 'ArrowUp':
+        case 'ArrowUp':
 				case 'Space': {
                     this.moveState.forward = 1;
                     this.damping = 1
@@ -144,7 +145,7 @@ class FlyControls extends EventDispatcher {
 		};
 
 		this.mousedown = function ( event ) {
-
+			console.log("Mouse Down", event.button)
 			if ( this.dragToLook ) {
 
 				this.mouseStatus ++;
@@ -166,14 +167,17 @@ class FlyControls extends EventDispatcher {
 
 		this.mousemove = function ( event ) {
 
-			if ( ! this.dragToLook || this.mouseStatus > 0 ) {
+			if ( ! this.dragToLook || this.mouseStatus > 0) {
 
 				const container = this.getContainerDimensions();
 				const halfWidth = container.size[ 0 ] / 2;
 				const halfHeight = container.size[ 1 ] / 2;
 
-				this.moveState.yawLeft = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth ) / halfWidth;
-				this.moveState.pitchDown = ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
+				const x = 'pageX' in event ? event.pageX : event.touches[ 0 ].pageX;
+				const y = 'pageY' in event ? event.pageY : event.touches[ 0 ].pageY;
+
+				this.moveState.yawLeft = - ( ( x - container.offset[ 0 ] ) - halfWidth ) / halfWidth;
+				this.moveState.pitchDown = ( ( y - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
 
 				this.updateRotationVector();
 
@@ -206,6 +210,23 @@ class FlyControls extends EventDispatcher {
 
 		};
 
+		this.touchStartFlyTimeout = null
+
+		this.touchstart = function ( event ) {
+			this.touchStartFlyTimeout = setTimeout(() => {
+				this.moveState.forward = 1;
+				this.damping = 1
+				this.allowMoving = true
+			}, 50)
+		}
+
+		this.touchend = function ( event ) {
+			this.allowMoving = false
+			this.moveState.forward = 0;
+			
+			if(this.touchStartFlyTimeout) clearTimeout(this.touchStartFlyTimeout)
+		}
+
 		this.update = function ( delta ) {
 
 			const moveMult = delta * scope.movementSpeed * this.movementSpeedMultiplier;
@@ -215,8 +236,11 @@ class FlyControls extends EventDispatcher {
 			scope.object.translateY( scope.moveVector.y * moveMult );
 			scope.object.translateZ( scope.moveVector.z * moveMult );
 
-			scope.tmpQuaternion.set( scope.rotationVector.x * rotMult, scope.rotationVector.y * rotMult, scope.rotationVector.z * rotMult, 1 ).normalize();
-			scope.object.quaternion.multiply( scope.tmpQuaternion );
+			if(this.allowMoving)
+			{
+				scope.tmpQuaternion.set( scope.rotationVector.x * rotMult, scope.rotationVector.y * rotMult, scope.rotationVector.z * rotMult, 1 ).normalize();
+				scope.object.quaternion.multiply( scope.tmpQuaternion );
+			}
 
 			if (
 				lastPosition.distanceToSquared( scope.object.position ) > EPS ||
@@ -229,8 +253,8 @@ class FlyControls extends EventDispatcher {
 
 			}
             
-            if(Math.abs(this.damping) > 0 && (!this.moveState.forward || !this.moveState.back))
-              this.updateMovementVector()
+      if(Math.abs(this.damping) > 0 && (!this.moveState.forward || !this.moveState.back))
+        this.updateMovementVector()
 
 		};
 
@@ -251,10 +275,10 @@ class FlyControls extends EventDispatcher {
 			this.moveVector.y = ( - this.moveState.down + this.moveState.up );
 			this.moveVector.z = ( - forward + this.moveState.back );
 
-            if (!this.moveState.forward && !this.moveState.back && Math.abs(this.damping) > 0)
-            {
-              this.damping = this.damping > 0 ? this.damping - 0.05 : this.damping + 0.05
-            }
+      if (!this.moveState.forward && !this.moveState.back && Math.abs(this.damping) > 0)
+      {
+        this.damping = this.damping > 0 ? this.damping - 0.05 : this.damping + 0.05
+      }
 
 			//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
 
@@ -292,46 +316,97 @@ class FlyControls extends EventDispatcher {
 
 		this.dispose = function () {
 
-			if(!this.forwardOnly)
+			if(this.isMobileDevice)
 			{
-				this.domElement.removeEventListener( 'contextmenu', contextmenu );
 				this.domElement.removeEventListener( 'mousemove', _mousemove );
 			}
+			else
+			{
+				this.domElement.removeEventListener( 'touchmove', _mousemove );
+				this.domElement.removeEventListener( 'touchstart', _touchstart );
+				this.domElement.removeEventListener( 'touchend', _touchend );
+			}
 
+			this.domElement.removeEventListener( 'contextmenu', contextmenu );
 			window.removeEventListener( 'keydown', _keydown );
 			window.removeEventListener( 'keyup', _keyup );
 
 		};
 
-		var _mousemove, _mousedown, _mouseup;
-		if(!this.forwardOnly)
-		{
-			_mousemove = this.mousemove.bind( this );
-			_mousedown = this.mousedown.bind( this );
-			_mouseup = this.mouseup.bind( this );
-			this.domElement.addEventListener( 'mousemove', _mousemove );
-		}
+		var _mousemove, _mousedown, _mouseup, _touchstart, _touchend;
+		_mousemove = this.mousemove.bind( this );
+		_mousedown = this.mousedown.bind( this );
+		_mouseup = this.mouseup.bind( this );
+		_touchstart = this.touchstart.bind( this );
+		_touchend = this.touchend.bind( this );
+		
 		const _keydown = this.keydown.bind( this );
 		const _keyup = this.keyup.bind( this );
 
 		this.domElement.addEventListener( 'contextmenu', contextmenu );
 
-		window.addEventListener( 'keydown', _keydown );
-		window.addEventListener( 'keyup', _keyup );
+		if(this.isMobileDevice)
+		{
+			this.domElement.addEventListener( 'touchmove', _mousemove );
+			this.domElement.addEventListener( 'touchstart', _touchstart );
+			this.domElement.addEventListener( 'touchend', _touchend );
+		}
+		else
+		{
+			this.allowMoving = true
+			this.domElement.addEventListener( 'mousemove', _mousemove );
+			window.addEventListener( 'keydown', _keydown );
+			window.addEventListener( 'keyup', _keyup );				
+		}
 
 		this.updateMovementVector();
 		this.updateRotationVector();
 
 	}
 
-	forward(b)
+	setMoveState(axis, state)
 	{
-		if(b)
+		if(axis == 'forward' && state)
 		{
 			this.moveState.forward = 1;
 			this.damping = 1			
 		}
-		else this.moveState.forward = 0
+		else if(axis == 'forward' && !state)
+		{
+			this.moveState.forward = 0;
+		}
+		else if(axis == 'back' && state)
+		{
+			this.moveState.back = 1;
+			this.damping = -1		
+		}
+		else if(axis == 'back' && !state)
+		{
+			this.moveState.back = 0;
+		}
+		else if(axis == 'right' && state)
+		{
+			this.moveState.right = 1;
+			this.damping = 0
+			this.updateMovementVector()
+		}
+		else if(axis == 'right' && !state)
+		{
+			this.moveState.right = 0;
+			this.updateMovementVector()
+		}
+		else if(axis == 'left' && state)
+		{
+			this.moveState.left = 1;
+			this.damping = 0
+			this.updateMovementVector()
+		}
+		else if(axis == 'left' && !state)
+		{
+			this.moveState.left = 0;
+			this.updateMovementVector()
+		}
+
 	}
 
 }
@@ -341,5 +416,6 @@ function contextmenu( event ) {
 	event.preventDefault();
 
 }
+
 
 export { FlyControls };

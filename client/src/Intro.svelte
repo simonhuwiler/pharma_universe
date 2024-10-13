@@ -4,6 +4,7 @@
   import isMobile from 'ismobilejs';
   import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle } from './store.js';
 
+  import { activateFullScreen } from './helpers'
   import { PathAnimation, RotateAnimation } from './pathanimation'
 
   let activeSlide = 0
@@ -21,6 +22,8 @@
   const start = () => {
     storeControlsEnabled.set(true)
     storeShowIntro.set(false)
+    
+    if(isMobile(window.navigator).any) activateFullScreen()
   }
 
   const flyAmgen = () => {
