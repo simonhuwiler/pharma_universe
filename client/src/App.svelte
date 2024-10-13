@@ -250,7 +250,7 @@
 
       // ----------------------- Add light
       const light = new THREE.PointLight( 0xffffff, 1 );
-      const ambientLight = new THREE.AmbientLight( 0xffffff, 0.1 );
+      const ambientLight = new THREE.AmbientLight( 0xffffff, 0.6 );
       light.position.y = data.solarsystem_r / 2
       scene.add( light );
       scene.add( ambientLight );
