@@ -21,8 +21,9 @@
     margin: 10px 0;
     line-height: 1.7em;
     font-size: 14px;
-    width: 500px;
+    width: 600px;
     max-width: 90vw;
+    border-radius: 5px;
   }
 
   @media (min-width: 800px) {

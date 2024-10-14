@@ -29,6 +29,7 @@
   import { activateFullScreen } from './helpers'
   import FullScreenSlides from './FullScreenSlides.svelte';
   import SideSlides from './SideSlides.svelte';
+  import Curtain from './Curtain.svelte';
 
   import settings from './settings'
 
@@ -37,7 +38,7 @@
   import de from './i18n/de.json'
 
   // --- DEBUG: This removes textures for planets and background sound and activates dat.gui
-  const debug = true
+  const debug = false
   // ---
 
   // ----------------------- Add i18n
@@ -60,7 +61,6 @@
   var activeAsteroid = null
 
   // ----------------------- Init and registerStores
-  let showIntro = true
   let showEasteregg = false
   let showInstructions = false  
   let searchItem = null
@@ -71,20 +71,6 @@
   storeControlButtonsEnabled.subscribe(value => controlButtonsEnabled = value)
   storeControlsEnabled.subscribe(value => activateControls = value);
   storeShowInstructions.subscribe(value => showInstructions = value)
-  // storeShowIntro.subscribe(value => {
-  //   showIntro = value
-
-  //   // Play Audio
-  //   if(!showIntro)
-  //   {
-  //     //TODO: Aktivieren!
-  //     // console.log("MUSIK DEAKTIVIERT!")
-  //     audioAmbient = new Audio('./sound/background.mp3');
-  //     if(!debug) audioAmbient.play();
-  //     showInstructions = true
-  //     setTimeout(() => showInstructions = false, 10000)
-  //   }
-  // });
   storeAnimationArray.subscribe(value => animationArray = value)
   storeShowEasteregg.subscribe(value => showEasteregg = value)
   storeSearchItem.subscribe(value => searchItem = value)
@@ -130,18 +116,6 @@
       // Scene
       const scene = new THREE.Scene()
       const textureLoader = new THREE.TextureLoader();
-
-      // Path Helper
-      // const vectors = [
-      //     [ 0, 525000000, 0 ],
-      //     [ 0, 525000000, -8273000 ],
-      //     [ 316134, 525000000, -187672734],
-      //     [ -332602038, 260559965, -462261069 ],
-      // ]
-      // var pipeSpline = new THREE.CatmullRomCurve3(vectors.map(vector => new THREE.Vector3( vector[0], vector[1], vector[2] )))
-      // var tubeGeometry = new THREE.TubeGeometry( pipeSpline, 1000, 2000, 100, false );
-      // var m = new THREE.Mesh(tubeGeometry, new THREE.MeshBasicMaterial({color: 'red'}))
-      // scene.add(m)
 
       // Generate loaders depending on debug or production
       const loaders = []
@@ -654,7 +628,7 @@
 
       // Everything loaded
       loadingCounter--
-      storeChapter.set(6)
+      storeChapter.set(1)
     });
 
 </script>
@@ -669,6 +643,11 @@
       <FullScreenSlides chapter = {chapter}/>
     </div>
   {/if}
+
+  {#if chapter < 4}
+    <Curtain open = {chapter >= 3} />
+  {/if}
+
   {#if chapter >= 3 && chapter <= 90}
     <SideSlides chapter = {chapter} />
   {/if}

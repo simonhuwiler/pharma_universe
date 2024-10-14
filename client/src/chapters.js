@@ -9,17 +9,26 @@ let data
 storeCamera.subscribe(value => camera = value)
 storeData.subscribe(value => data = value)
 
+
+const startAudio = () => {
+  if(!audioAmbient)
+  {
+    //TODO: Aktivieren
+    // console.log("AUDIO DEACTIVATED!")
+    audioAmbient = new Audio('./sound/background.mp3');
+    audioAmbient.play();
+  }
+}
+
 const freeFly = () => {
   storeControlsEnabled.set(true)
   storeControlButtonsEnabled.set(true)
   if(isMobile(window.navigator).any) activateFullScreen()
   
   // Start Audio
-  //TODO: Aktivieren!
-  audioAmbient = new Audio('./sound/background.mp3');
-  audioAmbient.play();
   storeShowInstructions.set(true)
   setTimeout(() => storeShowInstructions.set(false), 10000)    
+  startAudio()
 
 }
 
@@ -64,7 +73,7 @@ const flyToObject = (asteroidPosition, distance) => {
     x: newRotation.x,
     y: newRotation.y,
     z: newRotation.z,
-    duration: 0.5,
+    duration: 1,
     ease: "power1.inout"
   })
 
@@ -81,7 +90,7 @@ const flyToObject = (asteroidPosition, distance) => {
 const flyToAsteroid = ( id ) => {
   const asteroid = data.asteroids.find(block => block.id === id)
   const asteroidPosition = new THREE.Vector3( asteroid.x, asteroid.y, asteroid.z )
-  const distance = 50000000
+  const distance = asteroid.size < 1000000 ? 8000000 : 50000000
 
   flyToObject(asteroidPosition, distance)
 
@@ -140,14 +149,19 @@ const easteregg = () => {
   audioBonus.play();  
 }
 
+const startUniverse = () => {
+  startAudio()
+}
+
 storeChapter.subscribe(value => {
 
   const chapters = {
+    3: startUniverse,
     4: zoomToAbbvie,
     5: flyToEular,
     6: activateRays,
     7: () => flyToAsteroid(9021),
-    8: () => flyToAsteroid(5348),
+    8: () => flyToAsteroid(5348), // Marva
     9: () => flyToAsteroid(8936), // Uni Zürich
     10: () => flyToPlanet(40), // Novartis
     98: easteregg,

@@ -19,7 +19,7 @@
   "slide2": {
     "option1": "Du hast Dich für das Medikament jenes Herstellers entschieden, der Dich hofiert hat. Bist Du noch unabhängig?",
     "option2": "Du hast Dich gegen jene Firma entschieden, die dich hofiert hast. Glaubst Du, dass die meisten Ärzte so entscheiden?",
-    "text": "Diese Frage müssen sich viele Ärzte, Spitäler und Organisationen stellen, denn jährlich fliessen Millionen von der Pharmaindustrie zur Gesundheitsbranche. 2023 waren es 246 Millionen Franken. Das wissen wir, weil sich die meisten Schweizer Pharmafirmen dazu verpflichtet haben, diese Zuwendungen zu veröffentlichen. Lass uns tiefer eintauchen in dieses Universum aus Pharmageldern.",
+    "text": "Diese Frage müssen sich viele Ärzte, Spitäler und Organisationen stellen, denn jährlich fliesst ein beträchtlicher Betrag von der Pharmaindustrie zur Gesundheitsbranche. 2023 waren es 246 Millionen Franken. Das wissen wir, weil sich die meisten Schweizer Pharmafirmen dazu verpflichtet haben, diese Zuwendungen zu veröffentlichen. Lass uns tiefer eintauchen in dieses Universum aus Pharmageldern.",
     "button": "Das Pharmauniversum starten"
   },
   "slide3": {
@@ -27,17 +27,21 @@
     "button": "» Schauen wir uns den blauen Riesen genauer an"
   },
   "slide4": {
-    "text": "Das erfolgreichste Medikament des US-Konzern ist Humira ein Medikament, das bei rheumatischen Erkrankungen eingesetzt wird. Es gilt als eines der umsatzstärksten Medikamente überhaupt. Im letzten Jahr hat AbbVie insgesamt 8.8 Millionen Franken an Ärzte und Organisationen verteilt. Fliegen wir zu einer Organisation, die von AbbVie Geld erhalten hat.",
+    "text": "Das erfolgreichste Medikament des US-Konzern ist Humira, ein Präparat, das bei rheumatischen Erkrankungen eingesetzt wird. Es gilt als eines der umsatzstärksten Medikamente überhaupt. Im letzten Jahr hat AbbVie insgesamt 8.8 Millionen Franken an Ärzte und Organisationen verteilt. Fliegen wir zu einer Organisation, die von AbbVie Geld erhalten hat.",
     "button": "» Zu Empfänger fliegen"
   },
   "slide5": {
-    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine weltweit agierende, in Zürich ansässige Nonprofit-Organisation, spezialisiert auf rheumatische Erkrankungen. «Eular» vertritt Patienten und Ärzte, produziert ein Fachmagazin mit Studien über ihr Forschungsfeld und am jährlichen Kongress – zuletzt in Wien - diskutieren die führenden Wissenschaftler und Ärzte zu diesem Thema.",
-    "text2": "AbbVie unterstützte die Organisation im vergangenen Jahr mit 1.1 Millionen Franken. Dafür durfte die Pharmafirma etwa am Kongress ein eigenes Symposium durchführen. AbbVie ist nicht die einzige Pharmafirma, die «Eular» finanziell unterstützt. Insgesamt flossen 6,6 Millionen Franken von der Pharmaindustrie zu dieser Nonprofit-Organisation.",
+    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine weltweit agierende, in Zürich ansässige Nonprofit-Organisation, mit Fokus auf rheumatische Erkrankungen. «Eular» produziert etwa ein Fachmagazin mit Studien und am jährlichen Kongress – zuletzt in Wien, bald in Barcelona – treffen sich führende Wissenschaftler und Ärzte.",
+    "text2": "AbbVie unterstützte die Nonprofit-Organisation im vergangenen Jahr mit 1.1 Millionen Franken. Dafür durfte das Unternehmen etwa am Kongress ein eigenes Symposium durchführen. Auch andere Pharmafirmen haben «Eular» finanziell unterstützt. Insgesamt hat die Nonprofit-Organisation 6.6 Millionen Franken erhalten.",
     "button": "» Wer unterstützte die Organisation auch noch?"
   },
+  "esmo": {
+    "text1": "Die «European Society for Medical Oncology» (ESMO) ist eine Fachgesellschaft für die Krebsforschung. 40'000 Mitglieder gehören ihr an und sie gehört fast jedes Jahr zu den grössten Empfängern. Knapp 19 Millionen Franken hat das ESMO 2023 erhalten. Insgesamt (seit 2015) über 121 Millionen Franken.",
+    "text2": "Zu den grössten Gebern gehört mit 1.7 Millionen Franken die Pharmafirma MSD. Ihr Umsatzstärkstes Medikament ist ein Mittel gegen Krebs."
+  },
   "slide6": {
-    "text1": "Woher die Gelder stammen, zeigen die blauen Linien. Diese erscheinen, wenn ein Asteroid oder Planet angeklickt wird. Ohne diese Zahlungen könnte das Eular diese Kongresse vielleicht nicht durchführen, weniger Forschungsarbeiten unterstützen und Weiterbildungen anbieten. Aber bleibt es noch unabhängig?",
-    "text2": "Diese Frage lässt sich für viele weitere Organisationen in diesem Universum aus Pharmageldern stellen. Spitäler, Arztpraxen, Patientenorganisation, Ärztevereinigungen, usw. Jetzt bist Du an der Reihe. Du kannst frei im Pharmauniversum herumfliegen oder vorausgewählte Asteroiden und Planeten anfliegen.",
+    "text1": "Woher die Gelder genau stammen, zeigen die blauen Linien. Sie führt zum jeweiligen Geberplanet und erscheinen, wenn der Asteroid oder Planet angeklickt wird. Ohne diese Zahlungen könnte das Eular diese Kongresse vielleicht nicht durchführen und weniger Forschungsarbeiten unterstützen. Aber bleibt es noch unabhängig?",
+    "text2": "Diese Frage lässt sich für viele weitere Organisationen in diesem Universum aus Pharmageldern stellen. Bereit, es zu entdecken? Du kannst frei im Pharmauniversum herumfliegen oder vorausgewählte Asteroiden und Planeten ansteuern.",
     "buttonfree": "Frei herumfliegen",
     "buttoncancer": "Geld gegen Krebs",
     "buttonmarva": "Schönheitschirurgin",
@@ -58,7 +62,7 @@
     "starttour": "Tour starten",
     "next": "weiter",
     "fly": "Los gehts!",
-    "instructiondesktop": "Beschleunige mit der <u>Leertaste</u> (für Profis: <u>WASD</u>). Lenke, in dem Du <u>die Maus</u> bewegst. Doppelklicken, um in den Vollbildmodus zu wechseln.",
+    "instructiondesktop": "Beschleunige mit der <u>Leertaste</u> oder <u>W</u>. Lenke, in dem Du die <u>Maus</u> bewegst. Schneller fliegen mit <u>Shift</u>. Doppelklicken, um in den Vollbildmodus zu wechseln.",
     "instructionmobile": "Beschleunige, in dem Du day Display <u>berührst</u>. Lenke, in dem Du den Finger auf dem Bildschirm <u>bewegst</u>."
   },
   "infobox": {
