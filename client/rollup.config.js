@@ -87,6 +87,7 @@ const htmlTemplate = {
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap" rel="stylesheet">
 				<link href="https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap" rel="stylesheet">
+				<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 				<link rel='stylesheet' href='./global.css'>
 				<link rel='stylesheet' href='./bundle${hash}.css'>
 				${script}

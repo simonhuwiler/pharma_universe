@@ -54,7 +54,7 @@ h2
   box-sizing: border-box;
 }
 
-.buttons
+/* .buttons
 {
   text-align: right;
 }
@@ -75,7 +75,7 @@ h2
 .buttons button:hover {
   background-color: #090b1d;
   color: white;
-}
+} */
 
 .highlight
 {

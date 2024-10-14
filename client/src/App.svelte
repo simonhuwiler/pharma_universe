@@ -9,23 +9,26 @@
   import Stats from 'three/examples/jsm/libs/stats.module.js'
   import * as dat from 'dat.gui';
   import isMobile from 'ismobilejs';
+  import './chapters'
 
   import { FlyControls } from './universeControls';
   import { AsteroidGeometry } from './AsteroidGeometry'
   import Nearby from './nearby'
 
-  import { storeControlsEnabled, storeShowIntro, storeAnimationArray, storeShowStahle, storeShowEasteregg, storeData, storeSearchItem } from './store.js';
+  import { storeControlsEnabled, storeAnimationArray, storeActivateRaysInIntro, storeShowEasteregg, storeData, 
+    storeSearchItem, storeChapter, storeControlButtonsEnabled, storeCamera, storeShowInstructions } from './store.js';
   import Hud from './Hud.svelte'
   import Loading from './Loading.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
   import DisplayPlanet from './DisplayPlanet.svelte'
-  import Intro from './Intro.svelte'
   import Information from './Information.svelte'
   import Search from './Search.svelte'
   import Instructions from './Instructions.svelte'
   import Easteregg from './Easteregg.svelte'
   import Connection from './connection'
   import { activateFullScreen } from './helpers'
+  import FullScreenSlides from './FullScreenSlides.svelte';
+  import SideSlides from './SideSlides.svelte';
 
   import settings from './settings'
 
@@ -34,7 +37,7 @@
   import de from './i18n/de.json'
 
   // --- DEBUG: This removes textures for planets and background sound and activates dat.gui
-  const debug = false
+  const debug = true
   // ---
 
   // ----------------------- Add i18n
@@ -61,22 +64,27 @@
   let showEasteregg = false
   let showInstructions = false  
   let searchItem = null
+  let chapter = -1
 
+  let controlButtonsEnabled
+  storeChapter.subscribe(value => chapter = value)
+  storeControlButtonsEnabled.subscribe(value => controlButtonsEnabled = value)
   storeControlsEnabled.subscribe(value => activateControls = value);
-  storeShowIntro.subscribe(value => {
-    showIntro = value
+  storeShowInstructions.subscribe(value => showInstructions = value)
+  // storeShowIntro.subscribe(value => {
+  //   showIntro = value
 
-    // Play Audio
-    if(!showIntro)
-    {
-      //TODO: Aktivieren!
-      // console.log("MUSIK DEAKTIVIERT!")
-      audioAmbient = new Audio('./sound/background.mp3');
-      if(!debug) audioAmbient.play();
-      showInstructions = true
-      setTimeout(() => showInstructions = false, 10000)
-    }
-  });
+  //   // Play Audio
+  //   if(!showIntro)
+  //   {
+  //     //TODO: Aktivieren!
+  //     // console.log("MUSIK DEAKTIVIERT!")
+  //     audioAmbient = new Audio('./sound/background.mp3');
+  //     if(!debug) audioAmbient.play();
+  //     showInstructions = true
+  //     setTimeout(() => showInstructions = false, 10000)
+  //   }
+  // });
   storeAnimationArray.subscribe(value => animationArray = value)
   storeShowEasteregg.subscribe(value => showEasteregg = value)
   storeSearchItem.subscribe(value => searchItem = value)
@@ -100,11 +108,16 @@
       storeData.set(data)
       const canvas = document.querySelector('canvas.webgl')
 
-      // Subscribe intro click on astesroid 8713
-      storeShowStahle.subscribe(value => {
+      // TODO: Remove
+      // loadingCounter = 0
+      // storeChapter.set(6)
+      // return
+
+      // Subscribe intro click on astesroid 9033
+      storeActivateRaysInIntro.subscribe(value => {
         if(value) 
         {
-          const active = asteroids.find(x => x.userData.id === 9021)
+          const active = asteroids.find(x => x.userData.id === 9033)
           addConnections(active)
           active.add(sound)
           sound.play()
@@ -217,7 +230,7 @@
 
         // Generate Astroid
         // https://codepen.io/Divyz/pen/VPrZMy
-        var geometry = new AsteroidGeometry(p.size, 1);
+        var geometry = new AsteroidGeometry(p.size, 0);
         var mesh = new THREE.Mesh( geometry, materialAsteroid ); 
 
         mesh.position.set(p.x, p.y, p.z)
@@ -250,10 +263,14 @@
 
       // ----------------------- Add light
       const light = new THREE.PointLight( 0xffffff, 1 );
-      const ambientLight = new THREE.AmbientLight( 0xffffff, 0.6 );
+      const ambientLight = new THREE.AmbientLight( 0xffffff, .5 );
       light.position.y = data.solarsystem_r / 2
-      scene.add( light );
-      scene.add( ambientLight );
+      scene.add( light, ambientLight );
+
+      // Add second light to make intro a bit nicer
+      const light2 = new THREE.PointLight( 0xffffff, 0.2 );
+      light2.position.set(286919070, 9954286, -18705891)
+      scene.add(light2)
 
       // ----------------------- Add Easteregg
       const eeLoader = new THREE.ObjectLoader();
@@ -285,23 +302,23 @@
 
       // ----------------------- Register Resize
       const sizes = {
-          width: window.innerWidth,
-          height: window.innerHeight
+        width: window.innerWidth,
+        height: window.innerHeight
       }
 
       window.addEventListener('resize', () =>
       {
-          // Update sizes
-          sizes.width = window.innerWidth
-          sizes.height = window.innerHeight
+        // Update sizes
+        sizes.width = window.innerWidth
+        sizes.height = window.innerHeight
 
-          // Update camera
-          camera.aspect = sizes.width / sizes.height
-          camera.updateProjectionMatrix()
+        // Update camera
+        camera.aspect = sizes.width / sizes.height
+        camera.updateProjectionMatrix()
 
-          // Update renderer
-          renderer.setSize(sizes.width, sizes.height)
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        // Update renderer
+        renderer.setSize(sizes.width, sizes.height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       })
 
       // ----------------------- Add Fullsize event
@@ -310,14 +327,26 @@
       // ----------------------- Add Camera
       const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1000, data.solarsystem_r * 2)
       scene.add(camera)
-      camera.position.y = data.solarsystem_r / 2
+      storeCamera.set(camera)
+      // camera.position.y = data.solarsystem_r / 2 // Only this if camera should be in the center of the universe
+
+      // Set initial Camera position
+      camera.position.set(286919070, 9954286, -18705891)
+      camera.rotation.set(1.77, -0.25, -1.85)
 
       // ----------------------- Add to dat.gui
-      var guiCamera = gui.addFolder('camera')
+      var guiCamera = gui.addFolder('cameraPosition')
       guiCamera.open();
       guiCamera.add(camera.position, 'x').listen();
       guiCamera.add(camera.position, 'y').listen();
       guiCamera.add(camera.position, 'z').listen();   
+
+      var guiCamera = gui.addFolder('cameraRotation')
+      guiCamera.open();
+      guiCamera.add(camera.rotation, 'x', -4, 4, 0.01).listen();
+      guiCamera.add(camera.rotation, 'y', -4, 4, 0.01).listen();
+      guiCamera.add(camera.rotation, 'z', -4, 4, 0.01).listen();   
+
       var test = {'showall': () => {
         clearInterval(timerHideableObjects)
         hideableObjects.forEach(o => o.visible = true)
@@ -548,12 +577,7 @@
           }
           else if(active.userData.type == 'easteregg')
           {
-            console.log("EASTER")
-            audioAmbient.pause()
-            storeShowEasteregg.set(true)
-
-            let audioBonus = new Audio('./sound/t1.mp3');
-            audioBonus.play();
+            storeChapter.set(98)
           }
         }
         else 
@@ -623,7 +647,6 @@
         for(var i in nearbyMeshes)
         {
           const mesh = nearbyMeshes[i].id
-          // mesh.material = materialAsteroid
           mesh.visible = true
         }      
 
@@ -631,29 +654,50 @@
 
       // Everything loaded
       loadingCounter--
+      storeChapter.set(6)
     });
 
 </script>
 
 <main>
+  
   {#if loadingCounter > 0}
     <Loading />
   {/if}
+  {#if chapter == 1 || chapter == 2}
+    <div transition:fade>
+      <FullScreenSlides chapter = {chapter}/>
+    </div>
+  {/if}
+  {#if chapter >= 3 && chapter <= 90}
+    <SideSlides chapter = {chapter} />
+  {/if}
+
   {#if showInstructions}
     <div transition:fade style='position:absolute;left:50%;transform: translateX(-50%);z-index: 1000'><Instructions /></div>
   {/if}
-  {#if showIntro}
+  <!-- {#if showIntro}
     <Intro />
-  {/if}
-  {#if !showIntro}
+  {/if} -->
+  {#if controlButtonsEnabled}
     <Information />
     <Search/>
+
+    <div class='hud'>    
+      {#each huds as h}
+        <Hud
+          top={h.top}
+          left={h.left}
+          distance={h.distance}
+          label={h.label}
+          type={h.type}  
+        />
+      {/each}
+    </div>    
+
   {/if}
   {#if showEasteregg}
     <Easteregg />
-  {/if}
-  {#if !showIntro && isMobile(window.navigator).any}
-    <!-- <MobileControls controlMouse = {controlMouse} /> -->
   {/if}
 
   <div class='infoboxes'>
@@ -676,18 +720,6 @@
 
       {/if}
     {/if}
-  </div>
-
-  <div class='hud'>    
-    {#each huds as h}
-      <Hud
-        top={h.top}
-        left={h.left}
-        distance={h.distance}
-        label={h.label}
-        type={h.type}  
-      />
-    {/each}
   </div>
 
 	<canvas class="webgl"></canvas>

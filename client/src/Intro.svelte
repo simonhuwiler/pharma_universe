@@ -66,7 +66,7 @@
 
   const showStahel = () => {
     activeSlide = 4
-    storeShowStahle.set(true)
+    // storeShowStahle.set(true)
     setTimeout(() => fadeInSlide = 4, 2000);
   }
 

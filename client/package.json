@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-html": "^0.2.4",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-copy": "^3.4.0",
@@ -17,15 +19,14 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
+    "sirv-cli": "^1.0.0",
     "svelte": "^3.50.1"
   },
   "dependencies": {
-    "@rollup/plugin-html": "^0.2.4",
-    "@rollup/plugin-json": "^4.1.0",
     "dat.gui": "^0.7.7",
     "format-number": "^3.0.0",
+    "gsap": "^3.12.5",
     "ismobilejs": "^1.1.1",
-    "sirv-cli": "^1.0.0",
     "svelte-i18n": "^3.3.13",
     "three": "^0.131.3"
   }

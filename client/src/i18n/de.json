@@ -6,9 +6,45 @@
     "detailinformation": "Detaillierte Daten anzeigen"
   },
   "messages": {
-    "loading": "laden",
+    "loading": "Einen Moment bitte",
     "waiting": "Raumstation wird angefragt...",
     "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt."
+  },
+  "slide1": {
+    "text": "Du bist Arzt. Einer Deiner Patienten braucht ein Medikament. Dir stehen zwei Präparate von zwei Pharmafirmen zur Verfügung. Die erste Firma hat Dich an einen Kongress eingeladen, Dir das Hotel bezahlt und Dir das Essen spendiert. Von der zweiten Firma kennst Du nur das Logo. Welches Medikament wirst Du verschreiben?",
+    "button1": "Das Medikament der ersten Firma",
+    "button2": "Das Medikament der zweiten Firma",
+    "skip": "Überspringen und das Pharmauniversum starten"
+  },
+  "slide2": {
+    "option1": "Du hast Dich für das Medikament jenes Herstellers entschieden, der Dich hofiert hat. Bist Du noch unabhängig?",
+    "option2": "Du hast Dich gegen jene Firma entschieden, die dich hofiert hast. Glaubst Du, dass die meisten Ärzte so entscheiden?",
+    "text": "Diese Frage müssen sich viele Ärzte, Spitäler und Organisationen stellen, denn jährlich fliessen Millionen von der Pharmaindustrie zur Gesundheitsbranche. 2023 waren es 246 Millionen Franken. Das wissen wir, weil sich die meisten Schweizer Pharmafirmen dazu verpflichtet haben, diese Zuwendungen zu veröffentlichen. Lass uns tiefer eintauchen in dieses Universum aus Pharmageldern.",
+    "button": "Das Pharmauniversum starten"
+  },
+  "slide3": {
+    "text": "Vor Dir siehst Du einen grossen, blauen Planeten. Dieser symbolisiert die Pharmafirma AbbVie. Im Universum findest Du auch Asteroiden. Das sind Geldempfänger wie Ärzte, Spitäler, Arztpraxen, Apotheken oder Gesundheitsorganisationen. Je mehr Geld dieser Empfänger erhalten hat, desto grösser ist er. Planeten haben auch eine Schwerkraft und ziehen Asteroiden stärker an, je mehr Geld sie diesem gegeben haben.",
+    "button": "» Schauen wir uns den blauen Riesen genauer an"
+  },
+  "slide4": {
+    "text": "Das erfolgreichste Medikament des US-Konzern ist Humira ein Medikament, das bei rheumatischen Erkrankungen eingesetzt wird. Es gilt als eines der umsatzstärksten Medikamente überhaupt. Im letzten Jahr hat AbbVie insgesamt 8.8 Millionen Franken an Ärzte und Organisationen verteilt. Fliegen wir zu einer Organisation, die von AbbVie Geld erhalten hat.",
+    "button": "» Zu Empfänger fliegen"
+  },
+  "slide5": {
+    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine weltweit agierende, in Zürich ansässige Nonprofit-Organisation, spezialisiert auf rheumatische Erkrankungen. «Eular» vertritt Patienten und Ärzte, produziert ein Fachmagazin mit Studien über ihr Forschungsfeld und am jährlichen Kongress – zuletzt in Wien - diskutieren die führenden Wissenschaftler und Ärzte zu diesem Thema.",
+    "text2": "AbbVie unterstützte die Organisation im vergangenen Jahr mit 1.1 Millionen Franken. Dafür durfte die Pharmafirma etwa am Kongress ein eigenes Symposium durchführen. AbbVie ist nicht die einzige Pharmafirma, die «Eular» finanziell unterstützt. Insgesamt flossen 6,6 Millionen Franken von der Pharmaindustrie zu dieser Nonprofit-Organisation.",
+    "button": "» Wer unterstützte die Organisation auch noch?"
+  },
+  "slide6": {
+    "text1": "Woher die Gelder stammen, zeigen die blauen Linien. Diese erscheinen, wenn ein Asteroid oder Planet angeklickt wird. Ohne diese Zahlungen könnte das Eular diese Kongresse vielleicht nicht durchführen, weniger Forschungsarbeiten unterstützen und Weiterbildungen anbieten. Aber bleibt es noch unabhängig?",
+    "text2": "Diese Frage lässt sich für viele weitere Organisationen in diesem Universum aus Pharmageldern stellen. Spitäler, Arztpraxen, Patientenorganisation, Ärztevereinigungen, usw. Jetzt bist Du an der Reihe. Du kannst frei im Pharmauniversum herumfliegen oder vorausgewählte Asteroiden und Planeten anfliegen.",
+    "buttonfree": "Frei herumfliegen",
+    "buttoncancer": "Geld gegen Krebs",
+    "buttonmarva": "Schönheitschirurgin",
+    "buttonzirkel": "Ärztezirkel",
+    "buttonunispital": "Unispital Zürich",
+    "buttonnovartis": "Novartis"
+
   },
   "intro": {
     "chapter1_title": "Hallo Reisender!",
