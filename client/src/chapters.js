@@ -1,5 +1,8 @@
-import { storeCamera, storeChapter, storeActivateRaysInIntro, storeControlsEnabled, storeControlButtonsEnabled, storeShowInstructions, storeData } from './store.js';
+import {
+  storeCamera, storeChapter, storeActivateRaysInIntro, storeControlsEnabled, storeControlButtonsEnabled, 
+  storeShowInstructions, storeData, storeShowEasteregg } from './store.js';
 import isMobile from 'ismobilejs';
+import { activateFullScreen } from './helpers.js';
 import * as THREE from 'three'
 import { gsap } from "gsap";
 
@@ -14,15 +17,16 @@ const startAudio = () => {
   if(!audioAmbient)
   {
     //TODO: Aktivieren
-    // console.log("AUDIO DEACTIVATED!")
-    audioAmbient = new Audio('./sound/background.mp3');
-    audioAmbient.play();
+    console.log("AUDIO DEACTIVATED!")
+    // audioAmbient = new Audio('./sound/background.mp3');
+    // audioAmbient.play();
   }
 }
 
 const freeFly = () => {
   storeControlsEnabled.set(true)
   storeControlButtonsEnabled.set(true)
+  storeActivateRaysInIntro.set(null)
   if(isMobile(window.navigator).any) activateFullScreen()
   
   // Start Audio
@@ -93,7 +97,7 @@ const flyToAsteroid = ( id ) => {
   const distance = asteroid.size < 1000000 ? 8000000 : 50000000
 
   flyToObject(asteroidPosition, distance)
-
+  storeActivateRaysInIntro.set(null)
 }
 
 const flyToPlanet = ( id ) => {
@@ -137,12 +141,12 @@ const flyToEular = () => {
 }
 
 const activateRays = () => {
-  storeActivateRaysInIntro.set(true)
+  storeActivateRaysInIntro.set(9033)
 }
 
 const easteregg = () => {
-  console.log("EASTER")
-  audioAmbient.pause()
+  console.log("EASTEREGG!")
+  if(audioAmbient) audioAmbient.pause()
   storeShowEasteregg.set(true)
 
   let audioBonus = new Audio('./sound/t1.mp3');
@@ -151,6 +155,7 @@ const easteregg = () => {
 
 const startUniverse = () => {
   startAudio()
+  if(isMobile(window.navigator).any) activateFullScreen()
 }
 
 storeChapter.subscribe(value => {

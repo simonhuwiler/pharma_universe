@@ -6,12 +6,14 @@
     "detailinformation": "Detaillierte Daten anzeigen"
   },
   "messages": {
-    "loading": "Einen Moment bitte",
+    "loading": "Einen Moment bitte...",
     "waiting": "Raumstation wird angefragt...",
-    "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt."
+    "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt.",
+    "instructiondesktop": "Beschleunige mit der <u>Leertaste</u> oder <u>W</u>. Lenke, in dem Du die <u>Maus</u> bewegst. Fliege schneller mit <u>Shift</u>. Asteroiden und Planeten lassen sich anklicken. Doppelklicken, um in den Vollbildmodus zu wechseln.",
+    "instructionmobile": "Beschleunige, in dem Du day Display <u>berührst</u>. Lenke, in dem Du den Finger auf dem Bildschirm <u>bewegst</u>. Asteroiden und Planeten lassen sich anklicken."
   },
   "slide1": {
-    "text": "Du bist Arzt. Einer Deiner Patienten braucht ein Medikament. Dir stehen zwei Präparate von zwei Pharmafirmen zur Verfügung. Die erste Firma hat Dich an einen Kongress eingeladen, Dir das Hotel bezahlt und Dir das Essen spendiert. Von der zweiten Firma kennst Du nur das Logo. Welches Medikament wirst Du verschreiben?",
+    "text": "Du bist Arzt. Einer Deiner Patienten braucht ein Medikament. Dir stehen zwei Präparate von zwei Pharmafirmen zur Verfügung. Die erste Firma hat Dich an einen Kongress eingeladen, Dir das Hotel bezahlt und das Essen spendiert. Von der zweiten Firma kennst Du nur das Logo. Welches Medikament wirst Du verschreiben?",
     "button1": "Das Medikament der ersten Firma",
     "button2": "Das Medikament der zweiten Firma",
     "skip": "Überspringen und das Pharmauniversum starten"
@@ -31,16 +33,12 @@
     "button": "» Zu Empfänger fliegen"
   },
   "slide5": {
-    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine weltweit agierende, in Zürich ansässige Nonprofit-Organisation, mit Fokus auf rheumatische Erkrankungen. «Eular» produziert etwa ein Fachmagazin mit Studien und am jährlichen Kongress – zuletzt in Wien, bald in Barcelona – treffen sich führende Wissenschaftler und Ärzte.",
+    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine Nonprofit-Organisation mit Fokus auf rheumatische Erkrankungen. Am jährlichen Kongress – zuletzt in Wien, bald in Barcelona – treffen sich führende Wissenschaftler und Ärzte ihres Faches.",
     "text2": "AbbVie unterstützte die Nonprofit-Organisation im vergangenen Jahr mit 1.1 Millionen Franken. Dafür durfte das Unternehmen etwa am Kongress ein eigenes Symposium durchführen. Auch andere Pharmafirmen haben «Eular» finanziell unterstützt. Insgesamt hat die Nonprofit-Organisation 6.6 Millionen Franken erhalten.",
     "button": "» Wer unterstützte die Organisation auch noch?"
   },
-  "esmo": {
-    "text1": "Die «European Society for Medical Oncology» (ESMO) ist eine Fachgesellschaft für die Krebsforschung. 40'000 Mitglieder gehören ihr an und sie gehört fast jedes Jahr zu den grössten Empfängern. Knapp 19 Millionen Franken hat das ESMO 2023 erhalten. Insgesamt (seit 2015) über 121 Millionen Franken.",
-    "text2": "Zu den grössten Gebern gehört mit 1.7 Millionen Franken die Pharmafirma MSD. Ihr Umsatzstärkstes Medikament ist ein Mittel gegen Krebs."
-  },
   "slide6": {
-    "text1": "Woher die Gelder genau stammen, zeigen die blauen Linien. Sie führt zum jeweiligen Geberplanet und erscheinen, wenn der Asteroid oder Planet angeklickt wird. Ohne diese Zahlungen könnte das Eular diese Kongresse vielleicht nicht durchführen und weniger Forschungsarbeiten unterstützen. Aber bleibt es noch unabhängig?",
+    "text1": "Woher die Gelder genau stammen, zeigen die blauen Linien. Sie führt zum jeweiligen Geberplanet. Ohne diese Zahlungen könnte das Eular den Kongresse vielleicht nicht durchführen und weniger Forschungsarbeiten unterstützen. Aber bleibt es noch unabhängig? ",
     "text2": "Diese Frage lässt sich für viele weitere Organisationen in diesem Universum aus Pharmageldern stellen. Bereit, es zu entdecken? Du kannst frei im Pharmauniversum herumfliegen oder vorausgewählte Asteroiden und Planeten ansteuern.",
     "buttonfree": "Frei herumfliegen",
     "buttoncancer": "Geld gegen Krebs",
@@ -48,26 +46,27 @@
     "buttonzirkel": "Ärztezirkel",
     "buttonunispital": "Unispital Zürich",
     "buttonnovartis": "Novartis"
-
   },
-  "intro": {
-    "chapter1_title": "Hallo Reisender!",
-    "chapter1": "Jedes Jahr zahlen Novartis, Roche und rund 60 andere Pharmafirmen eine Menge Geld an Ärzt:innen und Spitäler. Jetzt stell Dir vor, diese Welt der <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder</a> wäre ein Universum: Wie würde es aussehen? Genau so! Ein Universum mit Planeten (Pharmafirmen) und Asteroiden (Geldempfänger), vom Computer so generiert, dass jeder Himmelskörper am richtigen Ort ist. Darf ich Dir eine Tour durch das Universum geben?",
-    "chapter2": "Dein Raumschiff befindet sich zur Zeit im Zentrum des Sonnensystems. An den Rändern siehst Du einzelne Planeten. Dies sind Pharmafirmen, also Geldgeber. Lass uns zu einem dieser Planeten fliegen!",
-    "chapter3": "Dieser Steinplanet ist Bayer, ein eher grösseres Exemplar seiner Klasse (aber bei weitem noch kein Riese). Je grösser ein Planet, desto mehr Geld hat er ausgegeben. Um einen Planeten herum siehst Du oft einen Asteroidengürtel. Dies sind jene Geldempfänger, die einzig von dieser Pharmafirma Geld erhalten haben. Wollen wir zu Asteroiden reisen, welche auf der Rechnung mehreren Firmen stehen, müssen wir uns ins Zentrum der Galaxie begeben. Der Bordcomputer zeigt Dir übrigens immer jene Asteroiden an, die am nächsten beim Deinem Raumschiff sind.",
-    "chapter4": "Dieser Brocken ist die Europäische Vereinigung für medizinische Onkologie (ESMO). Er gehört zu den grösseren Empfängern im Pharma-Universum und hat Millionen von Franken erhalten. Ein Klick auf den ESMO-Asteroiden zeigt Dir, woher das Geld stammt.",
-    "chapter5": "Die Strahlen zeigen Dir an, mit welchen Planeten dieser Asteroid verbunden ist. Übrigens: Je mehr Geld ein Empfänger von einer Pharmafirma erhalten hat, desto näher liegt der Asteroid am entsprechenden Planeten. Und je mehr Geld floss, desto grösser ist er. Falls Du einen Asteroiden suchen willst, in der rechten, oberen Ecke findet sich eine Suchfunktion. Nun schalten wir auf manuelle Steuerung. Viel Spass!",
-    "turnyoursmartphone": "Zuerst: Das Universum funktioniert am besten, wenn Du Dein Smartphone quer hältst.",
-    "flydirectly": "Direkt losfliegen",
-    "starttour": "Tour starten",
-    "next": "weiter",
-    "fly": "Los gehts!",
-    "instructiondesktop": "Beschleunige mit der <u>Leertaste</u> oder <u>W</u>. Lenke, in dem Du die <u>Maus</u> bewegst. Schneller fliegen mit <u>Shift</u>. Doppelklicken, um in den Vollbildmodus zu wechseln.",
-    "instructionmobile": "Beschleunige, in dem Du day Display <u>berührst</u>. Lenke, in dem Du den Finger auf dem Bildschirm <u>bewegst</u>."
+  "esmo": {
+    "text1": "Die «European Society for Medical Oncology» (ESMO) ist eine Fachgesellschaft für die Krebsforschung. 40'000 Mitglieder gehören ihr an und sie gehört fast jedes Jahr zu den grössten Empfängern. Knapp 19 Millionen Franken hat das ESMO 2023 erhalten. Insgesamt (seit 2015) über 121 Millionen Franken.",
+    "text2": "Zu den grössten Gebern gehört mit 1.7 Millionen Franken die Pharmafirma MSD. Ihr Umsatzstärkstes Medikament ist ein Mittel gegen Krebs."
+  },
+  "safa": {
+    "text1": "Diese Besitzerin einer Schönheitsklinik hat 2023 152'278 Franken erhalten. Das ist der höchste dokumentierte Betrag seit Publikation der Daten vor neun Jahren, der jemals an eine Einzelperson geleistet wurde. Das Geld kam ausschliesslich von der Pharmafirma AbbVie."
+  },
+  "unispital": {
+    "text1": "Ins Zürcher Universitätsspital fliesst jährlich ein beachtlicher Betrag. Knapp 1.2 Millionen Franken waren es 2023. Grösster Geber ist Novartis (552'000 Franken) gefolgt von Gilead (488'000 Franken)."
+  },
+  "novartis": {
+    "text1": "Keine andere Pharmafirma gibt so viel Geld aus wie Novartis. Knapp 31 Millionen im Jahr 2023, nur leicht weniger als im Vorjahr. Seit Veröffentlichung dieser Zahlungen vor 9 Jahren hat die Basler Pharmafirma 233 Millionen Franken ausgegeben. Die grössten Empfänger 2023 waren die Universität Basel (1.1 Millionen Franken), das ESMO (1.1 Millionen Franken) und das Universitätsspital Basel (600'000 Franken)."
   },
   "infobox": {
-    "title": "Das Pharma-Universum",
-    "text": "Entwicklung & Audio: Simon Huwiler (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Basierend auf Daten von: <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Kontakt: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
+    "title": "Über das Projekt",
+    "text1": "Entwicklung & Audio: Simon Huwiler (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code und Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a>",
+    "title1": "Woher stammen die Daten?",
+    "text2": "Die Daten stammen von <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder.ch</a>, ein Rechercheprojekt von Ringier Medien Schweiz. Journalistinnen und Journalisten von Beobachter, Blick, SonntagsBlick und Handelszeitung strukturieren die von den Pharmaunternehmen publizierten Daten und bereiten sie so auf, dass sie unter <a href='https://www.pharmagelder.ch' target='_blank'>www.pharmagelder.ch</a> von jedermann durchsuchbar sind. Auch der Autor ist an Pharmagelder.ch beteiligt.",
+    "title2": "Wieso ein Universum?",
+    "text3": "Das Pharmauniversum ist als experimentelle Datenvisualisierung entstanden. Es ist der Versuch, Geldflüsse «begeh-» und erlebbar zu machen. Rückmeldungen dazu sind willkommen. Das Pharma-Universum war in einer früheren Form für den <a href=' https://www.informationisbeautifulawards.com/' target='_blank'>Information is Beautiful Award</a> in der Kategorie «unusual» nominiert und auf der Shortlist.",
     "goon": "weiterfliegen"
   },
   "search":
@@ -78,7 +77,7 @@
     "nothingfound": "(Noch) nichts gefunden"
   },
   "easteregg": {
-    "title": "Wohooo!",
-    "text": "Gratuliere, Du hast das versteckte Easteregg gefunden! Natürlich hat ein F-35-Jet nichts in diesem Universum verloren. Als Belohnung erhältst Du einen unfertigen Bonustrack (er läuft bereits). Ja, er fängt gleich an wie die Hintergrundmusik. Falls Du ihn fertig schreiben möchtest, findest Du ihn <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>hier</a>. Du brauchst <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> dazu."
+    "title": "Hm...",
+    "text": "Ob das hierhin gehört? Du hast das Easteregg gefunden. Als Belohnung erhältst Du einen unfertigen Bonustrack (er läuft bereits). Falls Du ihn fertig schreiben möchtest, findest Du ihn <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>hier</a>. Du brauchst <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> dazu."
   }
 }

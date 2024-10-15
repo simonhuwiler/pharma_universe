@@ -25,7 +25,8 @@
       </div>
 
       {$_('slide1.text')}
-      <div class='buttons'>
+
+      <div class='buttonsFullscreen'>
         <button on:click={() => nextChapter(0)}>{$_('slide1.button1')}</button>
         <button on:click={() => {
           nextChapter(1)
@@ -52,7 +53,7 @@
         {$_('slide2.text')}
       </p>
 
-      <div class='buttons'>
+      <div class='buttonsFullscreen'>
         <button on:click={() => storeChapter.set(3)}>{$_('slide2.button')}</button>
       </div>
     </div>
@@ -79,6 +80,7 @@
     color: rgb(201, 201, 201);
     cursor: pointer;
   }
+
   .slide {
     position: fixed;
     background-color: rgb(19, 19, 19);
@@ -100,26 +102,24 @@
     font-size: 1.5em;
     font-weight: 200;
     color: white;
+    padding: 10px;
   }
 
-  .slide .buttons {
-    margin-top: 40px; /* Add some space between text and buttons */
+  @media (max-width: 1100px) {
+    .slide .content {
+      font-size: 1.3em;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .smalllink
+    {
+      font-size: 0.8em;
+    }
   }
 
-  .slide .buttons button {
-    background-color: rgb(19, 19, 19);
-    border: 2px solid white;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px; /* Rounded corners */
-    cursor: pointer;
-    font-size: 22px;
-    font-family: "Lexend", sans-serif;
-    font-weight: 300;
+  .slide .buttonsFullscreen {
+    margin-top: 40px;
   }
 
-  .slide .buttons button:hover {
-    background-color: rgb(43, 43, 43);
-    /* color: black; */
-  }  
 </style>

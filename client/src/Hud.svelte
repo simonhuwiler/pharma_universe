@@ -86,12 +86,12 @@
   
   .label.asteroid
   {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.55);
   }
 
   .label.planet
   {
-    color: rgba(2, 202, 216, 0.35);
+    color: rgba(2, 202, 216, 0.55);
   }
 
   .label.search

@@ -5,9 +5,9 @@
     
 <div class='instructions'>
   {#if isMobile(window.navigator).any}
-    {@html $_('intro.instructionmobile')}
+    {@html $_('messages.instructionmobile')}
   {:else}
-    {@html $_('intro.instructiondesktop')}
+    {@html $_('messages.instructiondesktop')}
   {/if}
 </div>
 
@@ -15,22 +15,25 @@
   .instructions
   {
     z-index: 1000;
-    background-color: rgba(85, 85, 85, 0.8);
+    background-color: #131313;
     color: rgb(228, 228, 228);
     padding: 5px;
     margin: 10px 0;
-    line-height: 1.7em;
-    font-size: 14px;
     width: 600px;
     max-width: 90vw;
-    border-radius: 5px;
+    border-radius: 7px;
+    font-family: "Lexend", sans-serif;
+    font-size: 1.4em;
+    line-height: 1.5em;
+    font-weight: 200;
+    color: white;    
   }
 
-  @media (min-width: 800px) {
+  @media (max-width: 800px) {
     .instructions
     {
       font-size: 16px;
-      line-height: 1.8em;
+      line-height: 1.6em;
     }
   }   
 </style>

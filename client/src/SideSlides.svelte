@@ -10,7 +10,7 @@
   <div class="sideslide" in:fade={{ duration: 200, delay: 2000}} out:fade={{ duration: 200 }}>
     <div class="content">
       {$_("slide3.text")}
-      <div class="buttonsBig">
+      <div class="buttonsSide">
         <button on:click={() => storeChapter.set(4)}
           >{$_("slide3.button")}</button
         >
@@ -21,7 +21,7 @@
   <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
     <div class="content">
       {$_("slide4.text")}
-      <div class="buttonsBig">
+      <div class="buttonsSide">
         <button on:click={() => storeChapter.set(5)}
           >{$_("slide4.button")}</button
         >
@@ -35,7 +35,7 @@
       <p>
         {$_("slide5.text2")}
       </p>
-      <div class="buttonsBig">
+      <div class="buttonsSide">
         <button on:click={() => storeChapter.set(6)}
           >{$_("slide5.button")}</button
         >
@@ -64,6 +64,30 @@
         <ButtonList />
       </div>
     </div>
+
+  {:else if chapter == 8}
+    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+      <div class="content">
+        {$_("safa.text1")}
+        <ButtonList />
+      </div>
+    </div>    
+
+  {:else if chapter == 9}
+    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+      <div class="content">
+        {$_("unispital.text1")}
+        <ButtonList />
+      </div>
+    </div>  
+    
+  {:else if chapter == 10}
+    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+      <div class="content">
+        {$_("novartis.text1")}
+        <ButtonList />
+      </div>
+    </div>            
   {/if}
 
 <style>
@@ -72,7 +96,7 @@
     background-color: #131313;
     z-index: 1000;
     width: 500px;
-    max-width: 100%;
+    max-width: 100vw;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
@@ -86,6 +110,43 @@
     font-size: 1.1em;
     font-weight: 200;
     color: white;
+  }
+
+  /* Landscape */
+  @media (max-width: 1100px) {
+    .sideslide {
+      padding: 10px;
+      right: 0px;
+      width: 400px;
+      opacity: 0.9;
+      max-height: 100vh;
+    }
+
+    .sideslide .content {
+      font-size: 1em;
+      overflow-y: scroll;
+      max-height: 100vh;
+      margin: 10px;
+    }
+  }  
+
+  /* Portrait */
+  @media (max-width: 800px) {
+    .sideslide {
+      bottom: 0;
+      left: initial;
+      top: initial;
+      transform: initial;
+      padding: 10px;
+      margin: 0;
+      box-sizing: border-box;
+      opacity: 0.9;
+    }
+
+    .sideslide .content {
+      margin: 0;
+    }
+    
   }
 
 </style>

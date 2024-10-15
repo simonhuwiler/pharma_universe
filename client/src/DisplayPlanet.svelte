@@ -1,7 +1,7 @@
 <script>
   import { _ } from 'svelte-i18n'
   import format from 'format-number'
-  var myFormat = format({integerSeparator: "'"});
+  var myFormat = format({integerSeparator: "&thinsp;", suffix: ' CHF'});
 
   export let id
   export let name
@@ -71,82 +71,105 @@
   
   <style>
 
-    .display
-    {
-      font-family: 'Titillium Web', sans-serif;
-      color: rgb(228, 228, 228);
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 250px;
-      border-radius: 2px;
-      padding: 2px 5px;
-      background-color: rgba(210, 225, 226, 0.432);
-      z-index: 3;
-      line-height: 1.1em;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
+  .display
+  {
+    font-family: 'Titillium Web', sans-serif;
+    color: white;
+    position: absolute;
+    background-color: #131313;
+    z-index: 1000;
+    width: 400px;
+    max-width: 100vw;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    padding: 20px;
+    border: 5px solid #131313;
+    border-radius: 7px;
+  }
 
-    table
-    {
+  /* Landscape */
+  @media (max-width: 1100px) {
+    .display {
+      padding: 10px;
+      right: 0px;
+      width: 400px;
+      opacity: 0.9;
+      max-height: 100vh;
       font-size: 0.8em;
-      width: 100%;
-      border: 0;
-      margin: 5px 0;
-    }
+    }    
+  }
 
-    tr, td
-    {
-      padding: 0;
+  /* Portrait */
+  @media (max-width: 800px) {
+    .display {
+      bottom: 0;
+      left: initial;
+      top: initial;
+      transform: initial;
+      padding: 10px;
       margin: 0;
-      line-height: 1.2;
-    }
-
-    /* table tr:last-child td
-    {
-      border-top: 1px solid grey;
-    } */
-    
-    tr td:nth-child(1)
-    {
-      min-width: 45px;
-    }
-    
-    tr td:nth-child(2)
-    {
-      width: 100%;
-    }
-
-    tr td:nth-child(3)
-    {
-      text-align: right;
-      white-space: nowrap;
-      padding-left: 5px;
-    }
-
-    .bar
-    {
-      display: block;
-      height: 10px;
-      background-color: #00d0ff;
-    }
-
-    a
-    {
-      background: url('./images/link.png') no-repeat left;
-      padding-left: 18px;
-      background-size: 15px 15px;
+      box-sizing: border-box;
+      opacity: 0.9;
       font-size: 0.8em;
     }
+  }
 
-    a, a:visited, a:active
-    {
-      color: rgb(228, 228, 228);
-    }
+  table
+  {
+    /* font-size: 0.8em; */
+    width: 100%;
+    border: 0;
+    margin: 5px 0;
+    font-variant-numeric: tabular-nums;
+  }
 
-    a:hover
-    {
-      color: rgb(255, 255, 255);
-    }
+  tr, td
+  {
+    padding: 0;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  tr td:nth-child(1)
+  {
+    min-width: 45px;
+  }
+  
+  tr td:nth-child(2)
+  {
+    width: 100%;
+  }
+
+  tr td:nth-child(3)
+  {
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 5px;
+  }
+
+  .bar
+  {
+    display: block;
+    height: 10px;
+    background-color: #00d0ff;
+  }
+
+  a
+  {
+    background: url('./images/link.png') no-repeat left;
+    padding-left: 18px;
+    background-size: 15px 15px;
+    font-size: 0.8em;
+  }
+
+  a, a:visited, a:active
+  {
+    color: rgb(228, 228, 228);
+  }
+
+  a:hover
+  {
+    color: rgb(255, 255, 255);
+  }
   </style>

@@ -23,9 +23,10 @@
 	
 	.text
 	{
+    font-family: "Lexend", sans-serif;
 		color: white;
-		font-family: 'Titillium Web', sans-serif;
-		font-size: 1.0em;
+    font-size: 1.2em;
+    font-weight: 200;
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -46,16 +47,6 @@
     100% {
         opacity: 1;
     }
-}
+  }
 
-	/*
-@media (min-width: 800px) {
-	.loadingtext
-	{
-		font-size: 3em;
-	}
-}  
-*/
-
-
-	</style>
+</style>

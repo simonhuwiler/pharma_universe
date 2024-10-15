@@ -94,21 +94,6 @@
       storeData.set(data)
       const canvas = document.querySelector('canvas.webgl')
 
-      // TODO: Remove
-      // loadingCounter = 0
-      // storeChapter.set(6)
-      // return
-
-      // Subscribe intro click on astesroid 9033
-      storeActivateRaysInIntro.subscribe(value => {
-        if(value) 
-        {
-          const active = asteroids.find(x => x.userData.id === 9033)
-          addConnections(active)
-          active.add(sound)
-          sound.play()
-        }
-      })
 
       // On this object user is able to click (asteroids and planets)
       const groupClickable = new THREE.Group();
@@ -626,6 +611,21 @@
 
       }, 500)
 
+      // Subscribe intro click on asteroid
+      storeActivateRaysInIntro.subscribe(value => {
+        if(value) 
+        {
+          const active = asteroids.find(x => x.userData.id === value)
+          addConnections(active)
+          active.add(sound)
+          sound.play()
+        }
+        else
+        {
+          removeConnections()
+        }
+      })      
+
       // Everything loaded
       loadingCounter--
       storeChapter.set(1)
@@ -655,9 +655,11 @@
   {#if showInstructions}
     <div transition:fade style='position:absolute;left:50%;transform: translateX(-50%);z-index: 1000'><Instructions /></div>
   {/if}
-  <!-- {#if showIntro}
-    <Intro />
-  {/if} -->
+
+  {#if chapter == 97}
+    <Curtain open = {false} start='open' />
+  {/if}
+  
   {#if controlButtonsEnabled}
     <Information />
     <Search/>
