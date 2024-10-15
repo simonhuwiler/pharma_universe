@@ -3,6 +3,7 @@
   import { storeChapter } from "./store";
   import { _ } from "svelte-i18n";
   import ButtonList from "./ButtonList.svelte";
+    import isMobile from "ismobilejs";
   export let chapter = 0;
 </script>
 
@@ -10,6 +11,9 @@
   <div class="sideslide" in:fade={{ duration: 200, delay: 2000}} out:fade={{ duration: 200 }}>
     <div class="content">
       {$_("slide3.text")}
+      {#if isMobile(window.navigator).any}
+        {$_("slide3.mobile")}
+      {/if}
       <div class="buttonsSide">
         <button on:click={() => storeChapter.set(4)}
           >{$_("slide3.button")}</button

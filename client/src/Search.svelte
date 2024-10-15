@@ -103,7 +103,7 @@
     border: 1px solid #419696;
     border-radius: 4px;
     opacity: 1;
-    padding: 4px;    
+    padding: 4px;
     cursor: pointer;
   }
 

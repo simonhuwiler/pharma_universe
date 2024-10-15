@@ -5,8 +5,6 @@
 
   export let id
   export let name
-  export let value
-  export let recipients
 
   const states = {waiting: 0, ready: 1, nothing: 99, error: -1}
 

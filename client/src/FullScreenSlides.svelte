@@ -30,7 +30,6 @@
         <button on:click={() => nextChapter(0)}>{$_('slide1.button1')}</button>
         <button on:click={() => {
           nextChapter(1)
-          if(isMobile(window.navigator).any) activateFullScreen()
         }}>{$_('slide1.button2')}</button>
       </div>
       <div style='padding: 40px 0 0 0'>
