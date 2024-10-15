@@ -17,9 +17,9 @@ const startAudio = () => {
   if(!audioAmbient)
   {
     //TODO: Aktivieren
-    console.log("AUDIO DEACTIVATED!")
-    // audioAmbient = new Audio('./sound/background.mp3');
-    // audioAmbient.play();
+    // console.log("AUDIO DEACTIVATED!")
+    audioAmbient = new Audio('./sound/background.mp3');
+    audioAmbient.play();
   }
 }
 
