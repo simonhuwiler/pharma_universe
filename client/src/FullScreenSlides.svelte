@@ -110,6 +110,8 @@
       font-size: 1.3em;
       padding: 10px;
       box-sizing: border-box;
+      max-height: 100%;
+      overflow-y: scroll;
     }
 
     .smalllink
