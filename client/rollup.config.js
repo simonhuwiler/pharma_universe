@@ -70,23 +70,22 @@ const htmlTemplate = {
 				<meta property="og:url"           content="https://www.journalist.sh/pharmauniverse" />
 				<meta property="og:type"          content="website" />
 				<meta property="og:title"         content="Das Pharma-Universum | The Pharma-Universe" />
-				<meta property="og:description"   content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus." />
-				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/facebookc.jpg" />
+				<meta property="og:description"   content="Eine 3D-Visualisierung von Zahlungen der Pharmabranche an Ärzte und Organisationen" />
+				<meta property="og:image"         content="https://www.journalist.sh/pharmauniverse/images/teaser24.jpg" />
 			
 				<!-- TWITTER -->
 				<meta name="twitter:card" content="summary_large_image"/>
 				<meta name="twitter:site" content="@simon_huwiler"/>
 				<meta name="twitter:url" content="https://www.journalist.sh/pharmauniverse" />
 				<meta name="twitter:title" content="Das Pharma-Universum | The Pharma-Universe"/>
-				<meta name="twitter:description" content="Wenn die Pharmabranche ein Universum wäre, sähe es so aus."/>
-				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/facebookc.jpg"/>
+				<meta name="twitter:description" content="Eine 3D-Visualisierung von Zahlungen der Pharmabranche an Ärzte und Organisationen"/>
+				<meta name="twitter:image" content="https://www.journalist.sh/pharmauniverse/images/teaser24.jpg"/>
 
 				<title>Das Pharma-Universum | The Pharma-Universe</title>
 
 				<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap" rel="stylesheet">
-				<link href="https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap" rel="stylesheet">
 				<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 				<link rel='stylesheet' href='./global.css'>
 				<link rel='stylesheet' href='./bundle${hash}.css'>

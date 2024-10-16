@@ -23,8 +23,8 @@
     max-width: 90vw;
     border-radius: 7px;
     font-family: "Lexend", sans-serif;
-    font-size: 1.4em;
-    line-height: 1.5em;
+    font-size: 1.1em;
+    line-height: 1.6em;
     font-weight: 200;
     color: white;    
   }

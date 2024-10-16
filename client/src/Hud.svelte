@@ -43,6 +43,7 @@
     height: 0px;
     border-radius: 100px;
     border: 2px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
   }
 
   .cross {
@@ -52,6 +53,7 @@
     width: 32px;
     height: 32px;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 
   .cross:before, .cross:after {
@@ -82,16 +84,18 @@
     text-align: center;
     font-size: 0.9em;
     user-select: none;
+    font-family: 'Titillium Web', sans-serif;
+    pointer-events: none;
   }
   
   .label.asteroid
   {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .label.planet
   {
-    color: rgba(2, 202, 216, 0.55);
+    color: rgba(2, 202, 216, 0.8);
   }
 
   .label.search

@@ -27,6 +27,7 @@
       <p>{@html $_('infobox.text2')}</p>
       <h2>{@html $_('infobox.title2')}</h2>
       <p>{@html $_('infobox.text3')}</p>
+      <p>{@html $_('infobox.text4')}</p>
 
       <div class='buttonsSide'>
         <button class='tour' on:click={() => {
@@ -90,7 +91,7 @@
       font-size: 1em;
       padding: 10px;
       box-sizing: border-box;
-      overflow-x: scroll;
+      overflow-x: auto;
       max-height: 100vh;
     }
   }

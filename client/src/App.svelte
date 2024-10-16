@@ -55,7 +55,6 @@
   var animationArray = []
   var hideableObjects = []
   var timerHideableObjects
-  let audioAmbient
   var controlMouse;
   let huds = []
   var activeAsteroid = null
@@ -113,13 +112,18 @@
       var materialPlanetLava = null
       if(!debug)
       {
-        materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
-        materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
-        materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
-        materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
-        materialPlanetLava.emissiveMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Emissive.jpg`)
-        materialPlanetLava.displacementMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Displacement.jpg`)
-        materialPlanetLava.aoMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_AO.jpg`)
+        // materialPlanetLava = new THREE.MeshPhongMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
+        materialPlanetLava = new THREE.MeshStandardMaterial({map: textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Albedo.jpg`)});
+        // Only on Desktop
+        if(isMobile(window.navigator).any === false)
+        {
+          materialPlanetLava.metalnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Metalness.jpg`)
+          materialPlanetLava.normalMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Normal.jpg`)
+          materialPlanetLava.roughnessMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Roughness.jpg`)
+          materialPlanetLava.emissiveMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Emissive.jpg`)
+          materialPlanetLava.displacementMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_Displacement.jpg`)
+          materialPlanetLava.aoMap = textureLoader.load(`./textures/lava/l00kFoivOUCl2OUtQVZVZQ_4K_AO.jpg`)
+        }
       }
       
       // ----------------------- With nearby we detect nearest asteroids as well as which ones are far enough to hide
@@ -183,14 +187,26 @@
       let asteroids = []
       var moonCount = 0
       loadingCounter++
+
+      // Create n Asteroids max
+      // https://codepen.io/Divyz/pen/VPrZMy
+      const numIndividuals = 10;
+      const asteroidSize = 100
+      const asteroidGeometries = []
+      for(let i = 0; i < numIndividuals; i++)
+      {
+        asteroidGeometries.push(new AsteroidGeometry(asteroidSize, 0))
+      }
+
       for(let i in data.asteroids)
       {
         let p = data.asteroids[i]
 
         // Generate Astroid
-        // https://codepen.io/Divyz/pen/VPrZMy
-        var geometry = new AsteroidGeometry(p.size, 0);
-        var mesh = new THREE.Mesh( geometry, materialAsteroid ); 
+        // var geometry = new AsteroidGeometry(p.size, 0);
+        var mesh = new THREE.Mesh( asteroidGeometries[i % numIndividuals], materialAsteroid ); 
+        mesh.scale.set(p.size / asteroidSize, p.size / asteroidSize, p.size / asteroidSize)
+        mesh.rotation.set(Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI)
 
         mesh.position.set(p.x, p.y, p.z)
 
@@ -503,6 +519,9 @@
         pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
         raycaster.setFromCamera( pointer, camera );
         const intersects = raycaster.intersectObjects( groupClickable.children, true );
+
+        // Interrupt connection timer
+        if(connectionTimer) clearInterval(connectionTimer)
         
         if(intersects.length > 0)
         {
@@ -537,6 +556,7 @@
           else if(active.userData.type == 'easteregg')
           {
             storeChapter.set(98)
+            planets.find(e => e.userData.id == 40).material.displacementScale = 100000000
           }
         }
         else 
@@ -549,6 +569,7 @@
       }, false);
 
       // ----------------------- The rays from asteroids to planets
+      let connectionTimer = null
       function addConnections(active)
       {
         removeConnections()
@@ -560,7 +581,7 @@
 
         // Add it badgeSize to reduce lag
         const badgeSize = 50
-        const connectionTimer = setInterval(() => {
+        connectionTimer = setInterval(() => {
           planets.forEach((p, i) => {
             if(i >= badgeSize) return false
             addConnection(source, new THREE.Vector3(p.x, p.y, p.z), p[' '])
@@ -599,7 +620,6 @@
       timerHideableObjects = setInterval(() => {
 
         hideableObjects.forEach(o => o.visible = false)
-        // hideableObjects.forEach(o => o.material = materialTest)
 
         let nearbyMeshes = [...nearbyVisible.query(camera.position.x, camera.position.y, camera.position.z).keys()]
         // Now calculate distance to each Object
@@ -623,6 +643,7 @@
         else
         {
           removeConnections()
+          if(sound.parent) sound.stop()
         }
       })      
 
@@ -695,8 +716,6 @@
         <DisplayPlanet 
           name={activeAsteroid.name}
           id={activeAsteroid.id}
-          value={activeAsteroid.value}
-          recipients={activeAsteroid.recipients}
         />
 
       {/if}

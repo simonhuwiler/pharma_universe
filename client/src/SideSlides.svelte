@@ -37,7 +37,7 @@
     <div class="content">
       {$_("slide5.text1")}
       <p>
-        {$_("slide5.text2")}
+        {@html $_("slide5.text2")}
       </p>
       <div class="buttonsSide">
         <button on:click={() => storeChapter.set(6)}
@@ -59,7 +59,7 @@
   </div>
 
   {:else if chapter == 7}
-    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+    <div class="sideslide" in:fade={{ duration: 200, delay: 1500 }} out:fade={{duration: 200}}>
       <div class="content">
         {$_("esmo.text1")}
         <p>
@@ -70,7 +70,7 @@
     </div>
 
   {:else if chapter == 8}
-    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+    <div class="sideslide" in:fade={{ duration: 200, delay: 1500 }} out:fade={{duration: 200}}>
       <div class="content">
         {$_("safa.text1")}
         <ButtonList />
@@ -78,7 +78,7 @@
     </div>    
 
   {:else if chapter == 9}
-    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+    <div class="sideslide" in:fade={{ duration: 200, delay: 1500 }} out:fade={{duration: 200}}>
       <div class="content">
         {$_("unispital.text1")}
         <ButtonList />
@@ -86,7 +86,7 @@
     </div>  
     
   {:else if chapter == 10}
-    <div class="sideslide" in:fade={{ duration: 200, delay: 200 }} out:fade={{duration: 200}}>
+    <div class="sideslide" in:fade={{ duration: 200, delay: 1500 }} out:fade={{duration: 200}}>
       <div class="content">
         {$_("novartis.text1")}
         <ButtonList />
@@ -128,7 +128,7 @@
 
     .sideslide .content {
       font-size: 1em;
-      overflow-y: scroll;
+      overflow-y: auto;
       max-height: 100vh;
       margin: 10px;
     }

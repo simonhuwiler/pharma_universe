@@ -136,7 +136,7 @@
     .searchbox {
       top: 10px;
       font-size: 1em;
-      overflow-y: scroll;
+      overflow-y: auto;
       max-height: 100vh;
       margin: 10px;
       box-sizing: border-box;
@@ -149,7 +149,7 @@
       padding: 10px;
       margin: 0px;
       box-sizing: border-box;
-      overflow-x: scroll;
+      overflow-x: auto;
       max-height: 100vh;
       bottom: 0;
       top: initial;

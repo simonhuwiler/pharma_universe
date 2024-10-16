@@ -48,7 +48,7 @@
 
       {:else if data.state === states.ready} 
 
-        {data.name}<br/>
+        <h2>{data.name}</h2>
         <table border=0 cellpadding=0 cellspacing=0>
           {#each data.aggregation as t}
           <tr>
@@ -84,6 +84,13 @@
     padding: 20px;
     border: 5px solid #131313;
     border-radius: 7px;
+  }
+
+  .display h2
+  {
+    font-size: 1.4em;
+    margin: 0 0 5px 0;
+    line-height: 1.2em;
   }
 
   /* Landscape */

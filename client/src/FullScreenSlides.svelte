@@ -110,7 +110,7 @@
       padding: 10px;
       box-sizing: border-box;
       max-height: 100%;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     .smalllink

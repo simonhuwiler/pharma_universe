@@ -10,7 +10,7 @@
     "waiting": "Raumstation wird angefragt...",
     "errorfetch": ":( Raumstation konnte nicht gefunden werden. Vielleicht wurde sie von einem schwarzen Loch verschluckt.",
     "instructiondesktop": "Beschleunige mit der <u>Leertaste</u> oder <u>W</u>. Lenke, in dem Du die <u>Maus</u> bewegst. Fliege schneller mit <u>Shift</u>. Asteroiden und Planeten lassen sich anklicken. Doppelklicken, um in den Vollbildmodus zu wechseln.",
-    "instructionmobile": "Beschleunige, in dem Du day Display <u>berührst</u>. Lenke, in dem Du den Finger auf dem Bildschirm <u>bewegst</u>. Asteroiden und Planeten lassen sich anklicken."
+    "instructionmobile": "Beschleunige, in dem Du das Display <u>berührst</u>. Lenke, in dem Du den Finger auf dem Bildschirm <u>bewegst</u>. Asteroiden und Planeten lassen sich anklicken."
   },
   "slide1": {
     "text": "Du bist Arzt. Einer Deiner Patienten braucht ein Medikament. Dir stehen zwei Präparate von zwei Pharmafirmen zur Verfügung. Die erste Firma hat Dich an einen Kongress eingeladen, Dir das Hotel bezahlt und das Essen spendiert. Von der zweiten Firma kennst Du nur das Logo. Welches Medikament wirst Du verschreiben?",
@@ -20,26 +20,26 @@
   },
   "slide2": {
     "option1": "Du hast Dich für das Medikament jenes Herstellers entschieden, der Dich hofiert hat. Bist Du noch unabhängig?",
-    "option2": "Du hast Dich gegen jene Firma entschieden, die dich hofiert hast. Glaubst Du, dass die meisten Ärzte so entscheiden?",
-    "text": "Diese Frage müssen sich viele Ärzte, Spitäler und Organisationen stellen, denn jährlich fliesst ein beträchtlicher Betrag von der Pharmaindustrie zur Gesundheitsbranche. 2023 waren es 246 Millionen Franken. Das wissen wir, weil sich die meisten Schweizer Pharmafirmen dazu verpflichtet haben, diese Zuwendungen zu veröffentlichen. Lass uns tiefer eintauchen in dieses Universum aus Pharmageldern.",
+    "option2": "Du hast Dich gegen jene Firma entschieden, die dich hofiert hat. Glaubst Du, dass die meisten Ärzte so entscheiden?",
+    "text": "Diese Frage müssen sich viele Ärzte, Spitäler und Organisationen stellen, denn jährlich fliesst ein beträchtlicher Betrag von der Pharmaindustrie zur Gesundheitsbranche. 2023 waren es 246 Millionen Franken. Das wissen wir, weil sich die meisten Schweizer Pharmafirmen dazu verpflichtet haben, diese Zuwendungen offenzulegen. Lass uns tiefer eintauchen in dieses Universum aus Pharmageldern.",
     "button": "Das Pharmauniversum starten"
   },
   "slide3": {
-    "text": "Vor Dir siehst Du einen grossen, blauen Planeten. Dieser symbolisiert die Pharmafirma AbbVie. Im Universum findest Du auch Asteroiden. Das sind Geldempfänger wie Ärzte, Spitäler, Arztpraxen, Apotheken oder Gesundheitsorganisationen. Je mehr Geld dieser Empfänger erhalten hat, desto grösser ist er. Planeten haben auch eine Schwerkraft und ziehen Asteroiden stärker an, je mehr Geld sie diesem gegeben haben.",
-    "mobile": "Halte Dein Handy quer für die beste Erfahrung.",
+    "text": "Vor Dir siehst Du einen grossen, blauen Planeten. Dieser symbolisiert die Pharmafirma AbbVie. Im Universum findest Du auch Asteroiden. Das sind Geldempfänger wie Ärzte, Spitäler, Arztpraxen, Apotheken oder Gesundheitsorganisationen. Je mehr Geld ein Empfänger erhalten hat, desto grösser ist er. Planeten haben auch eine Schwerkraft und ziehen Asteroiden stärker an, je mehr Geld sie diesem gegeben haben.",
+    "mobile": "Halte Dein Handy quer für das beste Erlebnis.",
     "button": "» Schauen wir uns den blauen Riesen genauer an"
   },
   "slide4": {
-    "text": "Das erfolgreichste Medikament von AbbVie ist Humira, ein Präparat, das bei rheumatischen Erkrankungen eingesetzt wird. Es gilt als eines der umsatzstärksten Medikamente überhaupt. Im letzten Jahr hat der US-Konzern insgesamt 8.8 Millionen Franken an Ärzte und Organisationen verteilt. Fliegen wir zu einer Organisation, die von AbbVie Geld erhalten hat.",
-    "button": "» Zu Empfänger fliegen"
+    "text": "Das erfolgreichste Medikament von AbbVie ist Humira, ein Präparat, das bei rheumatischen Erkrankungen eingesetzt wird. Es gilt als eines der umsatzstärksten Medikamente überhaupt. Insgesamt 8.8 Millionen Franken hat der US-Konzern im letzten Jahr an Ärzte und Organisationen verteilt. Fliegen wir zu einer Organisation, die von AbbVie Geld erhalten hat.",
+    "button": "» Zum Empfänger fliegen"
   },
   "slide5": {
-    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine Nonprofit-Organisation mit Fokus auf rheumatische Erkrankungen. Am jährlichen Kongress – zuletzt in Wien, bald in Barcelona – treffen sich führende Wissenschaftler und Ärzte ihres Faches.",
-    "text2": "AbbVie unterstützte diese Nonprofit-Organisation im vergangenen Jahr mit 1.1 Millionen Franken. Dafür durfte das Unternehmen etwa am Kongress ein eigenes Symposium durchführen. Auch andere Pharmafirmen haben «Eular» finanziell unterstützt. Sie hat insgesamt 6.6 Millionen Franken erhalten.",
+    "text1": "Dies ist die «European Alliance of Associations for Rheumatology» – kurz «Eular». Sie ist eine der wichtigsten Nonprofit-Organisation mit Fokus auf rheumatische Erkrankungen. Sie gibt ein wissenschaftliches Magazin heraus und am jährlichen Kongress – zuletzt in Wien, bald in Barcelona – treffen sich führende Wissenschaftler und Ärzte ihres Faches.",
+    "text2": "1.1 Millionen Franken hat der Medikamentenhersteller AbbVie an «Eular» 2023 bezahlt. Dafür durfte das Unternehmen etwa <a href='https://apps-congress.eular.org/eular2024/en-GB/pag/session/2051' target='_blank'>ein eigenes Symposium</a> am Kongress durchführen.",
     "button": "» Wer unterstützte die Organisation auch noch?"
   },
   "slide6": {
-    "text1": "Woher die Gelder genau stammen, zeigen die blauen Linien. Sie führt zum jeweiligen Geberplanet. Ohne diese Zahlungen könnte das Eular den Kongresse vielleicht nicht durchführen und weniger Forschungsarbeiten unterstützen. Aber bleibt es noch unabhängig? ",
+    "text1": "Woher die Gelder genau stammen, zeigen die blauen Linien. Sie führen zum jeweiligen Geberplaneten. Ohne diese Zahlungen könnte «Eular» den Kongress vielleicht nicht durchführen und weniger Forschung mitfinanzieren. Aber bleibt es noch unabhängig?",
     "text2": "Diese Frage lässt sich für viele weitere Organisationen stellen. Bereit, das Pharma-Universum zu entdecken? Du kannst frei herumfliegen oder vorausgewählte Asteroiden und Planeten ansteuern.",
     "buttonfree": "Frei herumfliegen",
     "buttoncancer": "Geld gegen Krebs",
@@ -49,7 +49,7 @@
     "buttonnovartis": "Novartis"
   },
   "esmo": {
-    "text1": "Die «European Society for Medical Oncology» (ESMO) ist eine Fachgesellschaft für die Krebsforschung. 40'000 Mitglieder gehören ihr an und sie gehört fast jedes Jahr zu den grössten Empfängern. Knapp 19 Millionen Franken hat das ESMO 2023 erhalten. Insgesamt (seit 2015) über 121 Millionen Franken.",
+    "text1": "Die «European Society for Medical Oncology» (ESMO) ist eine Fachgesellschaft für die Krebsforschung. 40'000 Mitglieder gehören ihr an und sie gehört fast jedes Jahr zu den grössten Empfängern von Pharmageldern. Knapp 19 Millionen Franken hat das ESMO 2023 erhalten. Insgesamt (seit 2015) über 121 Millionen Franken.",
     "text2": "Zu den grössten Gebern gehört mit 1.7 Millionen Franken die Pharmafirma MSD. Ihr Umsatzstärkstes Medikament ist ein Mittel gegen Krebs."
   },
   "safa": {
@@ -59,7 +59,7 @@
     "text1": "Ins Zürcher Universitätsspital fliesst jährlich ein beachtlicher Betrag. Knapp 1.2 Millionen Franken waren es 2023. Grösster Geber ist Novartis (552'000 Franken) gefolgt von Gilead (488'000 Franken)."
   },
   "novartis": {
-    "text1": "Keine andere Pharmafirma gibt so viel Geld aus wie Novartis. Knapp 31 Millionen im Jahr 2023, nur leicht weniger als im Vorjahr. Seit Veröffentlichung dieser Zahlungen vor 9 Jahren hat die Basler Pharmafirma 233 Millionen Franken ausgegeben. Die grössten Empfänger 2023 waren die Universität Basel (1.1 Millionen Franken), das ESMO (1.1 Millionen Franken) und das Universitätsspital Basel (600'000 Franken)."
+    "text1": "Keine andere Pharmafirma gibt so viel Geld aus wie Novartis. Knapp 31 Millionen Franken im 2023. Seit die Zahlungen veröffentlicht werden hat die Basler Pharmafirma insgesamt 233 Millionen Franken ausgegeben. Viel Geld ging im letzten Jahr an die Universität Basel (1.1 Millionen Franken), an die Krebs-Fachgesellschaft ESMO (1.1 Millionen Franken) und an das Universitätsspital Basel (600'000 Franken)."
   },
   "infobox": {
     "title": "Über das Projekt",
@@ -67,7 +67,8 @@
     "title1": "Woher stammen die Daten?",
     "text2": "Die Daten stammen von <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder.ch</a>, ein Rechercheprojekt von Ringier Medien Schweiz. Journalistinnen und Journalisten von Beobachter, Blick, SonntagsBlick und Handelszeitung strukturieren die von den Pharmaunternehmen publizierten Daten und bereiten sie so auf, dass sie unter <a href='https://www.pharmagelder.ch' target='_blank'>www.pharmagelder.ch</a> von jedermann durchsuchbar sind. Auch der Autor ist an Pharmagelder.ch beteiligt.",
     "title2": "Wieso ein Universum?",
-    "text3": "Das Pharmauniversum ist als experimentelle Datenvisualisierung entstanden. Es ist der Versuch, Geldflüsse «begeh-» und erlebbar zu machen. Rückmeldungen dazu sind willkommen. Das Pharma-Universum war in einer früheren Form für den <a href=' https://www.informationisbeautifulawards.com/' target='_blank'>Information is Beautiful Award</a> in der Kategorie «unusual» nominiert und auf der Shortlist.",
+    "text3": "Das Pharmauniversum ist als experimentelle Datenvisualisierung entstanden. Es ist der Versuch, Geldflüsse «begeh-» und erlebbar zu machen. Rückmeldungen dazu sind willkommen.",
+    "text4": "Das Pharma-Universum war in einer früheren Form für den <a href=' https://www.informationisbeautifulawards.com/' target='_blank'>Information is Beautiful Award</a> in der Kategorie «unusual» nominiert und auf dessen Shortlist.",
     "goon": "weiterfliegen"
   },
   "search":

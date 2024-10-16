@@ -12,10 +12,63 @@
     "instructiondesktop": "Accelerate with the <u>space bar</u> or <u>W</u>. Steer by moving the <u>mouse</u>. Fly faster with <u>Shift</u>. Asteroids and planets can be clicked. Double-click to switch to full screen mode.",
     "instructionmobile": "Accelerate by <u>touching</u> the display. Steer by <u>moving</u> your finger on the screen. Asteroids and planets can be clicked on."
   },
+  "slide1": {
+    "text": "You are a doctor. One of your patients needs medication. You have to choose between the drugs from two different pharmaceutical companies. The first company has invited you to a congress, paid for your hotel and provided you with a free dinner. You only know the logo of the second company. Which medicine will you prescribe?",
+    "button1": "The first company’s drug",
+    "button2": "The second company’s drug",
+    "skip": "Skip and start the pharma universe"
+  },
+  "slide2": {
+    "option1": "You have decided in favour of the first manufacturers drug: The one who paid for your dinner. Are you still independent?",
+    "option2": "You decided against the company who paid your dinner. Do you think that most doctors make this decision?",
+    "text": "Many doctors, hospitals and organisations have to ask themselves this question, as a considerable amount of money flows from the pharmaceutical industry to the healthcare sector every year. In 2023, this amounted to CHF 246 million. We know this because most Swiss pharmaceutical companies have committed to disclosing these donations. Let's delve deeper into this universe of pharmaceutical money.",
+    "button": "Start the pharmaceutical universe"
+  },
+  "slide3": {
+    "text": "You see a large, blue planet in front of you. This symbolises the pharmaceutical company AbbVie. You will also find asteroids in the universe. These are recipients of money such as doctors, hospitals, medical practices, pharmacies or healthcare organisations. The more money a recipient has received, the bigger it is. Planets also have gravity and attract asteroids more strongly the more money they have been given.",
+    "mobile": "Hold your mobile phone across for the best experience.",
+    "button": "» Let's take a closer look at the blue giant"
+  },
+  "slide4": {
+    "text": "AbbVie's most successful drug is Humira, a preparation used to treat rheumatic diseases. It is considered one of the best-selling drugs of all. Last year, the US company distributed a total of 8.8 million Swiss francs to doctors and organisations. Let's fly to an organisation that has received money from AbbVie.",
+    "button": "» Fly to the recipient"
+  },
+  "slide5": {
+    "text1": "This is the ‘European Alliance of Associations for Rheumatology’ - ‘Eular’ for short. It is one of the most important non-profit organisations focusing on rheumatic diseases. It publishes a scientific magazine and at the annual congress - most recently in Vienna, soon in Barcelona - leading scientists and doctors in their field come together.",
+    "text2": "The drug manufacturer AbbVie paid 1.1 million Swiss francs to ‘Eular’ in 2023. To this end, the company was allowed to organise <a href='https://apps-congress.eular.org/eular2024/en-GB/pag/session/2051' target='_blank'>its own symposium</a> at the congress.",
+    "button": "» Who else supported the organisation?"
+  },
+  "slide6": {
+    "text1": "The blue lines show exactly where the money comes from. They lead to the respective donor planet. Without these payments, ‘Eular’ might not be able to organise the congress and co-finance less research. But will it remain independent?",
+    "text2": "This question can be asked for many other organisations. Ready to discover the pharmaceutical universe? You can fly around freely or head for pre-selected asteroids and planets.",
+    "buttonfree": "Fly around freely",
+    "buttoncancer": "Money against cancer",
+    "buttonmarva": "Plastic surgeon",
+    "buttonunispital": "University Hospital Zurich",
+    "buttonnovartis": "Novartis"
+  },
+  "esmo": {
+    "text1": "The European Society for Medical Oncology (ESMO) is a specialised society for cancer research. It has 40,000 members and is one of the largest recipients of pharmaceutical funding almost every year. The ESMO received almost 19 million Swiss francs in 2023. In total (since 2015) over 121 million francs.",
+    "text2": "One of the largest donors is the pharmaceutical company MSD with 1.7 million francs. Its best-selling drug is an anti-cancer agent."
+  },
+  "safa": {
+    "text1": "This owner of a beauty clinic received 152,278 francs in 2023. This is the highest documented amount ever paid to an individual since the data was published nine years ago. The money came exclusively from the pharmaceutical company AbbVie."
+  },
+  "unispital": {
+    "text1": "A considerable amount of money flows into Zurich University Hospital every year. The largest donor is Novartis (CHF 552,000), followed by Gilead (CHF 488,000)."
+  },
+  "novartis": {
+    "text1": "No other pharmaceutical company spends as much money as Novartis. Since the payments were published, the Basel-based pharmaceutical company has spent a total of 233 million francs. Last year, a lot of money went to the University of Basel (1.1 million francs), the specialist cancer organisation ESMO (1.1 million francs) and the University Hospital Basel (600,000 francs)."
+  },
   "infobox": {
-    "title": "The Pharma-Universe",
-    "text": "Development & Audio: Simon Huwiler (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code and full Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a><br />Based on data from: <a href='https://www.pharmagelder.ch' target='_blank'>pharmagelder.ch</a><br /><br />Contact: <a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>",
-    "goon": "fly on"
+    "title": "About the project",
+    "text1": "Development & Audio: Simon Huwiler (<a href='https://www.journalist.sh' target='_blank'>journalist.sh</a>)<br />Code and Credits: <a href='https://github.com/simonhuwiler/pharma_universe' target='_blank'>GitHub</a>",
+    "title1": "Where does the data come from?",
+    "text2": "The data comes from <a href='https://www.pharmagelder.ch' target='_blank'>Pharmagelder.ch</a>, a research project by Ringier Media Switzerland. Journalists from Beobachter, Blick, SonntagsBlick and Handelszeitung structure the data published by the pharmaceutical companies and prepare it in such a way that it can be searched by anyone at <a href='https://www.pharmagelder.ch' targetx='_blank'>www.pharmagelder.ch</a>. Auch der Autor ist an Pharmagelder.ch beteiligt.",
+    "title2": "Why a universe?",
+    "text3": "The pharmaceutical universe was created as an experimental data visualisation. It is an attempt to make cash flows ‘walkable’ and tangible. Feedback is welcome.",
+    "text4": "The pharmaceutical universe was previously nominated for the <a href=' https://www.informationisbeautifulawards.com/' target='_blank'>Information is Beautiful Award</a> in the ‘unusual’ category and was shortlisted.",
+    "goon": "continue flying"
   },
   "search":
   {
@@ -25,7 +78,7 @@
     "nothingfound": "Nothing found (yet)"
   },  
   "easteregg": {
-    "title": "Wohooo!",
-    "text": "Congratulations, you found the hidden Easteregg! Of course, an F-35 jet has no place in this universe. As a reward you get an unfinished bonus track (it's already running). Yes, it starts the same as the background music. If you want to finish it, you can find it <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>here</a>. You need <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> to do it."
+    "title": "Hm...",
+    "text": "Ob das hierhin gehört? Du hast das Easteregg gefunden. Als Belohnung erhältst Du einen unfertigen Bonustrack (er läuft bereits). If you want to finish writing it, you can find it <a href='https://github.com/simonhuwiler/pharma_universe/blob/master/soundtrack/t1.rb' target='_blank'>here</a>. You need <a href='https://sonic-pi.net/' target='_blank'>Sonic-Pi</a> for this."
   }
 }
