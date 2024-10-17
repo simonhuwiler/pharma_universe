@@ -1,6 +1,6 @@
 import {
   storeCamera, storeChapter, storeActivateRaysInIntro, storeControlsEnabled, storeControlButtonsEnabled, 
-  storeShowInstructions, storeData, storeShowEasteregg } from './store.js';
+  storeShowInstructions, storeData, storeShowEasteregg, storeShowInstructionsAlreadyShown } from './store.js';
 import isMobile from 'ismobilejs';
 import { activateFullScreen } from './helpers.js';
 import * as THREE from 'three'
@@ -31,7 +31,10 @@ const freeFly = () => {
   
   // Start Audio
   storeShowInstructions.set(true)
-  setTimeout(() => storeShowInstructions.set(false), 10000)    
+  setTimeout(() => {
+    storeShowInstructions.set(false)
+    storeShowInstructionsAlreadyShown.set(true)
+  }, 10000)
   startAudio()
 
 }

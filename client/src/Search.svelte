@@ -1,7 +1,7 @@
 <script>
     import { _ } from 'svelte-i18n'
     import * as THREE from 'three'
-    import { storeData, storeSearchItem, storeControlsEnabled } from './store.js';
+    import { storeData, storeSearchItem, storeControlsEnabled, storeChapter } from './store.js';
 
     var showSearchbox = false
     var data = null
@@ -23,6 +23,7 @@
             position: new THREE.Vector3(520553212, 563734939, -703080680)
           }
         })
+        storeChapter.set(99)
         return
       }
 
@@ -48,6 +49,7 @@
 <div class='search' on:click={() => {
     showSearchbox = true
     storeControlsEnabled.set(false)
+    storeChapter.set(96)
   }}>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88">
     <defs><style>.cls-1{fill-rule:evenodd;}</style></defs>
@@ -59,7 +61,7 @@
   <div class='infobox searchbox'>
     <h2>{$_('search.title')}</h2>
     <p>
-      <input type='text' placeholder={$_('search.placeholder')} on:input={inputChange} autofocus={true}/>
+      <input type='text' placeholder={$_('search.placeholder')} on:input={inputChange}/>
     </p>
     {#if searchResults.length == 0}
       <span>{$_('search.nothingfound')}</span>
@@ -72,6 +74,7 @@
             searchResults = []
             moreThan10 = false
             storeControlsEnabled.set(true)
+            storeChapter.set(99)
           }}>{item.name}</li>
         {/each}
       </ul>
@@ -85,6 +88,7 @@
         searchResults = []
         moreThan10 = false
         storeControlsEnabled.set(true)
+        storeChapter.set(99)
       }}>{$_('infobox.goon')}</button>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <script>
   import { fade } from 'svelte/transition';
   import { _ } from 'svelte-i18n'
-  import { storeControlsEnabled } from './store.js';
+  import {  storeControlsEnabled, storeActivateRaysInIntro } from './store.js';
   import { storeChapter } from './store.js';
 
   var showInfobox = false
@@ -89,7 +89,7 @@
   @media (max-width: 1100px) {
     .slide .content {
       font-size: 1em;
-      padding: 10px;
+      padding: 10px 10px 70px 10px;
       box-sizing: border-box;
       overflow-x: auto;
       max-height: 100vh;

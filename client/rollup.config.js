@@ -52,7 +52,7 @@ const htmlTemplate = {
 			<html lang="de">
 			<head>
 				<meta charset='utf-8'>
-				<meta name='viewport' content='width=device-width,initial-scale=1'>
+				<meta name='viewport' content='width=device-width,initial-scale=1,user-scalable=0,minimal-ui'>
 				<meta name="author" content="Simon Huwiler">
 				<meta name="apple-mobile-web-app-capable" content="yes" />        
 

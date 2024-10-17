@@ -16,7 +16,7 @@
   import Nearby from './nearby'
 
   import { storeControlsEnabled, storeAnimationArray, storeActivateRaysInIntro, storeShowEasteregg, storeData, 
-    storeSearchItem, storeChapter, storeControlButtonsEnabled, storeCamera, storeShowInstructions } from './store.js';
+    storeSearchItem, storeChapter, storeControlButtonsEnabled, storeCamera, storeShowInstructions, storeShowInstructionsAlreadyShown } from './store.js';
   import Hud from './Hud.svelte'
   import Loading from './Loading.svelte'
   import DisplayAsteroid from './DisplayAsteroid.svelte'
@@ -62,6 +62,7 @@
   // ----------------------- Init and registerStores
   let showEasteregg = false
   let showInstructions = false  
+  let showInstructionsAlreadyShown = false
   let searchItem = null
   let chapter = -1
 
@@ -70,6 +71,7 @@
   storeControlButtonsEnabled.subscribe(value => controlButtonsEnabled = value)
   storeControlsEnabled.subscribe(value => activateControls = value);
   storeShowInstructions.subscribe(value => showInstructions = value)
+  storeShowInstructionsAlreadyShown.subscribe(value => showInstructionsAlreadyShown = value)
   storeAnimationArray.subscribe(value => animationArray = value)
   storeShowEasteregg.subscribe(value => showEasteregg = value)
   storeSearchItem.subscribe(value => searchItem = value)
@@ -515,6 +517,10 @@
       const raycaster = new THREE.Raycaster();
       const pointer = new THREE.Vector2();
       canvas.addEventListener('click', e => {
+
+        // Only of freefligh is active
+        if(chapter != 99) return
+
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
         pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
         raycaster.setFromCamera( pointer, camera );
@@ -573,6 +579,9 @@
       function addConnections(active)
       {
         removeConnections()
+
+        // Dont show rays on mobile on planets
+        if(isMobile(window.navigator).any && active.userData.type == 'planet')  return
 
         if(active.userData.type == 'planet') var planets = data.asteroids.filter(p => p.from.includes(active.userData.id))
         else var planets = data.planets.filter(p => active.userData.from.includes(p.id))
@@ -644,6 +653,7 @@
         {
           removeConnections()
           if(sound.parent) sound.stop()
+          activeAsteroid = null
         }
       })      
 
@@ -673,7 +683,7 @@
     <SideSlides chapter = {chapter} />
   {/if}
 
-  {#if showInstructions}
+  {#if showInstructions && !showInstructionsAlreadyShown}
     <div transition:fade style='position:absolute;left:50%;transform: translateX(-50%);z-index: 1000'><Instructions /></div>
   {/if}
 
@@ -703,7 +713,7 @@
   {/if}
 
   <div class='infoboxes'>
-    {#if activeAsteroid}
+    {#if activeAsteroid && chapter == 99}
       {#if activeAsteroid.type == 'asteroid' && debug === false}
 
         <DisplayAsteroid 
