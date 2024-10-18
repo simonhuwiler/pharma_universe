@@ -1,7 +1,6 @@
 <script>
   import { fade } from 'svelte/transition';
   import { storeChapter } from './store'
-  import { activateFullScreen } from './helpers'
   import { _, locale } from 'svelte-i18n';
   export let chapter = 0
 
